@@ -75,19 +75,18 @@ export const getServerSession = cache(async () => {
 });
 ```
 
-### Fix: unstable_cache for Expensive Queries
+### Fix: "use cache" Directive for Expensive Queries
 ```typescript
-import { unstable_cache } from "next/cache";
+import { cacheTag, cacheLife } from "next/cache";
 
-const getProducts = unstable_cache(
-  async () => {
-    return prisma.product.findMany({
-      select: { id: true, name: true, price: true },
-    });
-  },
-  ["products"],
-  { tags: ["products"], revalidate: 3600 }
-);
+async function getProducts() {
+  "use cache"
+  cacheTag("products")
+  cacheLife("hours")
+  return prisma.product.findMany({
+    select: { id: true, name: true, price: true },
+  });
+}
 
 // Invalidate after product update:
 revalidateTag("products");

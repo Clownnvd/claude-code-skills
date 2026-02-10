@@ -1,4 +1,4 @@
-# Criteria: React cache() Deduplication (10%) + unstable_cache (10%)
+# Criteria: React cache() Deduplication (10%) + `"use cache"` Directive (10%)
 
 ## 5. React `cache()` Deduplication (10%)
 
@@ -30,23 +30,23 @@
 - [ ] Shared loaders use `cache()`
 - [ ] Per-request scope (not long-lived cache)
 
-## 6. `unstable_cache` / `use cache` (10%)
+## 6. `"use cache"` Directive (10%)
 
 ### Score 9-10: Enterprise-grade
-- `unstable_cache` wraps expensive or frequently-read queries
-- Tags are meaningful and specific (e.g., `["products"]`, `["user-123"]`)
+- `"use cache"` directive on expensive or frequently-read async functions
+- `cacheTag()` values are meaningful and specific (e.g., `"products"`, `"user-123"`)
 - `revalidateTag` called after writes to invalidate cached queries
-- TTL configured appropriately per query type
-- Auth-dependent data NOT cached with `unstable_cache`
-- Cache keys include relevant parameters
+- `cacheLife()` configured appropriately per function (e.g., `'hours'`, `'days'`)
+- Auth-dependent data NOT cached with `"use cache"`
+- Cache scope is clear (function-level, not module-level for user data)
 
 ### Score 7-8: Production-ready
-- Some use of `unstable_cache` for expensive queries
+- Some use of `"use cache"` for expensive queries
 - Tags exist but not always invalidated
 - Most appropriate queries are cached
 
 ### Score 5-6: Minimum
-- No `unstable_cache` usage
+- No `"use cache"` usage
 - All queries hit DB every time
 - No query-level caching strategy
 
@@ -56,13 +56,13 @@
 
 ### N/A Adjustment
 If the app is small (< 10 queries) and all are user-specific:
-- `unstable_cache` may not be applicable
+- `"use cache"` may not be applicable
 - Score based on awareness: does the code have a place to add it?
 - If truly N/A: redistribute 10% to ReactCache (15%) + Headers (20%)
 
 ### Checklist
-- [ ] `unstable_cache` on expensive queries
-- [ ] Meaningful tags per cache entry
+- [ ] `"use cache"` on expensive queries
+- [ ] Meaningful `cacheTag()` per cached function
 - [ ] `revalidateTag` after mutations
-- [ ] TTL configured per query type
-- [ ] No auth data in unstable_cache
+- [ ] `cacheLife()` configured per function
+- [ ] No auth data in `"use cache"` functions

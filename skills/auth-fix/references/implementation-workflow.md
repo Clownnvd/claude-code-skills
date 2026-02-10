@@ -34,7 +34,7 @@ For each fix:
 ### 3a. Read Before Edit
 - Read the target file(s)
 - Read `src/lib/auth.ts` if fix involves Better Auth config
-- Read `src/middleware.ts` if fix involves route protection or headers
+- Read `src/proxy.ts` if fix involves route protection or headers
 - Read related test files if they exist
 
 ### 3b. Apply Fix

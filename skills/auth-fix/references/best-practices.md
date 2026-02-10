@@ -13,10 +13,10 @@
 ## Safe vs Dangerous Changes
 
 ### Safe (low risk of breakage)
-- Adding security headers (middleware)
+- Adding security headers (proxy)
 - Tightening rate limits (lower threshold)
 - Adding audit log entries (new code, no changes to existing)
-- Adding CSRF origin validation (middleware addition)
+- Adding CSRF origin validation (proxy addition)
 - Adding `httpOnly`, `secure`, `sameSite` to cookies
 - Adding password strength validation (sign-up only initially)
 
@@ -37,12 +37,12 @@
 | Hardcoding allowed origins | Use `env.BETTER_AUTH_URL` or `env.NEXT_PUBLIC_APP_URL` |
 | Adding CSP that blocks inline styles | Tailwind uses inline styles; use `unsafe-inline` for style-src or nonce |
 | Blocking all requests without Origin header | Some legitimate requests (bookmarks, typed URLs) lack Origin |
-| Silent catch in auth middleware | Always log + return proper error response |
+| Silent catch in auth proxy | Always log + return proper error response |
 
 ## Fix Order Within a Category
 
 1. **Config changes** (Better Auth options) — safest, most impact
-2. **Middleware additions** (headers, checks) — moderate impact
+2. **Proxy additions** (headers, checks) — moderate impact
 3. **API route changes** (validation, response codes) — test-heavy
 4. **Schema/database changes** (new columns, migrations) — most risk
 

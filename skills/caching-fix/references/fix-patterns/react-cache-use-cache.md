@@ -1,4 +1,4 @@
-# Fix Patterns: React cache() + unstable_cache
+# Fix Patterns: React cache() + `"use cache"` Directive
 
 ## React cache() Fixes
 
@@ -45,24 +45,24 @@ export const getUserProfile = cache(async (userId: string) => {
 });
 ```
 
-## unstable_cache Fixes
+## `"use cache"` Directive Fixes
 
 ### Fix: Cache Expensive Public Query
 ```typescript
-import { unstable_cache } from "next/cache";
+import { cacheTag, cacheLife } from "next/cache";
 import prisma from "@/lib/db";
 
 // Cache product listing (public, changes rarely)
-export const getProducts = unstable_cache(
-  async () => {
-    return prisma.product.findMany({
-      select: { id: true, name: true, price: true, description: true },
-      orderBy: { createdAt: "desc" },
-    });
-  },
-  ["products-list"],
-  { tags: ["products"], revalidate: 3600 }
-);
+async function getProducts() {
+  "use cache";
+  cacheTag("products");
+  cacheLife("hours");
+
+  return prisma.product.findMany({
+    select: { id: true, name: true, price: true, description: true },
+    orderBy: { createdAt: "desc" },
+  });
+}
 
 // Invalidate after product update:
 import { revalidateTag } from "next/cache";
@@ -71,25 +71,29 @@ revalidateTag("products");
 
 ### Fix: Cache with User-Scoped Tags
 ```typescript
+import { cacheTag, cacheLife } from "next/cache";
+import prisma from "@/lib/db";
+
 // For frequently read user data (purchase status):
-export const getUserPurchase = unstable_cache(
-  async (userId: string) => {
-    return prisma.purchase.findUnique({
-      where: {
-        one_purchase_per_product: { userId, productType: "KING_TEMPLATE" },
-      },
-      select: { id: true, status: true, githubInviteSent: true },
-    });
-  },
-  ["user-purchase"],
-  { tags: [`user-${userId}-purchase`], revalidate: 300 }
-);
+async function getUserPurchase(userId: string) {
+  "use cache";
+  cacheTag(`user-${userId}-purchase`);
+  cacheLife("minutes");
+
+  return prisma.purchase.findUnique({
+    where: {
+      one_purchase_per_product: { userId, productType: "KING_TEMPLATE" },
+    },
+    select: { id: true, status: true, githubInviteSent: true },
+  });
+}
 
 // Invalidate after purchase:
+import { revalidateTag } from "next/cache";
 revalidateTag(`user-${userId}-purchase`);
 ```
 
-### When NOT to Use unstable_cache
+### When NOT to Use `"use cache"`
 - User-specific data that changes frequently (session, real-time)
 - Data that must be fresh on every request (payment status during checkout)
 - Small apps where query cost is negligible

@@ -34,7 +34,7 @@ Within each severity, prioritize by:
 For each fix:
 
 ### 3a. Read Before Edit
-- Read the target file(s) — route handler, middleware, helper
+- Read the target file(s) — route handler, proxy, helper
 - Read `src/lib/api/response.ts` if fix involves error handling
 - Load the relevant `references/fix-patterns/` file for the category
 

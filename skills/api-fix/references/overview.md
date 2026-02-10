@@ -44,7 +44,7 @@ The scorecard contains:
 | File Type | Examples |
 |-----------|---------|
 | API routes | `src/app/api/**/*.ts` |
-| Middleware | `src/middleware.ts` |
+| Proxy | `src/proxy.ts` |
 | Auth config | `src/lib/auth.ts` |
 | Response helpers | `src/lib/api/response.ts` |
 | Rate limiting | `src/lib/rate-limit.ts` |

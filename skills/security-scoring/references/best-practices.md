@@ -42,7 +42,7 @@
 
 | Do | Don't |
 |----|-------|
-| Strict CSP in middleware | No CSP header |
+| Strict CSP in proxy | No CSP header |
 | `script-src 'self'` + specific CDNs | `script-src *` or `unsafe-eval` |
 | `frame-ancestors 'none'` | Allow framing from any origin |
 | `default-src 'self'` baseline | No default-src |

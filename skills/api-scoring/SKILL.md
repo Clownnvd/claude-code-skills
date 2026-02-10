@@ -34,7 +34,7 @@ Score any REST/HTTP API codebase against 10 enterprise-grade criteria. Produce a
 
 Load `references/scoring-workflow.md` for full steps.
 
-1. **Gather** — Read API routes, middleware, auth config, env files, tests
+1. **Gather** — Read API routes, proxy, auth config, env files, tests
 2. **Score** — Each category 0-10, starting at 5 (neutral baseline)
 3. **Calculate** — Weighted sum → 0-100 score → letter grade
 4. **Report** — Scorecard table + prioritized issues list + quick wins

@@ -31,7 +31,7 @@
 - Changing error shape (`error` string → object)
 - Removing fields from success responses
 
-## Middleware Changes
+## Proxy Changes
 
 ### Safe to change
 - Adding headers (X-Request-Id, CORS)

@@ -2,10 +2,10 @@
 
 ## CSP Fixes
 
-### Add CSP to middleware
+### Add CSP to proxy
 
 ```typescript
-// src/middleware.ts
+// src/proxy.ts
 const cspDirectives = [
   "default-src 'self'",
   "script-src 'self'",

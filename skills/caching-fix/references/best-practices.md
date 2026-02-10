@@ -8,7 +8,7 @@
 | Read file before editing | Tool requirement + context |
 | Run `tsc --noEmit` after each file | Catch type errors immediately |
 | Check build output after static/dynamic changes | Verify route classification |
-| Don't cache auth-dependent data with unstable_cache | Security risk |
+| Don't cache auth-dependent data with `"use cache"` | Security risk |
 
 ## Safe Changes (apply freely)
 
@@ -18,15 +18,15 @@
 - Wrapping `getServerSession` with `cache()`
 - Adding `Vary: Cookie` to responses
 - Moving header auth from server to client-side `useSession()`
-- Adding middleware matcher to skip static assets
+- Adding proxy matcher to skip static assets
 
 ## Dangerous Changes (verify carefully)
 
 | Change | Risk | Mitigation |
 |--------|------|------------|
 | Remove `force-dynamic` | May serve stale data | Test with auth + mutations |
-| Add `unstable_cache` | May cache user-specific data | Only on public/shared queries |
-| Change middleware matcher | May break auth protection | Test protected routes |
+| Add `"use cache"` | May cache user-specific data | Only on public/shared queries |
+| Change proxy matcher | May break auth protection | Test protected routes |
 | Add ISR to auth pages | May serve other user's data | Only on public pages |
 | CDN cache public API | May leak data if auth changes | Check Vary headers |
 
@@ -34,7 +34,7 @@
 
 | Mistake | Correct Approach |
 |---------|-----------------|
-| `unstable_cache` on user-specific data | Use `NO_CACHE_HEADERS` instead |
+| `"use cache"` on user-specific data | Use `NO_CACHE_HEADERS` instead |
 | `force-dynamic` on landing page | Move auth to client, keep page static |
 | `revalidatePath("/")` after mutation | Revalidate specific path only |
 | `cache()` across requests | `cache()` is per-request in RSC |

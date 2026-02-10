@@ -79,7 +79,7 @@ Headers present on all responses:
 
 ### Checklist
 - [ ] All 7 security headers present
-- [ ] Applied via middleware to ALL routes
+- [ ] Applied via proxy to ALL routes
 - [ ] CSP restricts script-src, style-src, connect-src
 - [ ] HSTS with includeSubDomains
 - [ ] Permissions-Policy disables camera, microphone, geolocation, interest-cohort

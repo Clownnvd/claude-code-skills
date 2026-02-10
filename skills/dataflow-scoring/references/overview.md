@@ -56,5 +56,5 @@ Objectively score data flow quality in Next.js App Router applications. Framewor
 6. `src/types/**` — shared type definitions
 7. `src/components/**` — data consumption
 8. `prisma/schema.prisma` — indexes, relations
-9. `src/middleware.ts` — request pipeline
+9. `src/proxy.ts` — request pipeline
 10. `src/lib/api/response.ts` — response envelope

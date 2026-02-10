@@ -8,7 +8,7 @@ Read these files (adapt paths to project):
 |---|---|
 | `src/lib/auth.ts` | Better Auth config, plugins, providers, hooks |
 | `src/lib/auth/*.ts` | Audit logging, helpers, types |
-| `src/middleware.ts` | Route protection, security headers, CSRF |
+| `src/proxy.ts` | Route protection, security headers, CSRF |
 | `src/lib/csrf.ts` | CSRF origin/referer validation |
 | `src/lib/rate-limit.ts` | Auth route rate limiting config |
 | `src/lib/validations/*.ts` | Password schema, input validation |

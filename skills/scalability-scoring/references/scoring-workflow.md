@@ -10,7 +10,7 @@ src/app/**/page.tsx             # Page components, RSC boundaries
 src/components/**               # 'use client' usage, component patterns
 src/app/api/**/route.ts         # API response patterns
 src/lib/db/**                   # Database connection, queries
-src/middleware.ts                # Edge performance
+src/proxy.ts                     # Proxy performance
 prisma/schema.prisma            # Indexes, relations
 src/hooks/**                    # Client state patterns
 public/**                       # Asset sizes
@@ -55,7 +55,7 @@ Use the template from overview.md.
 - Automatic route-level code splitting = +1 to Bundle Size
 - Server Components default = +1 to RSC Architecture
 - Built-in image optimization = +1 to Images
-- Edge middleware for static bypass = +1 to Edge/CDN
+- Proxy for static bypass = +1 to Edge/CDN
 
 ### Small App Adjustments
 - If app has <10 pages and <5 API routes, Edge/CDN weight redistributes to Bundle and RSC

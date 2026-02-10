@@ -15,7 +15,7 @@ Sort issues by: `severity * category_weight`
 |----------|------------|
 | P1 | CRITICAL in any category |
 | P2 | HIGH in 15% categories (Headers, Revalidation) |
-| P3 | HIGH in 10-12% categories (Static/Dynamic, ReactCache, UnstableCache) |
+| P3 | HIGH in 10-12% categories (Static/Dynamic, ReactCache, UseCache) |
 | P4 | MEDIUM in any category |
 | P5 | LOW (backlog) |
 
@@ -27,9 +27,9 @@ For each issue, load the corresponding fix-patterns file:
 |----------|------------------|
 | Headers + Revalidation | `fix-patterns/headers-revalidation.md` |
 | Static/Dynamic + ISR | `fix-patterns/static-dynamic-isr.md` |
-| React cache + unstable_cache | `fix-patterns/react-cache-unstable.md` |
+| React cache + `"use cache"` | `fix-patterns/react-cache-use-cache.md` |
 | CDN + Request Dedup | `fix-patterns/cdn-dedup.md` |
-| Middleware + Monitoring | `fix-patterns/middleware-monitoring.md` |
+| Proxy + Monitoring | `fix-patterns/proxy-monitoring.md` |
 
 ## Step 4: Apply Fixes
 

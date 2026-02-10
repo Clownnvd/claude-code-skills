@@ -59,7 +59,7 @@ logger.warn("Validation failed", { route: "/api/xxx", errors: parsed.error.issue
 ### Add request IDs
 
 ```typescript
-// In middleware
+// In proxy
 const requestId = crypto.randomUUID();
 response.headers.set("X-Request-Id", requestId);
 

@@ -21,7 +21,7 @@ pnpm build
 Build must succeed. Watch for:
 - Missing imports (renamed helpers, new modules)
 - Type mismatches from response envelope changes
-- Middleware changes breaking API routes
+- Proxy changes breaking API routes
 
 ## Re-Scoring Protocol
 

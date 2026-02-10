@@ -14,7 +14,7 @@ src/types/index.ts            # Shared types
 prisma/schema.prisma          # Indexes, models
 src/app/**/error.tsx           # Error boundaries
 src/app/**/loading.tsx         # Loading states
-src/middleware.ts              # Request pipeline
+src/proxy.ts                   # Request pipeline
 ```
 
 ## Step 2: Score Each Category

@@ -66,8 +66,8 @@
 |----|-------|
 | Static generate where possible | `force-dynamic` on public pages |
 | Use ISR for semi-static content | Full SSR for unchanging content |
-| Keep middleware lightweight | Heavy computation in middleware |
-| Bypass middleware for static assets | Process every request through middleware |
+| Keep proxy lightweight | Heavy computation in proxy |
+| Bypass proxy for static assets | Process every request through proxy |
 | Set `s-maxage` for CDN caching | No CDN cache headers |
 
 ## 8. Memory & Resource Management

@@ -1,6 +1,6 @@
 ---
 name: caching-scoring
-description: Audit caching strategy against 10 enterprise criteria (cache headers, revalidation, static/dynamic, ISR, React cache, unstable_cache, CDN, request dedup, middleware, monitoring). Next.js App Router.
+description: Audit caching strategy against 10 enterprise criteria (cache headers, revalidation, static/dynamic, ISR, React cache, "use cache", CDN, request dedup, proxy, monitoring). Next.js 16 App Router.
 ---
 
 # Caching Strategy Scoring
@@ -23,15 +23,15 @@ Audit caching quality against 10 weighted categories. Produces scorecard with gr
 | 3 | Static vs Dynamic Classification | 12% | `force-dynamic` only where needed, static pages stay static |
 | 4 | ISR Configuration | 8% | `revalidate` on public pages, stale-while-revalidate |
 | 5 | React `cache()` Deduplication | 10% | `cache()` on session/auth, no duplicate DB calls per request |
-| 6 | `unstable_cache` / `use cache` | 10% | Tag-based cache for expensive queries, proper invalidation |
+| 6 | `"use cache"` Directive | 10% | Tag-based cache for expensive queries, proper invalidation |
 | 7 | CDN & Edge Caching | 8% | `stale-while-revalidate`, `s-maxage`, Vercel edge config |
 | 8 | Request Deduplication | 7% | No duplicate fetches, `Promise.all` for parallel data |
-| 9 | Middleware Caching | 7% | No heavy operations in middleware, static asset bypass |
+| 9 | Proxy Caching | 7% | No heavy operations in proxy, static asset bypass |
 | 10 | Cache Monitoring & Debug | 8% | `x-cache` headers in dev, cache hit/miss observability |
 
 ## Audit Process
 
-1. **Gather files**: API routes, pages, middleware, layout, lib/auth, services, hooks
+1. **Gather files**: API routes, pages, proxy, layout, lib/auth, services, hooks
 2. **Score each category** 0-10 using criteria in `references/criteria/` files
 3. **Calculate weighted total** (0-100)
 4. **Assign grade** using scale below
@@ -57,9 +57,9 @@ Audit caching quality against 10 weighted categories. Produces scorecard with gr
 ### Criteria (5 files covering 10 categories)
 - `references/criteria/headers-revalidation.md` — Cache Headers (15%) + Revalidation (15%)
 - `references/criteria/static-dynamic-isr.md` — Static/Dynamic (12%) + ISR (8%)
-- `references/criteria/react-cache-unstable.md` — React cache() (10%) + unstable_cache (10%)
+- `references/criteria/react-cache-use-cache.md` — React cache() (10%) + "use cache" (10%)
 - `references/criteria/cdn-dedup.md` — CDN (8%) + Request Dedup (7%)
-- `references/criteria/middleware-monitoring.md` — Middleware (7%) + Monitoring (8%)
+- `references/criteria/proxy-monitoring.md` — Proxy (7%) + Monitoring (8%)
 
 ### Reference
 - `references/overview.md` — Scoring system, output format, quality gates

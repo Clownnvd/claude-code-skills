@@ -3,8 +3,8 @@
 ## 9. Authorization & Route Protection (8%)
 
 ### Score 9-10: Enterprise-grade
-- Two-layer auth: middleware (Edge) + API route (Node)
-- Middleware: fast cookie check for page redirects + security headers
+- Two-layer auth: proxy (Node) + API route (Node)
+- Proxy: fast cookie check for page redirects + security headers
 - API routes: full session verification with DB lookup (`requireAuth()`)
 - Role-based access control (RBAC) with admin/user roles
 - Object-level authorization (users can only access own resources)
@@ -13,7 +13,7 @@
 
 ### Score 7-8: Production-ready
 - Two-layer auth implemented
-- Protected routes list in middleware
+- Protected routes list in proxy
 - `requireAuth()` helper in API routes
 - User can only access own data (BOLA prevention)
 
@@ -33,7 +33,7 @@
 - Privilege escalation possible
 
 ### Checklist
-- [ ] Middleware protects page routes (cookie check)
+- [ ] Proxy protects page routes (cookie check)
 - [ ] API routes use `requireAuth()` (DB session verification)
 - [ ] Protected routes list is comprehensive
 - [ ] Callback URL preserved on login redirect

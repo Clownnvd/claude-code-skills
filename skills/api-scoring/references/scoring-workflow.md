@@ -9,7 +9,7 @@ Collect ALL API-related files before scoring. Do not score from memory.
 | File Type | What to look for |
 |-----------|-----------------|
 | API routes | `src/app/api/**/route.ts` — every handler |
-| Middleware | `src/middleware.ts` — auth, headers, CORS |
+| Proxy | `src/proxy.ts` — auth, headers, CORS |
 | Auth config | Auth library setup (Better Auth, NextAuth, etc.) |
 | Validation | Zod schemas, validation modules |
 | Error handling | Response helpers, error envelope |

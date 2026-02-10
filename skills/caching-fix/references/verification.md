@@ -25,7 +25,7 @@ Build must succeed. Check build output for static/dynamic route classification.
 - Do ALL API routes have `export const dynamic = "force-dynamic"`?
 - Is `revalidatePath` called after EVERY mutation?
 - Is the landing page static in build output?
-- Does middleware skip static assets?
+- Does proxy skip static assets?
 - Is `cache()` wrapping auth/session lookups?
 
 ## Re-Scoring Protocol

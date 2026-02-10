@@ -38,7 +38,7 @@
 | Adding `async` to client component | Only Server Components can be async |
 | `useEffect` fetch in RSC page | Remove `"use client"`, fetch directly |
 | `fetch('/api/user')` in Server Component | Call `prisma.user.findUnique()` directly |
-| `unstable_cache` on authenticated data | Use `NO_CACHE_HEADERS` instead |
+| `"use cache"` on authenticated data | Use `NO_CACHE_HEADERS` instead |
 | `select: true` (selects everything) | `select: { id: true, name: true }` |
 | `findFirst` on unique field | Use `findUnique` |
 

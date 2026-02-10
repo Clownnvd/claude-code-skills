@@ -51,7 +51,7 @@ Objectively score caching quality in Next.js App Router applications. Framework:
 1. `src/app/api/**/route.ts` — Cache-Control headers on responses
 2. `src/app/**/page.tsx` — static vs dynamic, ISR config
 3. `src/app/**/layout.tsx` — layout caching behavior
-4. `src/middleware.ts` — middleware perf, static bypass
+4. `src/proxy.ts` — proxy perf, static bypass
 5. `src/lib/auth.ts` + `src/lib/auth/server.ts` — session dedup
 6. `src/lib/db/index.ts` — DB client, query cache
 7. `src/app/api/webhooks/**/route.ts` — revalidation after mutations

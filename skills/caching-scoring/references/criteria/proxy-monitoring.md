@@ -1,38 +1,38 @@
-# Criteria: Middleware Caching (7%) + Cache Monitoring & Debug (8%)
+# Criteria: Proxy Caching (7%) + Cache Monitoring & Debug (8%)
 
-## 9. Middleware Caching (7%)
+## 9. Proxy Caching (7%)
 
 ### Score 9-10: Enterprise-grade
-- Middleware is lightweight (no DB queries, no heavy computation)
-- Static assets (`_next/static`, images, fonts) bypass middleware
-- Auth check in middleware uses JWT/cookie validation (not DB lookup)
+- Proxy is lightweight (no DB queries, no heavy computation)
+- Static assets (`_next/static`, images, fonts) bypass proxy
+- Auth check in proxy uses JWT/cookie validation (not DB lookup)
 - `matcher` config excludes static files and public assets
-- Middleware returns early for public routes
-- No `fetch()` calls in middleware
+- Proxy returns early for public routes
+- No `fetch()` calls in proxy
 
 ### Score 7-8: Production-ready
-- Middleware is mostly lightweight
+- Proxy is mostly lightweight
 - Static assets mostly bypassed
 - Auth check is cookie-based
-- Some unnecessary middleware execution
+- Some unnecessary proxy execution
 
 ### Score 5-6: Minimum
-- Middleware runs on all routes including static
-- Some heavy operations in middleware
+- Proxy runs on all routes including static
+- Some heavy operations in proxy
 - No matcher config optimization
 
 ### Score 3-4: Below minimum
-- DB queries in middleware
-- Middleware runs on every request (no matcher)
+- DB queries in proxy
+- Proxy runs on every request (no matcher)
 - Heavy auth lookup per request
-- External API calls in middleware
+- External API calls in proxy
 
 ### Checklist
-- [ ] No DB queries in middleware
+- [ ] No DB queries in proxy
 - [ ] Static assets excluded via `matcher`
 - [ ] Auth check is cookie/JWT based (no DB)
 - [ ] Early return for public routes
-- [ ] No external API calls in middleware
+- [ ] No external API calls in proxy
 
 ## 10. Cache Monitoring & Debug (8%)
 

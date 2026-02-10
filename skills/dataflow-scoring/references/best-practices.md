@@ -50,7 +50,7 @@
 | Do | Don't |
 |----|-------|
 | `NO_CACHE_HEADERS` on authenticated responses | Allow proxy caching of user data |
-| `unstable_cache` with tags for expensive queries | `force-dynamic` on everything |
+| `"use cache"` directive with tags for expensive queries | `force-dynamic` on everything |
 | `revalidateTag` after writes | No cache invalidation strategy |
 
 ## 7. Type Safety

@@ -19,7 +19,7 @@ Check `auth.ts` (or wherever `betterAuth()` is called):
 ## Two-Layer Auth Pattern (Next.js)
 
 ```
-Layer 1: Middleware (Edge Runtime)
+Layer 1: Proxy (Node Runtime)
 ├── Fast cookie check: `better-auth.session_token`
 ├── Redirect to /sign-in if missing
 ├── Preserve callbackUrl in search params
@@ -36,14 +36,14 @@ Layer 2: API Routes (Node Runtime)
 | Implementation | Score Bonus |
 |---------------|------------|
 | Both layers implemented | +2 to Authorization |
-| Only middleware | 0 (default) |
+| Only proxy | 0 (default) |
 | Only API routes | -1 to Authorization |
 | Neither | -3 to Authorization |
 
 ## Session Cookie Checks
 
 Better Auth uses `better-auth.session_token` cookie. Verify:
-- Cookie name checked in middleware
+- Cookie name checked in proxy
 - Token length validation (> 20 chars = valid format)
 - No custom session parsing (let Better Auth handle it)
 

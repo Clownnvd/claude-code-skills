@@ -8,12 +8,12 @@ Systematically fix caching issues identified by caching-scoring. Prioritize by i
 2. **Revalidation Strategy (15%)** — highest weight, data freshness
 3. **Static/Dynamic Classification (12%)** — high weight, performance
 4. **React cache() (10%)** — medium weight, request efficiency
-5. **unstable_cache (10%)** — medium weight, query performance
+5. **`"use cache"` Directive (10%)** — medium weight, query performance
 6. **Cache Monitoring (8%)** — medium weight, observability
 7. **CDN & Edge (8%)** — medium weight, distribution
 8. **ISR (8%)** — medium weight, content freshness
 9. **Request Dedup (7%)** — lower weight, efficiency
-10. **Middleware (7%)** — lower weight, request pipeline
+10. **Proxy (7%)** — lower weight, request pipeline
 
 ## Safe vs Dangerous Changes
 
@@ -27,8 +27,8 @@ Systematically fix caching issues identified by caching-scoring. Prioritize by i
 
 ### Dangerous (verify carefully)
 - Removing `force-dynamic` (may serve stale auth data)
-- Adding `unstable_cache` to auth-dependent queries
-- Changing middleware matcher config
+- Adding `"use cache"` to auth-dependent queries
+- Changing proxy matcher config
 - Adding ISR to pages that need real-time data
 - CDN configuration changes (may cache private data)
 

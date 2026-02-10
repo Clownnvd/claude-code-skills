@@ -62,7 +62,7 @@ Objectively score application security design in Next.js App Router applications
 2. `.env.example` + `src/lib/env.ts` — secrets, env sync
 3. `package.json` + `pnpm-lock.yaml` — dependency audit
 4. `src/lib/api/response.ts` — error response shapes
-5. `src/middleware.ts` — CSP, security headers, redirects
+5. `src/proxy.ts` — CSP, security headers, redirects
 6. `src/app/api/webhooks/**` — webhook verification
 7. `src/lib/api/logger.ts` — security logging
 8. `src/app/api/**/route.ts` — input handling per route

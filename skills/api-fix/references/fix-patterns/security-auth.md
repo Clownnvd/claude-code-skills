@@ -15,7 +15,7 @@ import { randomBytes } from "crypto";
 
 function generateNonce() { return randomBytes(16).toString("base64"); }
 
-// In middleware:
+// In proxy.ts:
 const nonce = generateNonce();
 response.headers.set(
   "Content-Security-Policy",
@@ -31,7 +31,7 @@ response.headers.set("X-Nonce", nonce);
 
 ### Problem: No explicit CORS (relying on browser same-origin default)
 
-### Fix: Add CORS headers in middleware
+### Fix: Add CORS headers in proxy
 ```typescript
 const ALLOWED_ORIGINS = [process.env.NEXT_PUBLIC_APP_URL];
 

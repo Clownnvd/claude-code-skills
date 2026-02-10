@@ -31,7 +31,7 @@
 ## Framework-Specific Notes
 
 ### Next.js App Router
-- CSP goes in middleware (not next.config.js headers)
+- CSP goes in proxy (not next.config.js headers)
 - `poweredByHeader: false` in next.config.js
 - Server Components can't leak client secrets by design
 - Use `headers()` from next/headers for request inspection

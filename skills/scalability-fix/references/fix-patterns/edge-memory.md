@@ -24,10 +24,10 @@ export default async function BlogPage() {
 }
 ```
 
-### Optimize Middleware Matcher
+### Optimize Proxy Matcher
 ```typescript
 // BEFORE: Runs on every request
-export function middleware(request: NextRequest) { ... }
+export function proxy(request: NextRequest) { ... }
 
 // AFTER: Specific matcher excluding static assets
 export const config = {
@@ -37,15 +37,15 @@ export const config = {
 };
 ```
 
-### Lightweight Middleware
+### Lightweight Proxy
 ```typescript
-// BEFORE: DB query in middleware
-export async function middleware(request: NextRequest) {
+// BEFORE: DB query in proxy
+export async function proxy(request: NextRequest) {
   const user = await prisma.user.findUnique({ where: { id: session.userId } }); // BAD
 }
 
-// AFTER: Edge-compatible check only
-export async function middleware(request: NextRequest) {
+// AFTER: Lightweight check only
+export async function proxy(request: NextRequest) {
   const session = request.cookies.get('session');
   if (!session) return NextResponse.redirect(new URL('/login', request.url));
   return NextResponse.next();

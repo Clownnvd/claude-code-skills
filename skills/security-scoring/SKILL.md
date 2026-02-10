@@ -31,7 +31,7 @@ Audit application security design against 10 weighted categories. Produces score
 
 ## Audit Process
 
-1. **Gather files**: middleware, API routes, validations, env config, package.json, CSP, webhook handlers
+1. **Gather files**: proxy, API routes, validations, env config, package.json, CSP, webhook handlers
 2. **Score each category** 0-10 using criteria in `references/criteria/` files
 3. **Calculate weighted total** (0-100)
 4. **Assign grade** using scale below

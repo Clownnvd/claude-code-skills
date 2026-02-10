@@ -35,7 +35,7 @@ auth-scoring → scorecard + issues → auth-fix → improved code → auth-scor
 | Add rate limiting | Modify OAuth callback flow |
 | Add audit logging | Change password hashing algorithm |
 | Add CSRF validation | Modify session cookie config |
-| Add 2FA plugin | Change auth middleware logic |
+| Add 2FA plugin | Change auth proxy logic |
 
 For dangerous changes: read existing code first, make minimal surgical edits, test immediately.
 

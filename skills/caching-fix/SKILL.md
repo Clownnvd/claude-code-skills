@@ -30,9 +30,9 @@ Take a caching-scoring scorecard and systematically implement all fixes. Priorit
 |-------------------|----------------------|
 | Cache-Control Headers, Revalidation Strategy | `references/fix-patterns/headers-revalidation.md` |
 | Static/Dynamic, ISR | `references/fix-patterns/static-dynamic-isr.md` |
-| React cache(), unstable_cache | `references/fix-patterns/react-cache-unstable.md` |
+| React cache(), `"use cache"` | `references/fix-patterns/react-cache-use-cache.md` |
 | CDN, Request Dedup | `references/fix-patterns/cdn-dedup.md` |
-| Middleware, Monitoring | `references/fix-patterns/middleware-monitoring.md` |
+| Proxy, Monitoring | `references/fix-patterns/proxy-monitoring.md` |
 
 ## Implementation
 
@@ -51,6 +51,6 @@ Load `references/implementation-workflow.md` for step-by-step process (parse -> 
 ### Fix Patterns (5 files covering 10 categories)
 - `references/fix-patterns/headers-revalidation.md` — Cache headers, revalidation paths
 - `references/fix-patterns/static-dynamic-isr.md` — Static page conversion, ISR config
-- `references/fix-patterns/react-cache-unstable.md` — cache() dedup, unstable_cache
+- `references/fix-patterns/react-cache-use-cache.md` — cache() dedup, `"use cache"` directive
 - `references/fix-patterns/cdn-dedup.md` — CDN headers, Promise.all dedup
-- `references/fix-patterns/middleware-monitoring.md` — Middleware optimization, debug headers
+- `references/fix-patterns/proxy-monitoring.md` — Proxy optimization, debug headers

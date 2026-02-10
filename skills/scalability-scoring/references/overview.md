@@ -5,7 +5,7 @@ Objectively score application scalability and performance in Next.js App Router 
 
 ## Scope Boundaries
 - **This skill**: Bundle size, images, RSC architecture, DB queries, API perf, client rendering, edge/CDN, memory, concurrency, monitoring
-- **caching-scoring**: Cache headers, revalidation, ISR, React cache(), unstable_cache
+- **caching-scoring**: Cache headers, revalidation, ISR, React cache(), `"use cache"` directive
 - **dataflow-scoring**: RSC data flow, Prisma patterns, API route design, form handling
 
 ## Scoring System
@@ -38,7 +38,7 @@ Objectively score application scalability and performance in Next.js App Router 
 4. `src/components/**` — 'use client' directives, component size
 5. `src/app/api/**/route.ts` — response size, query patterns
 6. `src/lib/db/**` — connection pooling, query patterns
-7. `src/middleware.ts` — edge performance, static bypass
+7. `src/proxy.ts` — proxy performance, static bypass
 8. `prisma/schema.prisma` — indexes, relations
 9. `src/hooks/**` — client-side state, re-render patterns
 10. `public/**` — unoptimized assets, large files
@@ -49,7 +49,7 @@ Objectively score application scalability and performance in Next.js App Router 
 - Server Components by default = +1 to RSC Architecture
 - Automatic code splitting per route = +1 to Bundle Size
 - `next/image` auto-optimization = +1 to Images
-- Edge middleware = +1 to Edge/CDN
+- Proxy file = +1 to Edge/CDN
 
 ### Prisma
 - Connection pooling via Neon adapter = +1 to DB Performance

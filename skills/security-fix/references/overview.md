@@ -29,7 +29,7 @@ Systematically fix all issues found by security-scoring. Follows severity * weig
 - Adding `.strict()` to Zod schemas
 - Adding env vars to `.env.example`
 - Updating `poweredByHeader: false`
-- Adding CSP directives to middleware
+- Adding CSP directives to proxy
 
 ### Dangerous (verify after)
 - Changing error response format (breaks client expectations)

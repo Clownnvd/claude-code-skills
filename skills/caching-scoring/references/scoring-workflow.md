@@ -7,7 +7,7 @@ Read these files (minimum set):
 src/app/api/**/route.ts       # Cache-Control headers
 src/app/**/page.tsx           # Static/dynamic classification
 src/app/**/layout.tsx         # Layout caching
-src/middleware.ts             # Middleware caching
+src/proxy.ts                 # Proxy caching
 src/lib/auth.ts               # Auth session caching
 src/lib/auth/server.ts        # Server session dedup
 src/lib/db/index.ts           # Prisma client config
@@ -30,7 +30,7 @@ For each category, use the criteria file:
 total = sum(score[i] * weight[i]) for i in 1..10
 ```
 
-Weights: Headers(15) + Revalidation(15) + Static/Dynamic(12) + ISR(8) + ReactCache(10) + UnstableCache(10) + CDN(8) + Dedup(7) + Middleware(7) + Monitoring(8) = 100%
+Weights: Headers(15) + Revalidation(15) + Static/Dynamic(12) + ISR(8) + ReactCache(10) + UseCache(10) + CDN(8) + Dedup(7) + Proxy(7) + Monitoring(8) = 100%
 
 ## Step 4: Assign Grade
 
@@ -58,10 +58,10 @@ Use the template from overview.md.
 - Landing page is fully static (no server session read) = +2 to Static/Dynamic
 
 ### Prisma + Neon
-- `unstable_cache` wrapping expensive aggregations = +1 to UnstableCache
+- `"use cache"` directive on expensive aggregations = +1 to UseCache
 - Connection pooling configured = +1 to CDN (reduces origin load)
 
 ### Better Auth
 - `cache()` on `getServerSession` = +2 to ReactCache
-- Session check in middleware is lightweight = +1 to Middleware
+- Session check in proxy is lightweight = +1 to Proxy
 - `useSession()` client-side for non-critical auth = +1 to Static/Dynamic

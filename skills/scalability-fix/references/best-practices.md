@@ -20,7 +20,7 @@
 ### 2. Breaking Changes
 - Converting client component to server may break event handlers
 - Adding ISR may cause stale data for time-sensitive content
-- Changing middleware matcher may break auth redirects
+- Changing proxy matcher may break auth redirects
 
 ### 3. False Fixes
 - Adding `priority` to ALL images (only above-fold)
@@ -44,7 +44,7 @@
 - Children of client components can still be Server Components if passed as `children` prop
 - Don't remove `'use client'` if component uses hooks (useState, useEffect, etc.)
 
-### Middleware
-- Test middleware changes with `curl` to verify auth still works
-- Middleware runs on EVERY matched request — keep it fast
-- Don't add DB queries to middleware — use edge-compatible checks only
+### Proxy
+- Test proxy changes with `curl` to verify auth still works
+- Proxy runs on EVERY matched request — keep it fast
+- Don't add DB queries to proxy — keep it lightweight

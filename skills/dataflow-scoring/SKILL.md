@@ -23,7 +23,7 @@ Audit data flow quality against 10 weighted categories. Produces scorecard with 
 | 3 | Prisma Query Optimization | 12% | `select`, `findUnique`, indexes, singleton, pooling |
 | 4 | API Route Design | 15% | Validation, auth, rate limit, CSRF, response envelope |
 | 5 | State Management | 8% | Minimal client state, server-first |
-| 6 | Caching & Revalidation | 10% | Cache headers, `unstable_cache`, revalidation |
+| 6 | Caching & Revalidation | 10% | Cache headers, `"use cache"` directive, revalidation |
 | 7 | Type Safety Across Boundaries | 10% | Zod schemas, shared types, `ApiResponse<T>` |
 | 8 | Error Propagation | 8% | `error.tsx`, error boundaries, safe error messages |
 | 9 | Form Handling | 7% | Validation, loading states, CSRF, error display |
@@ -31,7 +31,7 @@ Audit data flow quality against 10 weighted categories. Produces scorecard with 
 
 ## Audit Process
 
-1. **Gather files**: pages, API routes, hooks, services, validations, types, middleware, schema.prisma
+1. **Gather files**: pages, API routes, hooks, services, validations, types, proxy, schema.prisma
 2. **Score each category** 0-10 using criteria in `references/criteria/` files
 3. **Calculate weighted total** (0-100)
 4. **Assign grade** using scale in `references/overview.md`

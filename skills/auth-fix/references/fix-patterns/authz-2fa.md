@@ -4,7 +4,7 @@
 
 ### Fix: Two-Layer Auth Pattern
 ```
-Layer 1: Middleware (Edge Runtime)
+Layer 1: Proxy (Node Runtime)
 ├── Fast cookie check: "better-auth.session_token" (or prefixed)
 ├── Redirect to /sign-in if missing
 ├── Preserve callbackUrl in search params
@@ -16,16 +16,16 @@ Layer 2: API Routes (Node Runtime)
 └── Provides session.user for route handlers
 ```
 
-### Fix: Middleware Cookie Check
+### Fix: Proxy Cookie Check
 ```typescript
-// src/middleware.ts
+// src/proxy.ts
 const protectedPaths = ["/dashboard", "/api/user", "/api/checkout"];
 
 function isProtectedPath(pathname: string): boolean {
   return protectedPaths.some((p) => pathname.startsWith(p));
 }
 
-// In middleware handler:
+// In proxy handler:
 if (isProtectedPath(pathname)) {
   const sessionCookie = request.cookies.get(
     "better-auth.session_token"

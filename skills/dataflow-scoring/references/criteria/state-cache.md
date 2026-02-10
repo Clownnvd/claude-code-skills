@@ -40,7 +40,7 @@
 ## 6. Caching & Revalidation (10%)
 
 ### Score 9-10: Enterprise-grade
-- `unstable_cache` (or `use cache`) for expensive queries with tags
+- `"use cache"` directive for expensive queries with `cacheTag()` and `cacheLife()`
 - `revalidateTag` after mutations for targeted invalidation
 - `revalidatePath` for full page revalidation after writes
 - `Cache-Control: private, no-store` on authenticated API responses
@@ -63,12 +63,12 @@
 ### Score 3-4: Below minimum
 - `force-dynamic` on every page
 - No Cache-Control headers (proxy can cache user data)
-- No `unstable_cache` or ISR
+- No `"use cache"` or ISR
 - Stale data served after mutations
 
 ### Checklist
 - [ ] `NO_CACHE_HEADERS` on authenticated responses
-- [ ] `unstable_cache` with tags for expensive queries
+- [ ] `"use cache"` with `cacheTag()`/`cacheLife()` for expensive queries
 - [ ] `revalidateTag`/`revalidatePath` after writes
 - [ ] `force-dynamic` only where necessary
 - [ ] React `cache()` for request deduplication

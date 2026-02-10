@@ -26,7 +26,7 @@ function isValidRedirectUrl(url: string): boolean {
 ### Validate callbackUrl parameters
 
 ```typescript
-// In middleware or auth handler
+// In proxy or auth handler
 const callbackUrl = searchParams.get("callbackUrl") ?? "/dashboard";
 
 if (!isValidRedirectUrl(callbackUrl)) {

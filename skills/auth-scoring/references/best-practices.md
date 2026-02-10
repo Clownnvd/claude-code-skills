@@ -67,7 +67,7 @@
 
 | Do | Don't |
 |----|-------|
-| Two-layer: middleware (Edge) + API (Node) | Client-only auth gates |
+| Two-layer: proxy (Node) + API route (Node) | Client-only auth gates |
 | `requireAuth()` in every protected API route | Trust middleware alone |
 | Object-level auth (own resources only) | Trust user-supplied IDs |
 | Preserve callbackUrl on login redirect | Redirect to static path |

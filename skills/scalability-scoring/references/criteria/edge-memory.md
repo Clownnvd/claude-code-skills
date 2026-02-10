@@ -7,18 +7,18 @@
 1. **Static generation where possible** — Public pages without user data are statically generated at build time
 2. **ISR for semi-static content** — Pages with infrequently changing data use `revalidate` instead of full SSR
 3. **No force-dynamic on public pages** — `export const dynamic = 'force-dynamic'` only on pages requiring per-request data
-4. **Lightweight middleware** — Middleware performs only routing/redirects/auth checks, no heavy computation or DB calls
-5. **Static asset bypass** — Middleware matcher excludes static files (`/((?!api|_next/static|_next/image|favicon.ico).*)`)
+4. **Lightweight proxy** — Proxy performs only routing/redirects/auth checks, no heavy computation or DB calls
+5. **Static asset bypass** — Proxy matcher excludes static files (`/((?!api|_next/static|_next/image|favicon.ico).*)`)
 6. **CDN-friendly cache headers** — Static assets served with long `Cache-Control` (immutable), API responses with appropriate `s-maxage`
-7. **Edge-compatible middleware** — Middleware uses only Edge Runtime compatible APIs (no Node.js-only modules)
-8. **No middleware on every request** — Middleware config.matcher limits which routes are processed
+7. **Efficient proxy** — Proxy runs on Node.js runtime but stays lightweight (no heavy imports or DB queries)
+8. **No proxy on every request** — Proxy config.matcher limits which routes are processed
 9. **Proper revalidation** — `revalidatePath`/`revalidateTag` used after mutations to invalidate cached pages
-10. **Edge middleware for auth** — Auth checks happen at edge (middleware) not in individual page components
+10. **Proxy for auth** — Auth checks happen in proxy, not in individual page components
 
 ### Deduction Examples
 - `-3` `force-dynamic` on public landing page
-- `-2` Heavy database query in middleware
-- `-2` No middleware matcher (runs on every request including static assets)
+- `-2` Heavy database query in proxy
+- `-2` No proxy matcher (runs on every request including static assets)
 - `-1` Missing revalidation after data mutations
 
 ### Small App Adjustment

@@ -57,7 +57,7 @@ Quick reference for common patterns. Use during scoring to identify issues.
 | Do | Don't |
 |----|-------|
 | Verify user owns resource (BOLA check) | Trust user-supplied resource IDs |
-| Check auth at handler level, not just middleware | Rely only on middleware cookie check |
+| Check auth at handler level, not just proxy | Rely only on proxy cookie check |
 | Validate session + DB lookup for mutations | Trust cookie existence for writes |
 | Separate admin from user endpoints | Same auth level for all roles |
 

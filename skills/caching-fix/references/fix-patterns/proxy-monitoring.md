@@ -1,11 +1,11 @@
-# Fix Patterns: Middleware Caching + Monitoring
+# Fix Patterns: Proxy Caching + Monitoring
 
-## Middleware Fixes
+## Proxy Fixes
 
 ### Fix: Add Matcher to Skip Static Assets
 ```typescript
-// BEFORE: Middleware runs on every request
-export default async function middleware(req: NextRequest) {
+// BEFORE: Proxy runs on every request
+export function proxy(req: NextRequest) {
   // ... runs on _next/static, images, etc.
 }
 
@@ -18,13 +18,13 @@ export const config = {
 };
 ```
 
-### Fix: Lightweight Auth Check in Middleware
+### Fix: Lightweight Auth Check in Proxy
 ```typescript
-// BEFORE: Full DB session lookup in middleware
+// BEFORE: Full DB session lookup in proxy
 const session = await prisma.session.findUnique({ where: { token } });
 
 // AFTER: Cookie-based check only (no DB)
-export default async function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const sessionCookie = req.cookies.get("better-auth.session_token");
   const isAuthenticated = !!sessionCookie?.value;
 
@@ -39,7 +39,7 @@ export default async function middleware(req: NextRequest) {
 
 ### Fix: Early Return for Public Routes
 ```typescript
-export default async function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Public routes — skip all checks
@@ -81,19 +81,19 @@ pnpm build
 
 # Expected:
 # Route (app)                    Size     First Load JS
-# ┌ ○ /                          1.2 kB   85 kB       <- STATIC
-# ├ λ /api/stripe/checkout       0 B      0 B         <- DYNAMIC
-# ├ λ /api/user/purchase         0 B      0 B         <- DYNAMIC
-# ├ λ /dashboard                 2.1 kB   90 kB       <- DYNAMIC
-# └ ○ /sign-in                   1.8 kB   88 kB       <- STATIC
+# |- /                          1.2 kB   85 kB       <- STATIC
+# |- /api/stripe/checkout       0 B      0 B         <- DYNAMIC
+# |- /api/user/purchase         0 B      0 B         <- DYNAMIC
+# |- /dashboard                 2.1 kB   90 kB       <- DYNAMIC
+# |- /sign-in                   1.8 kB   88 kB       <- STATIC
 
-# ○ = Static, λ = Dynamic
-# If landing page shows λ instead of ○, investigate what's making it dynamic
+# Static vs Dynamic indicators in build output
+# If landing page shows dynamic instead of static, investigate what's making it dynamic
 ```
 
 ### Fix: Add Cache Debug Header (Dev Only)
 ```typescript
-// In middleware or API route:
+// In proxy or API route:
 if (process.env.NODE_ENV === "development") {
   const response = NextResponse.next();
   response.headers.set("x-cache-debug", "miss");

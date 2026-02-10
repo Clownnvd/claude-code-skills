@@ -8,7 +8,7 @@ src/lib/validations/**         # Zod schemas
 .env.example                   # Env vars documentation
 src/lib/env.ts                 # Runtime env validation
 src/lib/api/response.ts        # Error response shapes
-src/middleware.ts               # CSP, security headers, redirects
+src/proxy.ts                    # CSP, security headers, redirects
 src/app/api/webhooks/**        # Webhook verification
 src/app/api/**/route.ts        # Input handling per route
 src/lib/api/logger.ts          # Security logging
@@ -56,7 +56,7 @@ Use the template from overview.md.
 ### Next.js App Router
 - Server Components can't leak client secrets = +1 to Secrets
 - `poweredByHeader: false` in config = +1 to Supply Chain
-- Middleware CSP header = +1 to CSP
+- Proxy CSP header = +1 to CSP
 - `force-dynamic` prevents caching private data = +1 to Data Protection
 
 ### Prisma

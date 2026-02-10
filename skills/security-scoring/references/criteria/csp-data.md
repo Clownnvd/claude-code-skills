@@ -3,7 +3,7 @@
 ## Category 5: Content Security Policy (Weight: 10%)
 
 ### Enterprise (9-10)
-1. CSP header set in middleware on all responses
+1. CSP header set in proxy on all responses
 2. `default-src 'self'` baseline
 3. `script-src 'self'` (no `unsafe-eval`, no `unsafe-inline` without nonce)
 4. `frame-ancestors 'none'` (prevents clickjacking)

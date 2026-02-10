@@ -64,7 +64,7 @@ Run security-scoring again to verify improvements.
 5. Import from `env.ts` instead of hardcoded
 
 ### CSP Fix
-1. Open `src/middleware.ts`
+1. Open `src/proxy.ts`
 2. Add/update CSP directives in header construction
 3. Test page still renders correctly
 4. Verify with browser DevTools CSP tab

@@ -1,6 +1,6 @@
 # Next.js App Router API Patterns
 
-Framework-specific scoring adjustments for Next.js 14+ App Router.
+Framework-specific scoring adjustments for Next.js 16+ App Router.
 
 ## Route Handler Conventions
 
@@ -29,7 +29,7 @@ export const dynamic = "force-dynamic"; // no caching for auth endpoints
 
 ### Two-Layer Auth (expected in enterprise)
 ```
-Layer 1: Middleware (Edge) — fast cookie check for redirects
+Layer 1: Proxy (Node) — fast cookie check for redirects
 Layer 2: API Route (Node) — full session + DB verification
 ```
 
@@ -45,7 +45,7 @@ const session = await auth.api.getSession({ headers: req.headers });
 if (!session) return new Response("Unauthorized", { status: 401 });
 ```
 
-## Middleware Patterns
+## Proxy Patterns
 
 ### Security Headers (apply to ALL routes)
 ```typescript
@@ -108,7 +108,7 @@ Score +1 for Zod env; -1 for raw `process.env.X!`.
 | `console.log` in API routes | -1 Observability |
 | No `select` on DB queries | -1 Performance, -1 Security |
 | Missing CSRF on POST/PATCH/DELETE | -1 Security |
-| Auth middleware only (no DB check) | -1 Auth |
+| Auth proxy only (no DB check) | -1 Auth |
 | Hardcoded URLs/emails | -1 DX |
 | Secrets without env validation | -1 Security |
 | Empty catch blocks | -1 Observability |

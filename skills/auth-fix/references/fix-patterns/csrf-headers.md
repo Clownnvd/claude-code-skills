@@ -2,9 +2,9 @@
 
 ## CSRF Fixes
 
-### Fix: Origin Validation in Middleware
+### Fix: Origin Validation in Proxy
 ```typescript
-// src/middleware.ts — add to auth route handling
+// src/proxy.ts — add to auth route handling
 function validateOrigin(request: NextRequest): boolean {
   const origin = request.headers.get("origin");
   const referer = request.headers.get("referer");
@@ -59,7 +59,7 @@ advanced: {
 
 ### Fix: Comprehensive Security Headers
 ```typescript
-// src/middleware.ts — apply to ALL routes
+// src/proxy.ts — apply to ALL routes
 function applySecurityHeaders(response: NextResponse): NextResponse {
   const headers = response.headers;
 
@@ -101,7 +101,7 @@ headers.set("Content-Security-Policy", [
 
 ### Fix: Apply Headers to ALL Routes
 ```typescript
-// In middleware.ts matcher config:
+// In proxy.ts matcher config:
 export const config = {
   matcher: [
     // Match all routes except static files

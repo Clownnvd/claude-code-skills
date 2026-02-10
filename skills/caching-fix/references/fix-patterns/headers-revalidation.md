@@ -82,9 +82,11 @@ import { revalidateTag } from "next/cache";
 revalidateTag("user-purchases");
 
 // In cached query:
-const getPurchases = unstable_cache(
-  async (userId) => prisma.purchase.findMany({ where: { userId } }),
-  ["user-purchases"],
-  { tags: ["user-purchases"] }
-);
+async function getPurchases(userId: string) {
+  "use cache";
+  cacheTag("user-purchases");
+  cacheLife("hours");
+
+  return prisma.purchase.findMany({ where: { userId } });
+}
 ```

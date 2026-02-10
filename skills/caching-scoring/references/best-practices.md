@@ -43,20 +43,20 @@
 | `cache()` on shared data loaders | `cache()` on one-off queries |
 | Single `cache()` per unique data source | Nested `cache()` wrappers |
 
-## 6. unstable_cache
+## 6. `"use cache"` Directive
 
 | Do | Don't |
 |----|-------|
-| Tag-based caching for product listings | `unstable_cache` on user-specific data |
+| `"use cache"` + `cacheTag()` for product listings | `"use cache"` on user-specific data |
 | `revalidateTag` after writes | No invalidation strategy |
-| Short TTL for semi-dynamic data | Long TTL without invalidation |
+| `cacheLife('hours')` for semi-dynamic data | Long TTL without invalidation |
 
 ## 7. CDN & Edge
 
 | Do | Don't |
 |----|-------|
 | `s-maxage` for CDN-cacheable responses | CDN caching authenticated data |
-| Edge middleware for routing/redirects | Heavy DB queries in middleware |
+| Proxy for routing/redirects | Heavy DB queries in proxy |
 | Static assets served from CDN | API responses through CDN without vary headers |
 
 ## 8. Request Deduplication
@@ -67,12 +67,12 @@
 | React dedup for same fetch URL | Multiple `fetch()` to same endpoint in tree |
 | Shared data loader functions | Each component fetching its own data |
 
-## 9. Middleware Caching
+## 9. Proxy Caching
 
 | Do | Don't |
 |----|-------|
-| Lightweight auth check (JWT verify) | Full DB session lookup in middleware |
-| Skip middleware for static assets | Middleware runs on every request |
+| Lightweight auth check (JWT verify) | Full DB session lookup in proxy |
+| Skip proxy for static assets | Proxy runs on every request |
 | Return early for public routes | Complex logic before route matching |
 
 ## 10. Cache Monitoring

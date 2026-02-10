@@ -51,9 +51,9 @@ export async function GET(req: NextRequest) {
 
 ### Problem: No way to trace a request across logs
 
-### Fix: Generate X-Request-Id in middleware
+### Fix: Generate X-Request-Id in proxy
 ```typescript
-// In middleware.ts
+// In proxy.ts
 import { randomUUID } from "crypto";
 
 const requestId = req.headers.get("x-request-id") || randomUUID();

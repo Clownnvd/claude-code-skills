@@ -30,7 +30,7 @@ export function getClientIp(request: Request): string {
 
 ### Fix: Apply Rate Limiting to All Auth Routes
 ```typescript
-// In middleware.ts or individual route handlers
+// In proxy.ts or individual route handlers
 // POST /api/auth/sign-in — strict
 // POST /api/auth/sign-up — strict
 // POST /api/auth/forgot-password — strict

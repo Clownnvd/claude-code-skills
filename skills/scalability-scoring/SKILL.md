@@ -24,14 +24,14 @@ Audit scalability and performance against 10 weighted categories. Produces score
 | 4 | Database Query Performance | 12% | No N+1, connection pooling, indexed queries, select fields |
 | 5 | API Response Performance | 10% | Small payloads, pagination, no over-fetching, compression |
 | 6 | Client-Side Performance | 10% | Minimal re-renders, memoization where needed, no layout thrash |
-| 7 | Edge & CDN Optimization | 8% | Static generation, ISR, edge middleware, CDN-friendly headers |
+| 7 | Edge & CDN Optimization | 8% | Static generation, ISR, proxy configuration, CDN-friendly headers |
 | 8 | Memory & Resource Management | 8% | No leaks, connection cleanup, bounded caches, AbortController |
 | 9 | Concurrent & Parallel Processing | 7% | Promise.all for independent fetches, streaming responses |
 | 10 | Performance Monitoring & Budgets | 6% | Web Vitals tracking, bundle budget, lighthouse CI |
 
 ## Audit Process
 
-1. **Gather files**: pages, components, API routes, middleware, DB queries, package.json, next.config
+1. **Gather files**: pages, components, API routes, proxy, DB queries, package.json, next.config
 2. **Score each category** 0-10 using criteria in `references/criteria/` files
 3. **Calculate weighted total** (0-100)
 4. **Assign grade** using scale below

@@ -37,7 +37,7 @@ Fix highest impact number first.
 ### Dangerous (test thoroughly)
 - Changing page from client to server component (may break interactivity)
 - Adding ISR/revalidation (may serve stale data)
-- Modifying middleware matcher (may break auth)
+- Modifying proxy matcher (may break auth)
 - Changing database connection pool size
 - Adding streaming to API responses (may break existing consumers)
 
