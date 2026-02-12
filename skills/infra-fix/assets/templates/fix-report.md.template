@@ -1,0 +1,71 @@
+# Infrastructure Fix Report
+
+## Scoring Input
+
+- **Overall Grade**: {{GRADE_BEFORE}}
+- **Weighted Score**: {{SCORE_BEFORE}}/100
+- **Total Issues**: {{ISSUE_COUNT}}
+
+### Issues by Severity
+
+| Severity | Count | Categories |
+|----------|-------|------------|
+| CRITICAL | {{CRITICAL_COUNT}} | {{CRITICAL_CATEGORIES}} |
+| HIGH     | {{HIGH_COUNT}} | {{HIGH_CATEGORIES}} |
+| MEDIUM   | {{MEDIUM_COUNT}} | {{MEDIUM_CATEGORIES}} |
+| LOW      | {{LOW_COUNT}} | {{LOW_CATEGORIES}} |
+
+## Fixes Applied
+
+### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
+
+- **Severity**: {{SEVERITY}}
+- **Category**: {{CATEGORY}} (weight: {{WEIGHT}}%)
+- **Pattern**: `references/fix-patterns/{{PATTERN_FILE}}`
+- **Files Changed**:
+  - `{{FILE_PATH}}` -- {{CHANGE_DESCRIPTION}}
+
+#### Before
+
+```yaml
+{{CODE_BEFORE}}
+```
+
+#### After
+
+```yaml
+{{CODE_AFTER}}
+```
+
+#### Verification
+
+- [ ] CI pipeline runs successfully on push
+- [ ] Environment variables validated at startup
+- [ ] Health endpoint returns 200
+
+## Re-Score Results
+
+| Category | Before | After | Delta |
+|----------|--------|-------|-------|
+| CI Pipeline (15%) | {{CI_BEFORE}} | {{CI_AFTER}} | {{CI_DELTA}} |
+| CD Pipeline (12%) | {{CD_BEFORE}} | {{CD_AFTER}} | {{CD_DELTA}} |
+| Production Deploy (12%) | {{PROD_BEFORE}} | {{PROD_AFTER}} | {{PROD_DELTA}} |
+| Containerization (8%) | {{CONT_BEFORE}} | {{CONT_AFTER}} | {{CONT_DELTA}} |
+| Environment Mgmt (12%) | {{ENV_BEFORE}} | {{ENV_AFTER}} | {{ENV_DELTA}} |
+| Monitoring (10%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
+| Backup/DR (8%) | {{BAK_BEFORE}} | {{BAK_AFTER}} | {{BAK_DELTA}} |
+| Third-Party (8%) | {{TP_BEFORE}} | {{TP_AFTER}} | {{TP_DELTA}} |
+| IaC (8%) | {{IAC_BEFORE}} | {{IAC_AFTER}} | {{IAC_DELTA}} |
+| Deploy Security (7%) | {{DSEC_BEFORE}} | {{DSEC_AFTER}} | {{DSEC_DELTA}} |
+
+- **Final Grade**: {{GRADE_AFTER}}
+- **Final Score**: {{SCORE_AFTER}}/100
+- **Improvement**: +{{SCORE_DELTA}} points
+
+## Fix Pattern References Used
+
+- `ci-cd.md` -- GitHub Actions CI Workflow, Branch Protection, Deploy Notifications, Smoke Test
+- `deploy-container.md` -- Manual Approval Gate, Rollback Docs, Multi-Stage Dockerfile
+- `env-monitoring.md` -- Env Validation with Zod, Structured Logger, Health/Readiness Endpoints
+- `backup-integrations.md` -- Neon Backup Strategy, Webhook Idempotency, Graceful Degradation
+- `iac-security.md` -- vercel.json Config, Dependabot, Dependency Scanning, Secret Injection

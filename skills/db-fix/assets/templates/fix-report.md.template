@@ -1,0 +1,70 @@
+# Database Fix Report
+
+## Scoring Input
+
+- **Overall Grade**: {{GRADE_BEFORE}}
+- **Weighted Score**: {{SCORE_BEFORE}}/100
+- **Total Issues**: {{ISSUE_COUNT}}
+
+### Issues by Severity
+
+| Severity | Count | Categories |
+|----------|-------|------------|
+| CRITICAL | {{CRITICAL_COUNT}} | {{CRITICAL_CATEGORIES}} |
+| HIGH     | {{HIGH_COUNT}} | {{HIGH_CATEGORIES}} |
+| MEDIUM   | {{MEDIUM_COUNT}} | {{MEDIUM_CATEGORIES}} |
+| LOW      | {{LOW_COUNT}} | {{LOW_CATEGORIES}} |
+
+## Fixes Applied
+
+### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
+
+- **Severity**: {{SEVERITY}}
+- **Category**: {{CATEGORY}} (weight: {{WEIGHT}}%)
+- **Pattern**: `references/fix-patterns/{{PATTERN_FILE}}`
+- **Files Changed**:
+  - `{{FILE_PATH}}` -- {{CHANGE_DESCRIPTION}}
+
+#### Before
+
+```prisma
+{{CODE_BEFORE}}
+```
+
+#### After
+
+```prisma
+{{CODE_AFTER}}
+```
+
+#### Verification
+
+- [ ] `prisma validate` passes
+- [ ] `prisma migrate dev` creates clean migration
+- [ ] No data loss from schema change
+
+## Re-Score Results
+
+| Category | Before | After | Delta |
+|----------|--------|-------|-------|
+| Schema Design (15%) | {{SCHEMA_BEFORE}} | {{SCHEMA_AFTER}} | {{SCHEMA_DELTA}} |
+| Data Integrity (12%) | {{INTEG_BEFORE}} | {{INTEG_AFTER}} | {{INTEG_DELTA}} |
+| Security (15%) | {{SEC_BEFORE}} | {{SEC_AFTER}} | {{SEC_DELTA}} |
+| Indexing (12%) | {{IDX_BEFORE}} | {{IDX_AFTER}} | {{IDX_DELTA}} |
+| Query Performance (10%) | {{PERF_BEFORE}} | {{PERF_AFTER}} | {{PERF_DELTA}} |
+| Scalability (8%) | {{SCALE_BEFORE}} | {{SCALE_AFTER}} | {{SCALE_DELTA}} |
+| Migration (8%) | {{MIG_BEFORE}} | {{MIG_AFTER}} | {{MIG_DELTA}} |
+| Monitoring (7%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
+| Backup (8%) | {{BAK_BEFORE}} | {{BAK_AFTER}} | {{BAK_DELTA}} |
+| DevEx (5%) | {{DEV_BEFORE}} | {{DEV_AFTER}} | {{DEV_DELTA}} |
+
+- **Final Grade**: {{GRADE_AFTER}}
+- **Final Score**: {{SCORE_AFTER}}/100
+- **Improvement**: +{{SCORE_DELTA}} points
+
+## Fix Pattern References Used
+
+- `schema-integrity.md` -- String-to-Enum Conversion, Composite Unique, Cascade Rules, Schema Comments
+- `security.md` -- Env Var Validation, SSL Enforcement, Select Clauses, Error Message Leaking
+- `performance-scaling.md` -- FK Indexes, N+1 Fix, Unbounded Query Pagination, Connection Pooling
+- `operations.md` -- Migration Sync, prisma generate in Build, Seed Quality, Query Logging

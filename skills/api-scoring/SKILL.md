@@ -96,3 +96,7 @@ Load `references/scoring-workflow.md` for full steps.
 
 ### Framework Specific
 - `references/nextjs-patterns.md` — Next.js App Router scoring adjustments, anti-pattern penalties
+
+## Output Templates
+
+Use `assets/templates/scorecard.md.template` as the output format when generating scorecards. Fill `{{VARIABLE}}` placeholders with actual values.

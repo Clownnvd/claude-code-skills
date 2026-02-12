@@ -54,3 +54,7 @@ Load `references/implementation-workflow.md` for step-by-step process (parse -> 
 - `references/fix-patterns/react-cache-use-cache.md` — cache() dedup, `"use cache"` directive
 - `references/fix-patterns/cdn-dedup.md` — CDN headers, Promise.all dedup
 - `references/fix-patterns/proxy-monitoring.md` — Proxy optimization, debug headers
+
+## Output Templates
+
+Use `assets/templates/fix-report.md.template` as the output format when generating fix reports. Fill `{{VARIABLE}}` placeholders with actual values.

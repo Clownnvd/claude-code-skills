@@ -1,0 +1,71 @@
+# Data Flow Fix Report
+
+## Scoring Input
+
+- **Overall Grade**: {{GRADE_BEFORE}}
+- **Weighted Score**: {{SCORE_BEFORE}}/100
+- **Total Issues**: {{ISSUE_COUNT}}
+
+### Issues by Severity
+
+| Severity | Count | Categories |
+|----------|-------|------------|
+| CRITICAL | {{CRITICAL_COUNT}} | {{CRITICAL_CATEGORIES}} |
+| HIGH     | {{HIGH_COUNT}} | {{HIGH_CATEGORIES}} |
+| MEDIUM   | {{MEDIUM_COUNT}} | {{MEDIUM_CATEGORIES}} |
+| LOW      | {{LOW_COUNT}} | {{LOW_CATEGORIES}} |
+
+## Fixes Applied
+
+### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
+
+- **Severity**: {{SEVERITY}}
+- **Category**: {{CATEGORY}} (weight: {{WEIGHT}}%)
+- **Pattern**: `references/fix-patterns/{{PATTERN_FILE}}`
+- **Files Changed**:
+  - `{{FILE_PATH}}` -- {{CHANGE_DESCRIPTION}}
+
+#### Before
+
+```typescript
+{{CODE_BEFORE}}
+```
+
+#### After
+
+```typescript
+{{CODE_AFTER}}
+```
+
+#### Verification
+
+- [ ] TypeScript compiles with no errors
+- [ ] Server/client boundary correct ("use client" only where needed)
+- [ ] Data flows from server to client without unnecessary fetch calls
+
+## Re-Score Results
+
+| Category | Before | After | Delta |
+|----------|--------|-------|-------|
+| RSC Fetching (15%) | {{RSC_BEFORE}} | {{RSC_AFTER}} | {{RSC_DELTA}} |
+| Server/Client Composition (12%) | {{COMP_BEFORE}} | {{COMP_AFTER}} | {{COMP_DELTA}} |
+| Prisma Optimization (12%) | {{PRISMA_BEFORE}} | {{PRISMA_AFTER}} | {{PRISMA_DELTA}} |
+| API Route Design (10%) | {{API_BEFORE}} | {{API_AFTER}} | {{API_DELTA}} |
+| State Management (10%) | {{STATE_BEFORE}} | {{STATE_AFTER}} | {{STATE_DELTA}} |
+| Caching & Revalidation (10%) | {{CACHE_BEFORE}} | {{CACHE_AFTER}} | {{CACHE_DELTA}} |
+| Type Safety (10%) | {{TYPE_BEFORE}} | {{TYPE_AFTER}} | {{TYPE_DELTA}} |
+| Error Propagation (8%) | {{ERR_BEFORE}} | {{ERR_AFTER}} | {{ERR_DELTA}} |
+| Form Handling (8%) | {{FORM_BEFORE}} | {{FORM_AFTER}} | {{FORM_DELTA}} |
+| Data Transformation (5%) | {{DTO_BEFORE}} | {{DTO_AFTER}} | {{DTO_DELTA}} |
+
+- **Final Grade**: {{GRADE_AFTER}}
+- **Final Score**: {{SCORE_AFTER}}/100
+- **Improvement**: +{{SCORE_DELTA}} points
+
+## Fix Pattern References Used
+
+- `rsc-composition.md` -- Convert Client to Server Component, Suspense Boundaries, Push "use client" to Leaves
+- `prisma-api.md` -- Add select to Queries, Singleton PrismaClient, Standard API Pipeline
+- `state-cache.md` -- Replace Client Fetch with RSC, cache() Dedup, Remove force-dynamic
+- `types-errors.md` -- Shared Zod Schemas, error.tsx Boundaries, Wrap External Errors
+- `forms-dtos.md` -- Client+Server Validation, Date Serialization, Strip Internal Fields

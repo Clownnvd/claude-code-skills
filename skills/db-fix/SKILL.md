@@ -53,3 +53,7 @@ Load `references/implementation-workflow.md` for step-by-step process (parse -> 
 - `references/fix-patterns/security.md` — Env validation, SSL, select clauses, raw queries, error leaking
 - `references/fix-patterns/performance-scaling.md` — Indexes, N+1, pagination, transactions, connection pooling
 - `references/fix-patterns/operations.md` — Migration sync, prisma generate, seed quality, logging, backup docs
+
+## Output Templates
+
+Use `assets/templates/fix-report.md.template` as the output format when generating fix reports. Fill `{{VARIABLE}}` placeholders with actual values.

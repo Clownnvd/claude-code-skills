@@ -94,3 +94,7 @@ See `references/output-format.md` for presentation templates.
 - `references/site-sources.md` — Full source list with URLs and search patterns
 - `references/trending-2026.md` — Current trending components with descriptions
 - `references/output-format.md` — Per-page table templates and follow-up prompts
+
+## Output Templates
+
+Use `assets/templates/research-output.md.template` as the output format when generating research tables. Fill `{{VARIABLE}}` placeholders with actual values.

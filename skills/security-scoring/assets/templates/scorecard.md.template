@@ -1,0 +1,36 @@
+# Security Design Scoring — Scorecard
+
+**Project**: {{PROJECT_NAME}}
+**Date**: {{DATE}}
+**Score**: {{TOTAL_SCORE}}/100
+**Grade**: {{GRADE}}
+
+## Category Scores
+
+| # | Category | Weight | Raw (0-10) | Weighted | OWASP | Notes |
+|---|----------|--------|------------|----------|-------|-------|
+| 1 | Input Validation & Sanitization | 15% | {{INPUT_RAW}} | {{INPUT_WEIGHTED}} | A03 | {{INPUT_NOTES}} |
+| 2 | Secrets & Environment Mgmt | 12% | {{SECRETS_RAW}} | {{SECRETS_WEIGHTED}} | A02,A05 | {{SECRETS_NOTES}} |
+| 3 | Dependency Security | 10% | {{DEPS_RAW}} | {{DEPS_WEIGHTED}} | A06 | {{DEPS_NOTES}} |
+| 4 | Error Handling & Info Disclosure | 12% | {{ERROR_RAW}} | {{ERROR_WEIGHTED}} | A09 | {{ERROR_NOTES}} |
+| 5 | Content Security Policy | 10% | {{CSP_RAW}} | {{CSP_WEIGHTED}} | A05 | {{CSP_NOTES}} |
+| 6 | Data Protection & PII | 10% | {{DATA_RAW}} | {{DATA_WEIGHTED}} | A02 | {{DATA_NOTES}} |
+| 7 | Open Redirect & URL Validation | 8% | {{REDIRECT_RAW}} | {{REDIRECT_WEIGHTED}} | A01 | {{REDIRECT_NOTES}} |
+| 8 | Webhook & External API Security | 8% | {{WEBHOOK_RAW}} | {{WEBHOOK_WEIGHTED}} | A08 | {{WEBHOOK_NOTES}} |
+| 9 | Security Monitoring & Logging | 8% | {{SECMON_RAW}} | {{SECMON_WEIGHTED}} | A09 | {{SECMON_NOTES}} |
+| 10 | Supply Chain & Build Security | 7% | {{SUPPLY_RAW}} | {{SUPPLY_WEIGHTED}} | A06 | {{SUPPLY_NOTES}} |
+| | **TOTAL** | **100%** | | **{{TOTAL_SCORE}}** | | |
+
+## Grade Scale
+
+A+ (97-100) | A (93-96) | A- (90-92) | B+ (87-89) | B (83-86) | B- (80-82) | C+ (77-79) | C (70-76) | D (60-69) | F (<60)
+
+## Prioritized Issues
+
+| # | Severity | Category | Issue | OWASP | Fix |
+|---|----------|----------|-------|-------|-----|
+{{ISSUES_LIST}}
+
+## Quick Wins
+
+{{QUICK_WINS_LIST}}

@@ -1,0 +1,71 @@
+# Security Fix Report
+
+## Scoring Input
+
+- **Overall Grade**: {{GRADE_BEFORE}}
+- **Weighted Score**: {{SCORE_BEFORE}}/100
+- **Total Issues**: {{ISSUE_COUNT}}
+
+### Issues by Severity
+
+| Severity | Count | Categories |
+|----------|-------|------------|
+| CRITICAL | {{CRITICAL_COUNT}} | {{CRITICAL_CATEGORIES}} |
+| HIGH     | {{HIGH_COUNT}} | {{HIGH_CATEGORIES}} |
+| MEDIUM   | {{MEDIUM_COUNT}} | {{MEDIUM_CATEGORIES}} |
+| LOW      | {{LOW_COUNT}} | {{LOW_CATEGORIES}} |
+
+## Fixes Applied
+
+### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
+
+- **Severity**: {{SEVERITY}}
+- **Category**: {{CATEGORY}} (weight: {{WEIGHT}}%)
+- **Pattern**: `references/fix-patterns/{{PATTERN_FILE}}`
+- **Files Changed**:
+  - `{{FILE_PATH}}` -- {{CHANGE_DESCRIPTION}}
+
+#### Before
+
+```typescript
+{{CODE_BEFORE}}
+```
+
+#### After
+
+```typescript
+{{CODE_AFTER}}
+```
+
+#### Verification
+
+- [ ] No secrets exposed in client bundle or logs
+- [ ] Security headers present on all responses
+- [ ] Input validation rejects malformed payloads
+
+## Re-Score Results
+
+| Category | Before | After | Delta |
+|----------|--------|-------|-------|
+| Input Validation (15%) | {{INPUT_BEFORE}} | {{INPUT_AFTER}} | {{INPUT_DELTA}} |
+| Secrets Management (12%) | {{SECRET_BEFORE}} | {{SECRET_AFTER}} | {{SECRET_DELTA}} |
+| Dependencies (10%) | {{DEPS_BEFORE}} | {{DEPS_AFTER}} | {{DEPS_DELTA}} |
+| Error Handling (10%) | {{ERR_BEFORE}} | {{ERR_AFTER}} | {{ERR_DELTA}} |
+| CSP (12%) | {{CSP_BEFORE}} | {{CSP_AFTER}} | {{CSP_DELTA}} |
+| Data Protection (10%) | {{DATA_BEFORE}} | {{DATA_AFTER}} | {{DATA_DELTA}} |
+| Redirects (8%) | {{REDIR_BEFORE}} | {{REDIR_AFTER}} | {{REDIR_DELTA}} |
+| Webhooks (8%) | {{HOOK_BEFORE}} | {{HOOK_AFTER}} | {{HOOK_DELTA}} |
+| Monitoring (8%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
+| Supply Chain (7%) | {{SUPPLY_BEFORE}} | {{SUPPLY_AFTER}} | {{SUPPLY_DELTA}} |
+
+- **Final Grade**: {{GRADE_AFTER}}
+- **Final Score**: {{SCORE_AFTER}}/100
+- **Improvement**: +{{SCORE_DELTA}} points
+
+## Fix Pattern References Used
+
+- `input-secrets.md` -- Zod Validation, .strict() Schemas, Env Sync, NEXT_PUBLIC_ Audit
+- `deps-errors.md` -- pnpm audit, Pin Versions, Safe Error Responses, Structured Logger
+- `csp-data.md` -- CSP Directives, Security Headers, HSTS, Prisma select, PII Sanitization
+- `redirect-webhook.md` -- Open Redirect Blocking, Webhook Signature Verification, Idempotency
+- `monitoring-supply.md` -- Request IDs, Security Event Logging, poweredByHeader, Source Maps

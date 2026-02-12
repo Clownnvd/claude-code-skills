@@ -1,0 +1,36 @@
+# Scalability & Performance Scoring — Scorecard
+
+**Project**: {{PROJECT_NAME}}
+**Date**: {{DATE}}
+**Score**: {{TOTAL_SCORE}}/100
+**Grade**: {{GRADE}}
+
+## Category Scores
+
+| # | Category | Weight | Raw (0-10) | Weighted | Notes |
+|---|----------|--------|------------|----------|-------|
+| 1 | Bundle Size & Code Splitting | 15% | {{BUNDLE_RAW}} | {{BUNDLE_WEIGHTED}} | {{BUNDLE_NOTES}} |
+| 2 | Image & Asset Optimization | 12% | {{IMAGE_RAW}} | {{IMAGE_WEIGHTED}} | {{IMAGE_NOTES}} |
+| 3 | Server Component Architecture | 12% | {{RSC_RAW}} | {{RSC_WEIGHTED}} | {{RSC_NOTES}} |
+| 4 | Database Query Performance | 12% | {{DB_RAW}} | {{DB_WEIGHTED}} | {{DB_NOTES}} |
+| 5 | API Response Performance | 10% | {{API_RAW}} | {{API_WEIGHTED}} | {{API_NOTES}} |
+| 6 | Client-Side Performance | 10% | {{CLIENT_RAW}} | {{CLIENT_WEIGHTED}} | {{CLIENT_NOTES}} |
+| 7 | Edge & CDN Optimization | 8% | {{EDGE_RAW}} | {{EDGE_WEIGHTED}} | {{EDGE_NOTES}} |
+| 8 | Memory & Resource Management | 8% | {{MEMORY_RAW}} | {{MEMORY_WEIGHTED}} | {{MEMORY_NOTES}} |
+| 9 | Concurrent & Parallel Processing | 7% | {{CONCURRENCY_RAW}} | {{CONCURRENCY_WEIGHTED}} | {{CONCURRENCY_NOTES}} |
+| 10 | Performance Monitoring & Budgets | 6% | {{PERF_MON_RAW}} | {{PERF_MON_WEIGHTED}} | {{PERF_MON_NOTES}} |
+| | **TOTAL** | **100%** | | **{{TOTAL_SCORE}}** | |
+
+## Grade Scale
+
+A+ (97-100) | A (93-96) | A- (90-92) | B+ (87-89) | B (83-86) | B- (80-82) | C+ (77-79) | C (70-76) | D (60-69) | F (<60)
+
+## Prioritized Issues
+
+| # | Severity | Category | Issue | Affected Files | Fix |
+|---|----------|----------|-------|----------------|-----|
+{{ISSUES_LIST}}
+
+## Quick Wins
+
+{{QUICK_WINS_LIST}}

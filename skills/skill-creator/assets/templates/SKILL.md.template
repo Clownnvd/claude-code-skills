@@ -1,0 +1,27 @@
+---
+name: {{SKILL_NAME}}
+description: {{DESCRIPTION}}
+---
+
+# {{SKILL_TITLE}}
+
+{{PURPOSE}}
+
+## When to Use
+
+- {{TRIGGER_1}}
+- {{TRIGGER_2}}
+- {{TRIGGER_3}}
+
+## Quick Start
+
+{{QUICK_START_CONTENT}}
+
+## Resources
+
+### references/
+- `references/overview.md` -- {{OVERVIEW_DESC}}
+- `references/best-practices.md` -- {{BEST_PRACTICES_DESC}}
+
+### scripts/
+- `scripts/{{MAIN_SCRIPT}}` -- {{SCRIPT_DESC}}

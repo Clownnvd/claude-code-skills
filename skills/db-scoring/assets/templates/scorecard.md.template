@@ -1,0 +1,45 @@
+# Database Scoring — Scorecard
+
+**Project**: {{PROJECT_NAME}}
+**Date**: {{DATE}}
+**Score**: {{TOTAL_SCORE}}/100
+**Grade**: {{GRADE}}
+
+## Category Scores
+
+| # | Category | Weight | Raw (0-10) | Weighted | Notes |
+|---|----------|--------|------------|----------|-------|
+| 1 | Schema Design | 15% | {{SCHEMA_RAW}} | {{SCHEMA_WEIGHTED}} | {{SCHEMA_NOTES}} |
+| 2 | Data Integrity | 12% | {{INTEGRITY_RAW}} | {{INTEGRITY_WEIGHTED}} | {{INTEGRITY_NOTES}} |
+| 3 | Indexing Strategy | 12% | {{INDEX_RAW}} | {{INDEX_WEIGHTED}} | {{INDEX_NOTES}} |
+| 4 | Security | 15% | {{SECURITY_RAW}} | {{SECURITY_WEIGHTED}} | {{SECURITY_NOTES}} |
+| 5 | Query Performance | 10% | {{QUERY_RAW}} | {{QUERY_WEIGHTED}} | {{QUERY_NOTES}} |
+| 6 | Migration & Versioning | 10% | {{MIGRATION_RAW}} | {{MIGRATION_WEIGHTED}} | {{MIGRATION_NOTES}} |
+| 7 | Monitoring & Observability | 8% | {{MONITOR_RAW}} | {{MONITOR_WEIGHTED}} | {{MONITOR_NOTES}} |
+| 8 | Backup & Recovery | 8% | {{BACKUP_RAW}} | {{BACKUP_WEIGHTED}} | {{BACKUP_NOTES}} |
+| 9 | Scalability | 5% | {{SCALE_RAW}} | {{SCALE_WEIGHTED}} | {{SCALE_NOTES}} |
+| 10 | Developer Experience | 5% | {{DX_RAW}} | {{DX_WEIGHTED}} | {{DX_NOTES}} |
+| | **TOTAL** | **100%** | | **{{TOTAL_SCORE}}** | |
+
+## Grade Scale
+
+A+ (97-100) | A (93-96) | A- (90-92) | B+ (87-89) | B (83-86) | B- (80-82) | C+ (77-79) | C (73-76) | D (60-72) | F (<60)
+
+## Prioritized Issues
+
+| # | Severity | Category | Issue | Affected Files | Fix |
+|---|----------|----------|-------|----------------|-----|
+{{ISSUES_LIST}}
+
+## ORM / Provider Notes
+
+| Stack | Status |
+|-------|--------|
+| Prisma Version | {{PRISMA_VERSION}} |
+| prisma.config.ts (Prisma 7) | {{PRISMA_CONFIG_STATUS}} |
+| Neon PostgreSQL | {{NEON_STATUS}} |
+| Connection Pooling | {{POOLING_STATUS}} |
+
+## Quick Wins
+
+{{QUICK_WINS_LIST}}

@@ -65,3 +65,7 @@ Audit application security design against 10 weighted categories. Produces score
 - `references/overview.md` — Scoring system, output format, quality gates, OWASP mapping
 - `references/scoring-workflow.md` — Step-by-step audit process
 - `references/best-practices.md` — Do/Don't tables for all categories
+
+## Output Templates
+
+Use `assets/templates/scorecard.md.template` as the output format when generating scorecards. Fill `{{VARIABLE}}` placeholders with actual values.

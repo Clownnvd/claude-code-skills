@@ -54,3 +54,7 @@ Load `references/implementation-workflow.md` for step-by-step process (parse -> 
 - `references/fix-patterns/api-client.md` — Response optimization, client performance
 - `references/fix-patterns/edge-memory.md` — Edge config, resource cleanup
 - `references/fix-patterns/concurrency-monitoring.md` — Parallel processing, observability
+
+## Output Templates
+
+Use `assets/templates/fix-report.md.template` as the output format when generating fix reports. Fill `{{VARIABLE}}` placeholders with actual values.

@@ -1,0 +1,71 @@
+# Scalability Fix Report
+
+## Scoring Input
+
+- **Overall Grade**: {{GRADE_BEFORE}}
+- **Weighted Score**: {{SCORE_BEFORE}}/100
+- **Total Issues**: {{ISSUE_COUNT}}
+
+### Issues by Severity
+
+| Severity | Count | Categories |
+|----------|-------|------------|
+| CRITICAL | {{CRITICAL_COUNT}} | {{CRITICAL_CATEGORIES}} |
+| HIGH     | {{HIGH_COUNT}} | {{HIGH_CATEGORIES}} |
+| MEDIUM   | {{MEDIUM_COUNT}} | {{MEDIUM_CATEGORIES}} |
+| LOW      | {{LOW_COUNT}} | {{LOW_CATEGORIES}} |
+
+## Fixes Applied
+
+### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
+
+- **Severity**: {{SEVERITY}}
+- **Category**: {{CATEGORY}} (weight: {{WEIGHT}}%)
+- **Pattern**: `references/fix-patterns/{{PATTERN_FILE}}`
+- **Files Changed**:
+  - `{{FILE_PATH}}` -- {{CHANGE_DESCRIPTION}}
+
+#### Before
+
+```typescript
+{{CODE_BEFORE}}
+```
+
+#### After
+
+```typescript
+{{CODE_AFTER}}
+```
+
+#### Verification
+
+- [ ] `pnpm build` succeeds with no increase in bundle size
+- [ ] Page load performance unchanged or improved
+- [ ] No new client-side waterfalls introduced
+
+## Re-Score Results
+
+| Category | Before | After | Delta |
+|----------|--------|-------|-------|
+| Bundle Size (12%) | {{BUNDLE_BEFORE}} | {{BUNDLE_AFTER}} | {{BUNDLE_DELTA}} |
+| Image Optimization (8%) | {{IMG_BEFORE}} | {{IMG_AFTER}} | {{IMG_DELTA}} |
+| RSC Architecture (15%) | {{RSC_BEFORE}} | {{RSC_AFTER}} | {{RSC_DELTA}} |
+| DB Performance (12%) | {{DB_BEFORE}} | {{DB_AFTER}} | {{DB_DELTA}} |
+| API Performance (10%) | {{API_BEFORE}} | {{API_AFTER}} | {{API_DELTA}} |
+| Client Performance (10%) | {{CLIENT_BEFORE}} | {{CLIENT_AFTER}} | {{CLIENT_DELTA}} |
+| Edge/CDN (8%) | {{EDGE_BEFORE}} | {{EDGE_AFTER}} | {{EDGE_DELTA}} |
+| Memory Management (8%) | {{MEM_BEFORE}} | {{MEM_AFTER}} | {{MEM_DELTA}} |
+| Concurrency (10%) | {{CONC_BEFORE}} | {{CONC_AFTER}} | {{CONC_DELTA}} |
+| Monitoring (7%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
+
+- **Final Grade**: {{GRADE_AFTER}}
+- **Final Score**: {{SCORE_AFTER}}/100
+- **Improvement**: +{{SCORE_DELTA}} points
+
+## Fix Pattern References Used
+
+- `bundle-images.md` -- Dynamic Imports, Remove Barrel Re-exports, next/image, next/font
+- `rsc-dbperf.md` -- Extract Client Interactivity, Suspense Boundaries, Select Clauses, DB Indexes
+- `api-client.md` -- Pagination, AbortController Timeout, Debounce Events, Derived State
+- `edge-memory.md` -- Static Generation, ISR, Proxy Matcher, Bounded Cache, Event Listener Cleanup
+- `concurrency-monitoring.md` -- Promise.all Parallel, Non-Blocking Side Effects, Web Vitals

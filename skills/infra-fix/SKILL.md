@@ -54,3 +54,7 @@ Load `references/implementation-workflow.md` for step-by-step process (parse -> 
 - `references/fix-patterns/env-monitoring.md` — Env validation, monitoring stack
 - `references/fix-patterns/backup-integrations.md` — Backup strategy, integration resilience
 - `references/fix-patterns/iac-security.md` — IaC setup, deployment security
+
+## Output Templates
+
+Use `assets/templates/fix-report.md.template` as the output format when generating fix reports. Fill `{{VARIABLE}}` placeholders with actual values.

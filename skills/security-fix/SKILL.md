@@ -54,3 +54,7 @@ Load `references/implementation-workflow.md` for step-by-step process (parse -> 
 - `references/fix-patterns/csp-data.md` — CSP headers, data protection
 - `references/fix-patterns/redirect-webhook.md` — URL validation, webhook security
 - `references/fix-patterns/monitoring-supply.md` — Logging, build security
+
+## Output Templates
+
+Use `assets/templates/fix-report.md.template` as the output format when generating fix reports. Fill `{{VARIABLE}}` placeholders with actual values.

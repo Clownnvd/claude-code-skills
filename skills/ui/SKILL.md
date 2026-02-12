@@ -120,3 +120,11 @@ End-to-end orchestration. Load `references/pipeline/pipeline-workflow.md`.
 - `references/pipeline/pipeline-workflow.md` — Full flow, error handling
 - `references/pipeline/handoff-contracts.md` — Data formats between modes
 - `references/pipeline/measurement.md` — Real metrics collection
+
+## Output Templates
+
+Use templates from `assets/templates/` matching the current mode:
+- Research: `design-brief.md.template`
+- Score: `scorecard.md.template` and `ui-scorecard.md.template`
+- Fix: `fix-checklist.md.template`
+Fill `{{VARIABLE}}` placeholders with actual values.

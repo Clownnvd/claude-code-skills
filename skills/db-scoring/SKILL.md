@@ -85,3 +85,7 @@ Load `references/scoring-workflow.md` for full steps.
 ### ORM & Provider Specific
 - `references/prisma-patterns.md` — Prisma 7 config, schema/query patterns, migration commands
 - `references/neon-patterns.md` — Branching, pooling, PITR, edge runtime, region selection
+
+## Output Templates
+
+Use `assets/templates/scorecard.md.template` as the output format when generating scorecards. Fill `{{VARIABLE}}` placeholders with actual values.

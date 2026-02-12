@@ -1,0 +1,36 @@
+# Data Flow Scoring — Scorecard
+
+**Project**: {{PROJECT_NAME}}
+**Date**: {{DATE}}
+**Score**: {{TOTAL_SCORE}}/100
+**Grade**: {{GRADE}}
+
+## Category Scores
+
+| # | Category | Weight | Raw (0-10) | Weighted | Notes |
+|---|----------|--------|------------|----------|-------|
+| 1 | Server Component Data Fetching | 15% | {{RSC_RAW}} | {{RSC_WEIGHTED}} | {{RSC_NOTES}} |
+| 2 | Server/Client Composition | 10% | {{COMPOSITION_RAW}} | {{COMPOSITION_WEIGHTED}} | {{COMPOSITION_NOTES}} |
+| 3 | Prisma Query Optimization | 12% | {{PRISMA_RAW}} | {{PRISMA_WEIGHTED}} | {{PRISMA_NOTES}} |
+| 4 | API Route Design | 15% | {{API_RAW}} | {{API_WEIGHTED}} | {{API_NOTES}} |
+| 5 | State Management | 8% | {{STATE_RAW}} | {{STATE_WEIGHTED}} | {{STATE_NOTES}} |
+| 6 | Caching & Revalidation | 10% | {{CACHE_RAW}} | {{CACHE_WEIGHTED}} | {{CACHE_NOTES}} |
+| 7 | Type Safety Across Boundaries | 10% | {{TYPES_RAW}} | {{TYPES_WEIGHTED}} | {{TYPES_NOTES}} |
+| 8 | Error Propagation | 8% | {{ERROR_RAW}} | {{ERROR_WEIGHTED}} | {{ERROR_NOTES}} |
+| 9 | Form Handling | 7% | {{FORMS_RAW}} | {{FORMS_WEIGHTED}} | {{FORMS_NOTES}} |
+| 10 | Data Transformation (DTOs) | 5% | {{DTO_RAW}} | {{DTO_WEIGHTED}} | {{DTO_NOTES}} |
+| | **TOTAL** | **100%** | | **{{TOTAL_SCORE}}** | |
+
+## Grade Scale
+
+A+ (97-100) | A (93-96) | A- (90-92) | B+ (87-89) | B (83-86) | B- (80-82) | C+ (77-79) | C (70-76) | D (60-69) | F (<60)
+
+## Prioritized Issues
+
+| # | Severity | Category | Issue | Affected Files | Fix |
+|---|----------|----------|-------|----------------|-----|
+{{ISSUES_LIST}}
+
+## Quick Wins
+
+{{QUICK_WINS_LIST}}

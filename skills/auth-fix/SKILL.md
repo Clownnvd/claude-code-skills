@@ -54,3 +54,7 @@ Load `references/implementation-workflow.md` for step-by-step process (parse -> 
 - `references/fix-patterns/csrf-headers.md` — Origin validation, CSP hardening, HSTS, Permissions-Policy
 - `references/fix-patterns/ratelimit-audit.md` — Strict auth rate limits, distributed store, structured audit logging
 - `references/fix-patterns/authz-2fa.md` — Two-layer auth, requireAuth(), RBAC, 2FA plugin setup
+
+## Output Templates
+
+Use `assets/templates/fix-report.md.template` as the output format when generating fix reports. Fill `{{VARIABLE}}` placeholders with actual values.

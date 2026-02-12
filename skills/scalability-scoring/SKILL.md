@@ -65,3 +65,7 @@ Audit scalability and performance against 10 weighted categories. Produces score
 - `references/overview.md` — Scoring system, output format, files to audit
 - `references/scoring-workflow.md` — Step-by-step audit process
 - `references/best-practices.md` — Do/Don't tables for all categories
+
+## Output Templates
+
+Use `assets/templates/scorecard.md.template` as the output format when generating scorecards. Fill `{{VARIABLE}}` placeholders with actual values.

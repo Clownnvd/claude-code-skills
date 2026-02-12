@@ -54,3 +54,7 @@ Load `references/implementation-workflow.md` for step-by-step process (parse -> 
 - `references/fix-patterns/state-cache.md` — Server-first state, caching headers
 - `references/fix-patterns/types-errors.md` — Zod schemas, error boundaries
 - `references/fix-patterns/forms-dtos.md` — Form validation, DTO patterns
+
+## Output Templates
+
+Use `assets/templates/fix-report.md.template` as the output format when generating fix reports. Fill `{{VARIABLE}}` placeholders with actual values.

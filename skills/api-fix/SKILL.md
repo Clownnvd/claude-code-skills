@@ -52,3 +52,7 @@ Load `references/implementation-workflow.md` for step-by-step process (parse -> 
 - `references/fix-patterns/input-errors.md` — Content-Type enforcement, error codes, consistent helpers, webhook responses
 - `references/fix-patterns/ratelimit-response-perf.md` — Per-user rate limiting, query timeouts, pagination, caching headers
 - `references/fix-patterns/observability-docs-testing.md` — Request logging, X-Request-Id, API docs, integration tests
+
+## Output Templates
+
+Use `assets/templates/fix-report.md.template` as the output format when generating fix reports. Fill `{{VARIABLE}}` placeholders with actual values.

@@ -83,3 +83,7 @@ Load `references/scoring-workflow.md` for full steps.
 
 ### Framework Specific
 - `references/better-auth-patterns.md` — Better Auth scoring adjustments, plugin checks
+
+## Output Templates
+
+Use `assets/templates/scorecard.md.template` as the output format when generating scorecards. Fill `{{VARIABLE}}` placeholders with actual values.

@@ -65,3 +65,7 @@ Audit data flow quality against 10 weighted categories. Produces scorecard with 
 - `references/overview.md` — Scoring system, output format, quality gates
 - `references/scoring-workflow.md` — Step-by-step audit process
 - `references/best-practices.md` — Do/Don't tables for all categories
+
+## Output Templates
+
+Use `assets/templates/scorecard.md.template` as the output format when generating scorecards. Fill `{{VARIABLE}}` placeholders with actual values.

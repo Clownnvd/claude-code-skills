@@ -1,0 +1,71 @@
+# Auth Fix Report
+
+## Scoring Input
+
+- **Overall Grade**: {{GRADE_BEFORE}}
+- **Weighted Score**: {{SCORE_BEFORE}}/100
+- **Total Issues**: {{ISSUE_COUNT}}
+
+### Issues by Severity
+
+| Severity | Count | Categories |
+|----------|-------|------------|
+| CRITICAL | {{CRITICAL_COUNT}} | {{CRITICAL_CATEGORIES}} |
+| HIGH     | {{HIGH_COUNT}} | {{HIGH_CATEGORIES}} |
+| MEDIUM   | {{MEDIUM_COUNT}} | {{MEDIUM_CATEGORIES}} |
+| LOW      | {{LOW_COUNT}} | {{LOW_CATEGORIES}} |
+
+## Fixes Applied
+
+### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
+
+- **Severity**: {{SEVERITY}}
+- **Category**: {{CATEGORY}} (weight: {{WEIGHT}}%)
+- **Pattern**: `references/fix-patterns/{{PATTERN_FILE}}`
+- **Files Changed**:
+  - `{{FILE_PATH}}` -- {{CHANGE_DESCRIPTION}}
+
+#### Before
+
+```typescript
+{{CODE_BEFORE}}
+```
+
+#### After
+
+```typescript
+{{CODE_AFTER}}
+```
+
+#### Verification
+
+- [ ] Code compiles without errors
+- [ ] Better Auth config valid
+- [ ] Auth flow tested end-to-end
+
+## Re-Score Results
+
+| Category | Before | After | Delta |
+|----------|--------|-------|-------|
+| Session Management (15%) | {{SESS_BEFORE}} | {{SESS_AFTER}} | {{SESS_DELTA}} |
+| Password Security (12%) | {{PASS_BEFORE}} | {{PASS_AFTER}} | {{PASS_DELTA}} |
+| OAuth & Social Login (12%) | {{OAUTH_BEFORE}} | {{OAUTH_AFTER}} | {{OAUTH_DELTA}} |
+| Email Verification (8%) | {{EMAIL_BEFORE}} | {{EMAIL_AFTER}} | {{EMAIL_DELTA}} |
+| CSRF & Origin (10%) | {{CSRF_BEFORE}} | {{CSRF_AFTER}} | {{CSRF_DELTA}} |
+| Security Headers (10%) | {{HDR_BEFORE}} | {{HDR_AFTER}} | {{HDR_DELTA}} |
+| Rate Limiting (10%) | {{RL_BEFORE}} | {{RL_AFTER}} | {{RL_DELTA}} |
+| Audit Logging (8%) | {{AUDIT_BEFORE}} | {{AUDIT_AFTER}} | {{AUDIT_DELTA}} |
+| Authorization/RBAC (10%) | {{AUTHZ_BEFORE}} | {{AUTHZ_AFTER}} | {{AUTHZ_DELTA}} |
+| 2FA/MFA (5%) | {{MFA_BEFORE}} | {{MFA_AFTER}} | {{MFA_DELTA}} |
+
+- **Final Grade**: {{GRADE_AFTER}}
+- **Final Score**: {{SCORE_AFTER}}/100
+- **Improvement**: +{{SCORE_DELTA}} points
+
+## Fix Pattern References Used
+
+- `sessions-passwords.md` -- Cookie Security Flags, Session Expiry, Strong Password Schema
+- `oauth-email.md` -- Env-Gated Provider Config, Account Linking, Email Verification Gate
+- `csrf-headers.md` -- Origin Validation, Comprehensive Security Headers, CSP, HSTS
+- `ratelimit-audit.md` -- Strict Auth Rate Limits, Structured Audit Logging
+- `authz-2fa.md` -- Two-Layer Auth, requireAuth(), RBAC, 2FA Plugin Setup

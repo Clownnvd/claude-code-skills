@@ -1,0 +1,70 @@
+# API Fix Report
+
+## Scoring Input
+
+- **Overall Grade**: {{GRADE_BEFORE}}
+- **Weighted Score**: {{SCORE_BEFORE}}/100
+- **Total Issues**: {{ISSUE_COUNT}}
+
+### Issues by Severity
+
+| Severity | Count | Categories |
+|----------|-------|------------|
+| CRITICAL | {{CRITICAL_COUNT}} | {{CRITICAL_CATEGORIES}} |
+| HIGH     | {{HIGH_COUNT}} | {{HIGH_CATEGORIES}} |
+| MEDIUM   | {{MEDIUM_COUNT}} | {{MEDIUM_CATEGORIES}} |
+| LOW      | {{LOW_COUNT}} | {{LOW_CATEGORIES}} |
+
+## Fixes Applied
+
+### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
+
+- **Severity**: {{SEVERITY}}
+- **Category**: {{CATEGORY}} (weight: {{WEIGHT}}%)
+- **Pattern**: `references/fix-patterns/{{PATTERN_FILE}}`
+- **Files Changed**:
+  - `{{FILE_PATH}}` -- {{CHANGE_DESCRIPTION}}
+
+#### Before
+
+```typescript
+{{CODE_BEFORE}}
+```
+
+#### After
+
+```typescript
+{{CODE_AFTER}}
+```
+
+#### Verification
+
+- [ ] Code compiles without errors
+- [ ] Existing tests pass
+- [ ] Fix addresses the specific scoring criterion
+
+## Re-Score Results
+
+| Category | Before | After | Delta |
+|----------|--------|-------|-------|
+| Security (20%) | {{SEC_BEFORE}} | {{SEC_AFTER}} | {{SEC_DELTA}} |
+| Auth & AuthZ (15%) | {{AUTH_BEFORE}} | {{AUTH_AFTER}} | {{AUTH_DELTA}} |
+| Input Validation (12%) | {{INPUT_BEFORE}} | {{INPUT_AFTER}} | {{INPUT_DELTA}} |
+| Error Handling (10%) | {{ERR_BEFORE}} | {{ERR_AFTER}} | {{ERR_DELTA}} |
+| Rate Limiting (10%) | {{RL_BEFORE}} | {{RL_AFTER}} | {{RL_DELTA}} |
+| Response Design (8%) | {{RESP_BEFORE}} | {{RESP_AFTER}} | {{RESP_DELTA}} |
+| Performance (8%) | {{PERF_BEFORE}} | {{PERF_AFTER}} | {{PERF_DELTA}} |
+| Observability (7%) | {{OBS_BEFORE}} | {{OBS_AFTER}} | {{OBS_DELTA}} |
+| Documentation (5%) | {{DOC_BEFORE}} | {{DOC_AFTER}} | {{DOC_DELTA}} |
+| Testing (5%) | {{TEST_BEFORE}} | {{TEST_AFTER}} | {{TEST_DELTA}} |
+
+- **Final Grade**: {{GRADE_AFTER}}
+- **Final Score**: {{SCORE_AFTER}}/100
+- **Improvement**: +{{SCORE_DELTA}} points
+
+## Fix Pattern References Used
+
+- `security-auth.md` -- CSP Hardening, CORS Allowlist, Content-Type Enforcement, Audit Logging, BFLA Admin Separation
+- `input-errors.md` -- Machine-Readable Error Codes, Consistent Response Helpers, Webhook Validation
+- `ratelimit-response-perf.md` -- Per-User Rate Limiting, DB Query Timeouts, Pagination, Caching Headers
+- `observability-docs-testing.md` -- Request-Level Logging, X-Request-Id, API Docs, Integration Tests

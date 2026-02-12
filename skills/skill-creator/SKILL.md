@@ -90,3 +90,13 @@ Use skill on real tasks → notice gaps → update SKILL.md or resources → re-
 - `scripts/init_skill.py` — Initialize new skill directory
 - `scripts/quick_validate.py` — Fast validation check
 - `scripts/package_skill.py` — Validate + package into zip
+
+## Skill Templates
+
+Use templates from `assets/templates/` when scaffolding new skills:
+- `SKILL.md.template` — Main skill definition
+- `reference.md.template` — Reference documentation
+- `scoring-skill.md.template` — Scoring-type skill structure
+- `fix-skill.md.template` — Fix-type skill structure
+- `script.py.template` — Python script scaffold
+Fill `{{VARIABLE}}` placeholders with actual values.
