@@ -17,6 +17,7 @@
 
 ## Fixes Applied
 
+<!-- Repeat this block for each fix. Increment {{FIX_NUMBER}} sequentially. -->
 ### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
 
 - **Severity**: {{SEVERITY}}
@@ -48,14 +49,14 @@
 | Category | Before | After | Delta |
 |----------|--------|-------|-------|
 | RSC Fetching (15%) | {{RSC_BEFORE}} | {{RSC_AFTER}} | {{RSC_DELTA}} |
-| Server/Client Composition (12%) | {{COMP_BEFORE}} | {{COMP_AFTER}} | {{COMP_DELTA}} |
+| Server/Client Composition (10%) | {{COMP_BEFORE}} | {{COMP_AFTER}} | {{COMP_DELTA}} |
 | Prisma Optimization (12%) | {{PRISMA_BEFORE}} | {{PRISMA_AFTER}} | {{PRISMA_DELTA}} |
-| API Route Design (10%) | {{API_BEFORE}} | {{API_AFTER}} | {{API_DELTA}} |
-| State Management (10%) | {{STATE_BEFORE}} | {{STATE_AFTER}} | {{STATE_DELTA}} |
+| API Route Design (15%) | {{API_BEFORE}} | {{API_AFTER}} | {{API_DELTA}} |
+| State Management (8%) | {{STATE_BEFORE}} | {{STATE_AFTER}} | {{STATE_DELTA}} |
 | Caching & Revalidation (10%) | {{CACHE_BEFORE}} | {{CACHE_AFTER}} | {{CACHE_DELTA}} |
 | Type Safety (10%) | {{TYPE_BEFORE}} | {{TYPE_AFTER}} | {{TYPE_DELTA}} |
 | Error Propagation (8%) | {{ERR_BEFORE}} | {{ERR_AFTER}} | {{ERR_DELTA}} |
-| Form Handling (8%) | {{FORM_BEFORE}} | {{FORM_AFTER}} | {{FORM_DELTA}} |
+| Form Handling (7%) | {{FORM_BEFORE}} | {{FORM_AFTER}} | {{FORM_DELTA}} |
 | Data Transformation (5%) | {{DTO_BEFORE}} | {{DTO_AFTER}} | {{DTO_DELTA}} |
 
 - **Final Grade**: {{GRADE_AFTER}}

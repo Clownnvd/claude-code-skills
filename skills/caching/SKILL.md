@@ -1,6 +1,7 @@
 ---
 name: caching
 description: Caching quality system. 3 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score->fix until target). Next.js 16 App Router.
+license: Complete terms in LICENSE.txt
 ---
 
 # Caching Quality System
@@ -37,8 +38,8 @@ Audit caching strategy against 10 weighted categories (0-100 scale, A+ to F grad
 | Grade | Score | Grade | Score | Grade | Score |
 |-------|-------|-------|-------|-------|-------|
 | A+ | 97-100 | B+ | 87-89 | C+ | 77-79 |
-| A | 93-96 | B | 83-86 | C | 70-76 |
-| A- | 90-92 | B- | 80-82 | D | 60-69 |
+| A | 93-96 | B | 83-86 | C | 73-76 |
+| A- | 90-92 | B- | 80-82 | D | 60-72 |
 | | | | | F | <60 |
 
 ### Score Workflow

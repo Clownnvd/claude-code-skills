@@ -17,6 +17,7 @@
 
 ## Fixes Applied
 
+<!-- Repeat this block for each fix. Increment {{FIX_NUMBER}} sequentially. -->
 ### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
 
 - **Severity**: {{SEVERITY}}

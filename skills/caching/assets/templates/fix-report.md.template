@@ -17,6 +17,7 @@
 
 ## Fixes Applied
 
+<!-- Repeat this block for each fix. Increment {{FIX_NUMBER}} sequentially. -->
 ### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
 
 - **Severity**: {{SEVERITY}}
@@ -51,12 +52,12 @@
 | Revalidation Strategy (15%) | {{REVAL_BEFORE}} | {{REVAL_AFTER}} | {{REVAL_DELTA}} |
 | Static/Dynamic (12%) | {{SD_BEFORE}} | {{SD_AFTER}} | {{SD_DELTA}} |
 | ISR (8%) | {{ISR_BEFORE}} | {{ISR_AFTER}} | {{ISR_DELTA}} |
-| React cache() (12%) | {{RC_BEFORE}} | {{RC_AFTER}} | {{RC_DELTA}} |
+| React cache() (10%) | {{RC_BEFORE}} | {{RC_AFTER}} | {{RC_DELTA}} |
 | "use cache" (10%) | {{UC_BEFORE}} | {{UC_AFTER}} | {{UC_DELTA}} |
 | CDN (8%) | {{CDN_BEFORE}} | {{CDN_AFTER}} | {{CDN_DELTA}} |
-| Request Dedup (10%) | {{DEDUP_BEFORE}} | {{DEDUP_AFTER}} | {{DEDUP_DELTA}} |
-| Proxy Caching (5%) | {{PROXY_BEFORE}} | {{PROXY_AFTER}} | {{PROXY_DELTA}} |
-| Monitoring (5%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
+| Request Dedup (7%) | {{DEDUP_BEFORE}} | {{DEDUP_AFTER}} | {{DEDUP_DELTA}} |
+| Proxy Caching (7%) | {{PROXY_BEFORE}} | {{PROXY_AFTER}} | {{PROXY_DELTA}} |
+| Monitoring (8%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
 
 - **Final Grade**: {{GRADE_AFTER}}
 - **Final Score**: {{SCORE_AFTER}}/100

@@ -1,6 +1,7 @@
 ---
 name: auth
 description: Auth quality system. 3 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score->fix until target). Better Auth + Next.js patterns.
+license: Complete terms in LICENSE.txt
 ---
 
 # Auth Quality System

@@ -91,6 +91,8 @@ Automated score-fix cycle. Runs score -> fix -> re-score until target grade is m
 4. Repeat until target grade reached or no score improvement between iterations
 
 Default target: **B+ (87+)**. Override with "loop until A-" or similar.
+- Max 5 iterations
+- Stop on plateau (score unchanged after full fix cycle)
 
 ## Stack Adjustments
 
