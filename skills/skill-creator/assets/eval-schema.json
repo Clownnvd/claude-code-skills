@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Skill Eval",
+  "description": "Schema for Claude Code skill evaluation files. Each eval file tests a specific aspect of skill behavior.",
+  "type": "object",
+  "required": ["skill", "eval_name", "description", "tests"],
+  "properties": {
+    "skill": {
+      "type": "string",
+      "description": "Skill name matching the directory name (e.g., 'api-scoring')"
+    },
+    "eval_name": {
+      "type": "string",
+      "description": "Eval identifier without file extension (e.g., 'scoring-workflow')"
+    },
+    "description": {
+      "type": "string",
+      "description": "One-line description of what this eval validates"
+    },
+    "tests": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "prompt", "expectations"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Unique test ID within this eval (e.g., 'valid-score-range')"
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable test name"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "The prompt or instruction to give the skill"
+          },
+          "setup": {
+            "type": "string",
+            "description": "Optional setup/preconditions before running the test"
+          },
+          "input_files": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Optional list of input file paths needed for the test"
+          },
+          "expectations": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" },
+            "description": "List of expected behaviors/outputs to verify"
+          },
+          "pass_criteria": {
+            "type": "string",
+            "description": "Concise pass/fail criteria for the test"
+          },
+          "fail_indicators": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Optional list of outputs that indicate failure"
+          }
+        }
+      }
+    }
+  }
+}

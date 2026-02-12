@@ -1,0 +1,72 @@
+{
+  "skill": "caching-fix",
+  "eval_name": "eval-fix-patterns",
+  "description": "Verify specific fix patterns from references/fix-patterns/ produce correct code changes for caching issues.",
+  "tests": [
+    {
+      "id": "no-cache-headers-on-authenticated-responses",
+      "name": "NO_CACHE_HEADERS on Authenticated Responses (headers-revalidation.md)",
+      "prompt": "Apply NO_CACHE_HEADERS pattern to prevent caching of authenticated API responses",
+      "setup": "Authenticated API routes return `successResponse(data)` without cache headers. User-specific data could be cached by intermediaries.",
+      "input_files": [],
+      "expectations": [
+        "Apply NO_CACHE_HEADERS pattern",
+        "Verify `NO_CACHE_HEADERS` constant defined as `{ \"Cache-Control\": \"private, no-store\" }`",
+        "Verify all authenticated API routes pass `NO_CACHE_HEADERS` to `successResponse()`"
+      ],
+      "pass_criteria": "Every authenticated route returns `Cache-Control: private, no-store`. Public endpoints (health) use `public, s-maxage` instead.",
+      "fail_indicators": [
+        "Authenticated routes still missing cache headers, or public endpoints get `no-store`"
+      ]
+    },
+    {
+      "id": "cache-session-dedup",
+      "name": "cache() Session Dedup (react-cache-use-cache.md)",
+      "prompt": "Apply cache() wrapper pattern to deduplicate session queries across Server Components",
+      "setup": "Multiple Server Components in the same request tree each call `auth.api.getSession()`, causing duplicate DB queries.",
+      "input_files": [],
+      "expectations": [
+        "Apply `cache()` wrapper pattern",
+        "Verify `getServerSession` exported from `src/lib/auth/server.ts` wrapped with `cache()`",
+        "Verify layout.tsx and page.tsx both import from the shared cached function"
+      ],
+      "pass_criteria": "Single DB query per request even when multiple components call `getServerSession()`. `cache()` import from `\"react\"`. Both layout and page use the shared function.",
+      "fail_indicators": [
+        "Components still call `auth.api.getSession()` directly, or `cache()` imported from wrong package"
+      ]
+    },
+    {
+      "id": "static-page-conversion",
+      "name": "Static Page Conversion (static-dynamic-isr.md)",
+      "prompt": "Apply Static Page Conversion pattern to convert dynamic landing page to static",
+      "setup": "Landing page renders dynamically because header reads server session via `headers()`.",
+      "input_files": [],
+      "expectations": [
+        "Apply Static Page Conversion pattern",
+        "Verify server-side session check moved to client component using `useSession()`",
+        "Verify `export const dynamic = \"force-dynamic\"` removed from landing page",
+        "Verify `pnpm build` output shows landing page as static (circle icon)"
+      ],
+      "pass_criteria": "Landing page builds as static. Auth state checked client-side. No `headers()` or `cookies()` call in the page tree.",
+      "fail_indicators": [
+        "Page still dynamic in build output, or auth check removed entirely"
+      ]
+    },
+    {
+      "id": "revalidate-path-after-mutations",
+      "name": "revalidatePath After Mutations (headers-revalidation.md)",
+      "prompt": "Apply revalidatePath pattern to trigger cache revalidation after data mutations",
+      "setup": "Prisma `create`/`update` calls in API routes and webhooks do not trigger cache revalidation. Dashboard shows stale data after purchase.",
+      "input_files": [],
+      "expectations": [
+        "Apply revalidatePath pattern",
+        "Verify `revalidatePath(\"/dashboard\")` called after purchase creation",
+        "Verify webhook handlers also call revalidation"
+      ],
+      "pass_criteria": "After `prisma.purchase.create()`, `revalidatePath(\"/dashboard\")` called. Stripe webhook handler includes revalidation. Dashboard reflects new purchase without manual refresh.",
+      "fail_indicators": [
+        "No revalidation added, or revalidation on wrong path, or only added in API route but not webhook"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "skill": "skill-creator",
+  "eval_name": "eval-quality-gates",
+  "description": "Validate quality gate enforcement rules for skill creation and packaging.",
+  "tests": [
+    {
+      "id": "skill-md-size-limit",
+      "name": "SKILL.md Size Limit",
+      "prompt": "Validate a skill with an oversized SKILL.md",
+      "setup": "SKILL.md with 160 lines (over 150 limit).",
+      "input_files": [
+        "SKILL.md"
+      ],
+      "expectations": [
+        "Validation warns about size",
+        "Packager should flag as issue"
+      ],
+      "pass_criteria": "Size warning or flag raised for SKILL.md exceeding 150 lines.",
+      "fail_indicators": [
+        "No warning for oversized SKILL.md",
+        "Packaging proceeds without flagging"
+      ]
+    },
+    {
+      "id": "reference-file-size-limit",
+      "name": "Reference File Size Limit",
+      "prompt": "Validate a skill with an oversized reference file",
+      "setup": "Single reference file with 200 lines (over 150 limit).",
+      "input_files": [
+        "references/large-reference.md"
+      ],
+      "expectations": [
+        "Should recommend splitting into 2 files of ~100 lines each"
+      ],
+      "pass_criteria": "Recommendation to split the oversized reference file.",
+      "fail_indicators": [
+        "No recommendation to split",
+        "Oversized file accepted silently"
+      ]
+    },
+    {
+      "id": "description-length",
+      "name": "Description Length",
+      "prompt": "Validate skills with various description lengths",
+      "setup": "Test with multiple description lengths: 50 chars, 199 chars, 200 chars, 250 chars.",
+      "input_files": [],
+      "expectations": [
+        "50 chars: Pass",
+        "199 chars: Pass",
+        "200 chars: Fail — over limit",
+        "250 chars: Fail — over limit"
+      ],
+      "pass_criteria": "Descriptions under 200 chars pass; 200+ chars fail.",
+      "fail_indicators": [
+        "Description of 200+ chars passes validation",
+        "Description under 200 chars fails validation"
+      ]
+    },
+    {
+      "id": "no-duplication-rule",
+      "name": "No Duplication Rule",
+      "prompt": "Validate a skill with duplicated content between SKILL.md and references",
+      "setup": "Same paragraph appears in both SKILL.md and `references/overview.md`.",
+      "input_files": [
+        "SKILL.md",
+        "references/overview.md"
+      ],
+      "expectations": [
+        "Should be flagged",
+        "Info lives in ONE place only"
+      ],
+      "pass_criteria": "Duplication flagged. Content must exist in only one location.",
+      "fail_indicators": [
+        "Duplicated content not detected",
+        "No flag raised for duplication"
+      ]
+    },
+    {
+      "id": "writing-style-check",
+      "name": "Writing Style Check",
+      "prompt": "Validate writing style in skill documentation",
+      "setup": "Test with both valid and invalid writing style examples.",
+      "input_files": [],
+      "expectations": [
+        "Pass: \"To configure auth, set the `AUTH_SECRET` environment variable\"",
+        "Pass: \"Run `scripts/init.py` to scaffold the project\"",
+        "Fail: \"You should configure auth by setting the variable\" (second person)",
+        "Fail: \"This document explains how to...\" (meta-language, not actionable)"
+      ],
+      "pass_criteria": "Imperative, actionable writing passes. Second person and meta-language fail.",
+      "fail_indicators": [
+        "Second person language passes style check",
+        "Meta-language passes style check",
+        "Imperative style flagged as invalid"
+      ]
+    },
+    {
+      "id": "script-test-requirement",
+      "name": "Script Test Requirement",
+      "prompt": "Validate a skill where scripts lack corresponding tests",
+      "setup": "`scripts/main.py` exists but no `scripts/test_main.py`.",
+      "input_files": [
+        "scripts/main.py"
+      ],
+      "expectations": [
+        "Flag as issue — all scripts must have corresponding tests"
+      ],
+      "pass_criteria": "Missing test file flagged for scripts/main.py.",
+      "fail_indicators": [
+        "Missing test not detected",
+        "Script without test passes validation"
+      ]
+    },
+    {
+      "id": "consolidated-topics",
+      "name": "Consolidated Topics",
+      "prompt": "Evaluate two separate but related skills for consolidation",
+      "setup": "Two separate skills: `mongodb-scoring` and `postgresql-scoring`.",
+      "input_files": [],
+      "expectations": [
+        "Should recommend consolidating into `db-scoring` with subdirectories"
+      ],
+      "pass_criteria": "Consolidation recommendation made for related skills.",
+      "fail_indicators": [
+        "No consolidation recommendation",
+        "Related skills treated as independent without comment"
+      ]
+    }
+  ]
+}

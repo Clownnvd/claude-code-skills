@@ -1,0 +1,73 @@
+{
+  "skill": "api-fix",
+  "eval_name": "eval-fix-patterns",
+  "description": "Verify specific fix patterns from references/fix-patterns/ produce correct code changes for API issues.",
+  "tests": [
+    {
+      "id": "csp-hardening",
+      "name": "CSP Hardening (security-auth.md)",
+      "prompt": "Apply CSP Hardening pattern to remove unsafe-eval and add nonce-based or strict-dynamic approach",
+      "setup": "Proxy has `Content-Security-Policy` with `'unsafe-inline' 'unsafe-eval'`.",
+      "input_files": [],
+      "expectations": [
+        "Apply CSP Hardening pattern",
+        "Verify `'unsafe-eval'` removed from script-src",
+        "Verify nonce generation or `'strict-dynamic'` added"
+      ],
+      "pass_criteria": "CSP no longer contains `'unsafe-eval'`. Nonce-based or `strict-dynamic` approach used. Inline scripts still work via nonce.",
+      "fail_indicators": [
+        "`'unsafe-eval'` still present, or CSP removed entirely, or page breaks"
+      ]
+    },
+    {
+      "id": "per-user-rate-limiting",
+      "name": "Per-User Rate Limiting (ratelimit-response-perf.md)",
+      "prompt": "Apply Per-User Rate Limiting pattern to add userId-based rate limit keys",
+      "setup": "Rate limiter uses only IP-based keys: `${identifier}:${ip}`.",
+      "input_files": [],
+      "expectations": [
+        "Apply Per-User Rate Limiting pattern",
+        "Verify `userId` parameter added to `rateLimit()` function",
+        "Verify authenticated routes pass `session.user.id`"
+      ],
+      "pass_criteria": "Rate limit key uses `user:${userId}` when authenticated, falls back to `ip:${ip}` when not. At least one authenticated route updated to pass userId.",
+      "fail_indicators": [
+        "Only IP-based limiting remains, or userId not passed from route handlers"
+      ]
+    },
+    {
+      "id": "machine-readable-error-codes",
+      "name": "Machine-Readable Error Codes (input-errors.md)",
+      "prompt": "Apply Machine-Readable Error Codes pattern to add error code fields to API responses",
+      "setup": "API returns `{ success: false, error: \"Validation failed\" }` without a `code` field.",
+      "input_files": [],
+      "expectations": [
+        "Apply Machine-Readable Error Codes pattern",
+        "Verify `errorResponse()` signature updated with `code` parameter",
+        "Verify `ErrorCodes` constant object created",
+        "Verify at least 3 call sites updated to include error codes"
+      ],
+      "pass_criteria": "Error responses include `code` field (e.g., `VALIDATION_ERROR`, `UNAUTHORIZED`). `ErrorCodes` constant defined. Call sites use codes from the constant.",
+      "fail_indicators": [
+        "No `code` field in responses, or codes are arbitrary strings not from a central enum"
+      ]
+    },
+    {
+      "id": "request-level-structured-logging",
+      "name": "Request-Level Structured Logging (observability-docs-testing.md)",
+      "prompt": "Apply Request-Level Structured Logging pattern to add per-request logging to API routes",
+      "setup": "No per-request logging; only Prisma slow query logs exist.",
+      "input_files": [],
+      "expectations": [
+        "Apply Request-Level Structured Logging pattern",
+        "Verify `logRequest()` function created in `src/lib/api/logger.ts`",
+        "Verify function logs method, path, status, durationMs, timestamp",
+        "Verify at least 2 API route handlers call `logRequest()`"
+      ],
+      "pass_criteria": "`logRequest()` emits JSON in production, human-readable in dev. Route handlers log on both success and error paths. Log includes all required fields.",
+      "fail_indicators": [
+        "Logger missing fields, or only logs errors, or no route handlers use it"
+      ]
+    }
+  ]
+}

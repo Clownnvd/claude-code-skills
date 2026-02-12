@@ -1,0 +1,73 @@
+{
+  "skill": "api-fix",
+  "eval_name": "eval-fix-workflow",
+  "description": "Verify the api-fix skill correctly parses scoring output, prioritizes, fixes, and re-scores.",
+  "tests": [
+    {
+      "id": "accept-scoring-input",
+      "name": "Accept Scoring Input",
+      "prompt": "Run api-fix with the scorecard as input",
+      "setup": "Provide an api-scoring scorecard with 6 issues across Security, Input Validation, Rate Limiting.",
+      "input_files": [],
+      "expectations": [
+        "Run api-fix with the scorecard as input",
+        "Verify skill parses all 6 issues with correct severity and category",
+        "Verify skill identifies the weighted score and grade"
+      ],
+      "pass_criteria": "All issues extracted. No issue lost or duplicated.",
+      "fail_indicators": []
+    },
+    {
+      "id": "fix-in-severity-order",
+      "name": "Fix in Severity Order",
+      "prompt": "Run api-fix and observe fix application order",
+      "setup": "Scorecard contains CRITICAL (CSP unsafe-eval), HIGH (no per-user rate limiting), MEDIUM (missing error codes).",
+      "input_files": [],
+      "expectations": [
+        "Run api-fix",
+        "Observe fix application order"
+      ],
+      "pass_criteria": "CSP fix applied first (CRITICAL), then rate limiting (HIGH, 10% weight), then error codes (MEDIUM). No MEDIUM fix applied before all HIGH items resolved.",
+      "fail_indicators": []
+    },
+    {
+      "id": "fix-references-correct-pattern",
+      "name": "Fix References Correct Pattern",
+      "prompt": "Run api-fix and check which reference file the skill loads",
+      "setup": "Issue in \"Rate Limiting\" category scored 4/10.",
+      "input_files": [],
+      "expectations": [
+        "Run api-fix",
+        "Check which reference file the skill loads"
+      ],
+      "pass_criteria": "Skill loads `references/fix-patterns/ratelimit-response-perf.md` and applies the \"Per-User Rate Limiting\" pattern. Fix code matches the pattern structure (userId parameter, key prefix).",
+      "fail_indicators": []
+    },
+    {
+      "id": "verification-step-confirms-fix",
+      "name": "Verification Step Confirms Fix",
+      "prompt": "Run api-fix to apply the Content-Type Enforcement fix and verify compilation and tests",
+      "setup": "Apply the \"Content-Type Enforcement\" fix from `input-errors.md`.",
+      "input_files": [],
+      "expectations": [
+        "Run api-fix to apply the fix",
+        "Check that skill verifies: TypeScript compiles, existing tests pass, the specific criterion improves"
+      ],
+      "pass_criteria": "Skill runs `pnpm tsc --noEmit` or equivalent. Reports verification result before moving to next fix.",
+      "fail_indicators": []
+    },
+    {
+      "id": "re-score-shows-improvement",
+      "name": "Re-Score Shows Improvement",
+      "prompt": "Run api-fix through full cycle and compare before/after scores",
+      "setup": "Initial score 62/100 (grade C+). Apply fixes for 3 CRITICAL + 2 HIGH issues.",
+      "input_files": [],
+      "expectations": [
+        "Run api-fix through full cycle",
+        "Compare before/after scores per category"
+      ],
+      "pass_criteria": "Re-score produces a higher weighted score. Each fixed category shows improvement. Final grade is at least B. Report uses `assets/templates/fix-report.md.template` format.",
+      "fail_indicators": []
+    }
+  ]
+}

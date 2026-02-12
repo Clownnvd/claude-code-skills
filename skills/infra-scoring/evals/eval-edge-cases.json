@@ -1,0 +1,104 @@
+{
+  "skill": "infra-scoring",
+  "eval_name": "eval-edge-cases",
+  "description": "Verify correct behavior for infrastructure-specific edge cases.",
+  "tests": [
+    {
+      "id": "no-ci-cd-pipeline-configured",
+      "name": "No CI/CD Pipeline Configured",
+      "prompt": "Run infra-scoring against a codebase with no GitHub Actions or CI config files",
+      "setup": "Provide a codebase with no GitHub Actions or CI config files",
+      "input_files": [],
+      "expectations": [
+        "CI Pipeline and CD Pipeline both score 0",
+        "CRITICAL issue flags absence of automated testing",
+        "Production Deploy also penalized (no automated path)"
+      ],
+      "pass_criteria": "CI and CD both score 0, CRITICAL for missing automated testing, Production Deploy penalized",
+      "fail_indicators": ["CI or CD scores above 0", "Missing CRITICAL flag for no automated testing"]
+    },
+    {
+      "id": "dockerfile-without-multi-stage-build",
+      "name": "Dockerfile Without Multi-Stage Build",
+      "prompt": "Provide a single-stage Dockerfile including dev dependencies in final image and run infra-scoring",
+      "setup": "Provide a single-stage Dockerfile including dev dependencies in final image",
+      "input_files": [],
+      "expectations": [
+        "Containerization scores <= 4",
+        "Issue flags bloated image size",
+        "Fix recommends multi-stage build with separate builder stage"
+      ],
+      "pass_criteria": "Containerization score <= 4, bloated image flagged, multi-stage build recommended",
+      "fail_indicators": ["Containerization score above 4", "Multi-stage build not recommended"]
+    },
+    {
+      "id": "hardcoded-secrets-in-ci-config",
+      "name": "Hardcoded Secrets in CI Config",
+      "prompt": "Provide workflow YAML with hardcoded API keys or passwords and run infra-scoring",
+      "setup": "Provide workflow YAML with hardcoded API keys or passwords",
+      "input_files": [],
+      "expectations": [
+        "Environment Management scores <= 1 (CRITICAL)",
+        "Security in Deployment also penalized",
+        "Issue recommends GitHub Secrets or vault injection"
+      ],
+      "pass_criteria": "Environment Management score <= 1 (CRITICAL), Security penalized, secrets management recommended",
+      "fail_indicators": ["Environment Management score above 1", "Secrets management not recommended"]
+    },
+    {
+      "id": "no-health-check-endpoints",
+      "name": "No Health Check Endpoints",
+      "prompt": "Provide deployed service with no /health or readiness probe and run infra-scoring",
+      "setup": "Provide deployed service with no /health or readiness probe",
+      "input_files": [],
+      "expectations": [
+        "Monitoring & Observability scores <= 3",
+        "Issue recommends health check endpoint with dependency checks",
+        "Backup/DR also checked for recovery detection"
+      ],
+      "pass_criteria": "Monitoring score <= 3, health check recommended, Backup/DR checked",
+      "fail_indicators": ["Monitoring score above 3", "Health check not recommended"]
+    },
+    {
+      "id": "no-rollback-strategy",
+      "name": "No Rollback Strategy",
+      "prompt": "Provide deployment config with no rollback mechanism and run infra-scoring",
+      "setup": "Provide deployment config with no rollback mechanism",
+      "input_files": [],
+      "expectations": [
+        "Production Deploy scores <= 3",
+        "Issue flags risk of stuck bad deployments",
+        "Fix recommends blue-green, canary, or version pinning"
+      ],
+      "pass_criteria": "Production Deploy score <= 3, stuck deployment risk flagged, rollback strategy recommended",
+      "fail_indicators": ["Production Deploy score above 3", "Rollback strategy not recommended"]
+    },
+    {
+      "id": "third-party-calls-without-timeout",
+      "name": "Third-Party Calls Without Timeout",
+      "prompt": "Provide code calling external APIs without timeout or retry logic and run infra-scoring",
+      "setup": "Provide code calling external APIs without timeout or retry logic",
+      "input_files": [],
+      "expectations": [
+        "Third-Party Integrations scores <= 3",
+        "Issue recommends timeout, retry with backoff, and circuit breaker",
+        "Affected external call sites listed"
+      ],
+      "pass_criteria": "Third-Party score <= 3, timeout/retry/circuit breaker recommended, call sites listed",
+      "fail_indicators": ["Third-Party score above 3", "Call sites not listed"]
+    },
+    {
+      "id": "missing-dockerignore",
+      "name": "Missing .dockerignore",
+      "prompt": "Provide Docker setup with no .dockerignore file and run infra-scoring",
+      "setup": "Provide Docker setup with no .dockerignore file",
+      "input_files": [],
+      "expectations": [
+        "Containerization penalized for including node_modules, .git, .env",
+        "Security in Deployment also flagged for secret leak risk"
+      ],
+      "pass_criteria": "Containerization penalized for missing .dockerignore, Security flagged for secret leak risk",
+      "fail_indicators": ["Missing .dockerignore not flagged", "Secret leak risk not mentioned"]
+    }
+  ]
+}

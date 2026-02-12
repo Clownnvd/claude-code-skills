@@ -1,0 +1,75 @@
+{
+  "skill": "security-fix",
+  "eval_name": "eval-fix-patterns",
+  "description": "Verify specific fix patterns from references/fix-patterns/ produce correct code changes for security issues.",
+  "tests": [
+    {
+      "id": "zod-validation-on-api-routes",
+      "name": "Zod Validation on API Routes (input-secrets.md)",
+      "prompt": "Apply Zod Validation pattern to add strict input validation to API routes",
+      "setup": "API route reads `await req.json()` and uses `body.email` without validation. Accepts any shape.",
+      "input_files": [],
+      "expectations": [
+        "Apply Zod Validation pattern",
+        "Verify schema created in `src/lib/validations/` with `.strict()`",
+        "Verify `safeParse()` used (not `parse()` which throws)",
+        "Verify validation error returns 400 with field-level errors"
+      ],
+      "pass_criteria": "Invalid input returns `{ success: false, errors: { email: [\"Invalid email\"] } }`. Extra fields rejected by `.strict()`. Valid input proceeds to handler.",
+      "fail_indicators": [
+        "No validation added, or `.strict()` missing (extra fields accepted), or `parse()` used (uncaught throw)"
+      ]
+    },
+    {
+      "id": "csp-headers-in-proxy",
+      "name": "CSP Headers in Proxy (csp-data.md)",
+      "prompt": "Apply CSP pattern to add Content-Security-Policy headers to all responses",
+      "setup": "No Content-Security-Policy header on any response. Scripts can load from any origin.",
+      "input_files": [],
+      "expectations": [
+        "Apply CSP pattern",
+        "Verify CSP directives include: `default-src 'self'`, `script-src 'self'`, `frame-ancestors 'none'`, `base-uri 'self'`",
+        "Verify `style-src 'self' 'unsafe-inline'` for Tailwind compatibility",
+        "Verify `connect-src` allows Stripe API"
+      ],
+      "pass_criteria": "CSP header present on all responses. Scripts restricted to same origin. iframes blocked via `frame-ancestors 'none'`. Stripe checkout still works via `connect-src` and `frame-src`.",
+      "fail_indicators": [
+        "CSP missing, or too permissive (`*` in any directive), or breaks Stripe integration"
+      ]
+    },
+    {
+      "id": "open-redirect-blocking",
+      "name": "Open Redirect Blocking (redirect-webhook.md)",
+      "prompt": "Apply Open Redirect Blocking pattern to validate callbackUrl parameters",
+      "setup": "`callbackUrl` query parameter used after login redirect. No validation on the URL value. Attacker can set `callbackUrl=https://evil.com`.",
+      "input_files": [],
+      "expectations": [
+        "Apply Open Redirect Blocking pattern",
+        "Verify `isValidRedirectUrl()` function rejects protocol-relative URLs (`//evil.com`)",
+        "Verify only relative paths starting with `/` accepted",
+        "Verify decoded variants also checked (`%2F%2F` blocked)"
+      ],
+      "pass_criteria": "`callbackUrl=//evil.com` blocked. `callbackUrl=/dashboard` allowed. `callbackUrl=https://evil.com` blocked. Fallback redirects to `/dashboard`.",
+      "fail_indicators": [
+        "External URLs accepted, or encoded bypass works, or all callbackUrls rejected"
+      ]
+    },
+    {
+      "id": "webhook-signature-verification",
+      "name": "Webhook Signature Verification (redirect-webhook.md)",
+      "prompt": "Apply Signature Verification pattern to validate Stripe webhook signatures",
+      "setup": "Stripe webhook handler processes events without verifying the `stripe-signature` header. Any POST to the endpoint is accepted.",
+      "input_files": [],
+      "expectations": [
+        "Apply Signature Verification pattern",
+        "Verify `stripe.webhooks.constructEvent()` called with raw body and signature",
+        "Verify missing signature returns 401",
+        "Verify invalid signature returns 401 with `\"Invalid signature\"` message"
+      ],
+      "pass_criteria": "Valid Stripe signature accepted. Missing signature rejected with 401. Tampered body rejected. Raw body used (not parsed JSON). Webhook secret from env, not hardcoded.",
+      "fail_indicators": [
+        "No signature check, or parsed JSON used instead of raw body, or secret hardcoded"
+      ]
+    }
+  ]
+}

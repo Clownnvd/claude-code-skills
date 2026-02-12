@@ -1,0 +1,101 @@
+{
+  "skill": "skill-creator",
+  "eval_name": "eval-package-skill",
+  "description": "Validate package_skill.py creates correct zip archives and handles errors.",
+  "tests": [
+    {
+      "id": "valid-skill-packages-successfully",
+      "name": "Valid Skill Packages Successfully",
+      "prompt": "python scripts/package_skill.py /path/to/valid-skill",
+      "setup": "A valid skill directory that passes quick_validate.py.",
+      "input_files": [],
+      "expectations": [
+        "Runs validation first (prints \"Skill is valid!\")",
+        "Creates `valid-skill.zip` in current directory",
+        "Zip contains all files with correct relative paths",
+        "Exit code: 0"
+      ],
+      "pass_criteria": "Validation runs, zip created with correct structure, exit 0.",
+      "fail_indicators": [
+        "Validation step skipped",
+        "Zip not created",
+        "Incorrect paths inside zip"
+      ]
+    },
+    {
+      "id": "invalid-skill-rejects-packaging",
+      "name": "Invalid Skill Rejects Packaging",
+      "prompt": "python scripts/package_skill.py /path/to/invalid-skill",
+      "setup": "Skill with missing `name:` in frontmatter.",
+      "input_files": [],
+      "expectations": [
+        "Prints validation error",
+        "No zip created",
+        "Exit code: 1"
+      ],
+      "pass_criteria": "Validation error printed, no zip file created, exit 1.",
+      "fail_indicators": [
+        "Zip created despite validation failure",
+        "Validation error suppressed"
+      ]
+    },
+    {
+      "id": "custom-output-directory",
+      "name": "Custom Output Directory",
+      "prompt": "python scripts/package_skill.py /path/to/skill ./dist",
+      "setup": "./dist directory does not exist yet.",
+      "input_files": [],
+      "expectations": [
+        "`./dist/` created if not exists",
+        "`./dist/skill.zip` created",
+        "Exit code: 0"
+      ],
+      "pass_criteria": "Output directory created and zip placed in correct location.",
+      "fail_indicators": [
+        "Failure due to missing output directory",
+        "Zip created in wrong location"
+      ]
+    },
+    {
+      "id": "nonexistent-skill-path",
+      "name": "Nonexistent Skill Path",
+      "prompt": "python scripts/package_skill.py /nonexistent/path",
+      "setup": "Path /nonexistent/path does not exist.",
+      "input_files": [],
+      "expectations": [
+        "Exit code: 1",
+        "Output: \"Skill folder not found\""
+      ],
+      "pass_criteria": "Exit 1 with \"Skill folder not found\" error.",
+      "fail_indicators": [
+        "Unhandled exception or traceback",
+        "Exit 0 for nonexistent path"
+      ]
+    },
+    {
+      "id": "zip-content-verification",
+      "name": "Zip Content Verification",
+      "prompt": "Package a skill and verify zip contents",
+      "setup": "Skill directory with `SKILL.md`, `references/a.md`, `scripts/b.py`, `assets/c.txt`.",
+      "input_files": [
+        "SKILL.md",
+        "references/a.md",
+        "scripts/b.py",
+        "assets/c.txt"
+      ],
+      "expectations": [
+        "Zip structure contains: skill-name/SKILL.md",
+        "Zip structure contains: skill-name/references/a.md",
+        "Zip structure contains: skill-name/scripts/b.py",
+        "Zip structure contains: skill-name/assets/c.txt",
+        "All paths relative to skill parent directory"
+      ],
+      "pass_criteria": "Zip contains all files with correct relative directory structure.",
+      "fail_indicators": [
+        "Absolute paths in zip",
+        "Missing files in zip",
+        "Flat structure without subdirectories"
+      ]
+    }
+  ]
+}

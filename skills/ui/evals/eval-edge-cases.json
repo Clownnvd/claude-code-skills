@@ -1,0 +1,106 @@
+{
+  "skill": "ui",
+  "eval_name": "eval-edge-cases",
+  "description": "Verify correct behavior for UI-specific edge cases.",
+  "tests": [
+    {
+      "id": "no-responsive-breakpoints",
+      "name": "No Responsive Breakpoints",
+      "prompt": "Provide components with fixed pixel widths and no media queries and run ui scoring",
+      "setup": "Provide components with fixed pixel widths and no media queries",
+      "input_files": [],
+      "expectations": [
+        "Responsiveness scores <= 3 (CRITICAL)",
+        "Spacing & Layout also penalized for non-fluid layout",
+        "Issue identifies specific components lacking breakpoints"
+      ],
+      "pass_criteria": "Responsiveness score <= 3 (CRITICAL), Spacing penalized, specific components identified",
+      "fail_indicators": ["Responsiveness score above 3", "Specific components not identified"]
+    },
+    {
+      "id": "missing-aria-labels-and-alt-text",
+      "name": "Missing ARIA Labels and Alt Text",
+      "prompt": "Provide interactive elements without ARIA attributes and images without alt text and run ui scoring",
+      "setup": "Provide interactive elements without ARIA attributes and images without alt text",
+      "input_files": [],
+      "expectations": [
+        "Accessibility scores <= 2 (CRITICAL)",
+        "Issue lists each failing element and its location",
+        "Fix recommends specific ARIA roles and alt text patterns"
+      ],
+      "pass_criteria": "Accessibility score <= 2 (CRITICAL), failing elements listed, ARIA roles and alt text recommended",
+      "fail_indicators": ["Accessibility score above 2", "Failing elements not listed"]
+    },
+    {
+      "id": "no-visual-hierarchy-flat-design",
+      "name": "No Visual Hierarchy (Flat Design)",
+      "prompt": "Provide page where all text is same size, weight, and color and run ui scoring",
+      "setup": "Provide page where all text is same size, weight, and color",
+      "input_files": [],
+      "expectations": [
+        "Visual Hierarchy scores <= 3",
+        "Typography also penalized for missing type scale",
+        "Fix recommends heading hierarchy and emphasis patterns"
+      ],
+      "pass_criteria": "Visual Hierarchy score <= 3, Typography penalized, heading hierarchy recommended",
+      "fail_indicators": ["Visual Hierarchy score above 3", "Typography not penalized"]
+    },
+    {
+      "id": "hardcoded-colors-instead-of-design-tokens",
+      "name": "Hardcoded Colors Instead of Design Tokens",
+      "prompt": "Provide components using hex values instead of CSS variables from globals.css and run ui scoring",
+      "setup": "Provide components using hex values instead of CSS variables from globals.css",
+      "input_files": [],
+      "expectations": [
+        "Color & Theme scores <= 4",
+        "Issue identifies hardcoded color values",
+        "Fix recommends using existing CSS custom properties"
+      ],
+      "pass_criteria": "Color & Theme score <= 4, hardcoded colors identified, CSS custom properties recommended",
+      "fail_indicators": ["Color & Theme score above 4", "Hardcoded colors not identified"]
+    },
+    {
+      "id": "no-loading-or-feedback-states",
+      "name": "No Loading or Feedback States",
+      "prompt": "Provide interactive components (buttons, forms) with no loading indicators and run ui scoring",
+      "setup": "Provide interactive components (buttons, forms) with no loading indicators",
+      "input_files": [],
+      "expectations": [
+        "Interactions scores <= 3",
+        "Content & Copy penalized for missing feedback messaging",
+        "Nielsen heuristic \"Visibility of system status\" fails"
+      ],
+      "pass_criteria": "Interactions score <= 3, Content penalized, Nielsen visibility heuristic fails",
+      "fail_indicators": ["Interactions score above 3", "Nielsen heuristic not checked"]
+    },
+    {
+      "id": "cta-below-the-fold-with-no-visual-weight",
+      "name": "CTA Below the Fold With No Visual Weight",
+      "prompt": "Provide landing page with primary CTA buried or styled like secondary elements and run ui scoring",
+      "setup": "Provide landing page with primary CTA buried below the fold or styled like secondary elements",
+      "input_files": [],
+      "expectations": [
+        "Conversion & CTA scores <= 4",
+        "Visual Hierarchy also penalized",
+        "Fix recommends above-fold placement and contrasting CTA styling"
+      ],
+      "pass_criteria": "Conversion score <= 4, Visual Hierarchy penalized, above-fold placement recommended",
+      "fail_indicators": ["Conversion score above 4", "Above-fold placement not recommended"]
+    },
+    {
+      "id": "anti-bias-baseline-enforcement",
+      "name": "Anti-Bias Baseline Enforcement",
+      "prompt": "Run ui scoring and verify anti-bias baseline is enforced across all categories",
+      "setup": "Run ui scoring against any page",
+      "input_files": [],
+      "expectations": [
+        "No category starts above 7 without evidence",
+        "Scores of 9-10 cite specific positive evidence in Notes column",
+        "Scores below 5 cite specific failing checklist items",
+        "Output does not inflate scores for \"looking nice\" without criteria"
+      ],
+      "pass_criteria": "Anti-bias baseline enforced: no unearned scores above 7, high scores cite evidence, low scores cite failures, no inflation",
+      "fail_indicators": ["Category scores above 7 without evidence", "High scores lack evidence", "Score inflation without criteria"]
+    }
+  ]
+}

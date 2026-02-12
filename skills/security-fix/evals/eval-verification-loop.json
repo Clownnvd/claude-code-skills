@@ -1,0 +1,74 @@
+{
+  "skill": "security-fix",
+  "eval_name": "eval-verification-loop",
+  "description": "Verify the compile-test-rescore cycle, regression detection, and fix idempotency for security-fix.",
+  "tests": [
+    {
+      "id": "compile-test-verification",
+      "name": "Compile + Test Verification",
+      "prompt": "Apply the Zod Validation fix and verify compilation and tests pass",
+      "setup": "Scorecard with CRITICAL issue: no input validation on API routes (Input Validation 2/10). Apply the Zod Validation fix from `input-secrets.md` which adds `schema.safeParse(body)` with `.strict()` to route handlers.",
+      "input_files": [],
+      "expectations": [
+        "Create Zod schemas for each API route's expected body shape",
+        "Add `safeParse` with `.strict()` at the top of each POST/PUT/PATCH handler",
+        "Run `npx tsc --noEmit`. Verify zero type errors from new Zod schema types",
+        "Run `pnpm test`. Verify existing API tests still pass (request bodies must match new schemas)"
+      ],
+      "pass_criteria": "`tsc --noEmit` exits 0. All tests pass. Zod schema types exported as `z.infer<typeof schema>`. Error responses return 400 with `VALIDATION_ERROR` code for invalid input. No broken webhook handlers.",
+      "fail_indicators": [
+        "Type mismatch between Zod schema and existing handler types, test failure from stricter validation rejecting valid test payloads, or webhook endpoint broken by `.strict()`"
+      ]
+    },
+    {
+      "id": "re-score-improvement-verification",
+      "name": "Re-Score Improvement Verification",
+      "prompt": "Apply fixes for Input Validation and CSP categories and verify re-score improvement",
+      "setup": "Initial security-scoring scorecard: Input Validation 2/10, CSP 3/10, Secrets Management 6/10. Total 42/100 (D). Apply fixes for Zod validation (Input Validation) and Content-Security-Policy headers (CSP).",
+      "input_files": [],
+      "expectations": [
+        "Run security-fix for both issues",
+        "Invoke `security-scoring` to produce a new scorecard",
+        "Compare per-category scores: Input Validation, CSP must increase",
+        "Verify Secrets Management, Webhooks, Monitoring, and all other categories remain at or above pre-fix scores"
+      ],
+      "pass_criteria": "Input Validation >= 7/10 (was 2). CSP >= 6/10 (was 3). No category dropped below its pre-fix score. Total weighted score increased. CSP header contains no `'unsafe-eval'` in `script-src`. Comparison uses `references/verification.md` format.",
+      "fail_indicators": [
+        "Any unfixed category score decreased, or CSP still contains unsafe directives"
+      ]
+    },
+    {
+      "id": "regression-detection",
+      "name": "Regression Detection",
+      "prompt": "Apply a CSP fix that introduces an Auth Integration regression and verify pipeline detects it",
+      "setup": "Initial scorecard: Input Validation 8/10, CSP 7/10, Auth Integration 7/10. Apply a CSP fix that sets `frame-ancestors 'none'` and `form-action 'self'`, breaking the OAuth popup flow. Auth Integration drops from 7/10 to 3/10.",
+      "input_files": [],
+      "expectations": [
+        "Apply strict CSP that blocks OAuth provider redirect with `form-action 'self'`",
+        "Run `security-scoring` re-score",
+        "Verify pipeline detects Auth Integration dropped from 7 to 3 (delta -4)",
+        "Verify pipeline halts and recommends adding OAuth provider domains to `form-action` allowlist"
+      ],
+      "pass_criteria": "Pipeline detects the Auth Integration regression. Output flags: OAuth flow broken by CSP, before/after delta shown, recommendation to allowlist OAuth callback domains in `form-action`. Pipeline does not continue.",
+      "fail_indicators": [
+        "Pipeline ignores the auth regression and continues, or fails to link CSP changes to the OAuth breakage"
+      ]
+    },
+    {
+      "id": "fix-idempotency",
+      "name": "Fix Idempotency",
+      "prompt": "Run security-fix with an already-fixed input validation issue and verify no changes are made",
+      "setup": "Scorecard with CRITICAL issue: no input validation. All API routes already have Zod `safeParse` with `.strict()` from a previous fix run.",
+      "input_files": [],
+      "expectations": [
+        "Run security-fix with the same input validation issue",
+        "Check `git diff` after the fix attempt",
+        "Run `security-scoring` and compare scores to the post-first-fix scorecard"
+      ],
+      "pass_criteria": "No files modified (`git diff` is empty). Score remains identical. Skill reports \"already applied\" or \"no changes needed.\" No duplicate Zod schemas, no duplicate `safeParse` calls, no redundant validation middleware.",
+      "fail_indicators": [
+        "Duplicate schema definitions created, double validation on same route, or score changes from the second application"
+      ]
+    }
+  ]
+}

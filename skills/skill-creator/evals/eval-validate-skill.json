@@ -1,0 +1,124 @@
+{
+  "skill": "skill-creator",
+  "eval_name": "eval-validate-skill",
+  "description": "Validate quick_validate.py correctly accepts valid skills and rejects invalid ones.",
+  "tests": [
+    {
+      "id": "valid-skill-passes",
+      "name": "Valid Skill Passes",
+      "prompt": "Run quick_validate.py on a valid skill",
+      "setup": "Skill with correct `name: my-skill`, `description: Does X when Y` (<200 chars).",
+      "input_files": [],
+      "expectations": [
+        "Exit code: 0",
+        "Output: \"Skill is valid!\""
+      ],
+      "pass_criteria": "Exit 0 with \"Skill is valid!\" message.",
+      "fail_indicators": [
+        "Non-zero exit code for valid skill",
+        "Missing success message"
+      ]
+    },
+    {
+      "id": "missing-skill-md",
+      "name": "Missing SKILL.md",
+      "prompt": "Run quick_validate.py on a directory with no SKILL.md",
+      "setup": "Directory with no SKILL.md file.",
+      "input_files": [],
+      "expectations": [
+        "Exit code: 1",
+        "Output: \"SKILL.md not found\""
+      ],
+      "pass_criteria": "Exit 1 with \"SKILL.md not found\" error.",
+      "fail_indicators": [
+        "Exit 0 for missing SKILL.md",
+        "Unhandled exception"
+      ]
+    },
+    {
+      "id": "missing-frontmatter",
+      "name": "Missing Frontmatter",
+      "prompt": "Run quick_validate.py on a SKILL.md without YAML block",
+      "setup": "SKILL.md without `---` YAML block.",
+      "input_files": [],
+      "expectations": [
+        "Exit code: 1",
+        "Output: \"No YAML frontmatter found\""
+      ],
+      "pass_criteria": "Exit 1 with \"No YAML frontmatter found\" error.",
+      "fail_indicators": [
+        "Exit 0 for missing frontmatter",
+        "Different error message"
+      ]
+    },
+    {
+      "id": "missing-name-field",
+      "name": "Missing Name Field",
+      "prompt": "Run quick_validate.py on a SKILL.md with description but no name",
+      "setup": "Frontmatter with `description:` but no `name:` field.",
+      "input_files": [],
+      "expectations": [
+        "Exit code: 1",
+        "Output: \"Missing 'name' in frontmatter\""
+      ],
+      "pass_criteria": "Exit 1 with \"Missing 'name' in frontmatter\" error.",
+      "fail_indicators": [
+        "Exit 0 for missing name field",
+        "Validation passes without name"
+      ]
+    },
+    {
+      "id": "invalid-name-format",
+      "name": "Invalid Name Format",
+      "prompt": "Run quick_validate.py with various invalid name formats",
+      "setup": "Test with multiple invalid name formats.",
+      "input_files": [],
+      "expectations": [
+        "`MySkill` yields error: \"should be hyphen-case\"",
+        "`my_skill` yields error: \"should be hyphen-case\"",
+        "`-leading` yields error: \"cannot start/end with hyphen\"",
+        "`trailing-` yields error: \"cannot start/end with hyphen\"",
+        "`double--hyphen` yields error: \"cannot contain consecutive hyphens\""
+      ],
+      "pass_criteria": "Each invalid name format produces the correct specific error message.",
+      "fail_indicators": [
+        "Any invalid name format passes validation",
+        "Wrong error message for a given invalid format"
+      ]
+    },
+    {
+      "id": "angle-brackets-in-description",
+      "name": "Angle Brackets in Description",
+      "prompt": "Run quick_validate.py with description containing angle brackets",
+      "setup": "SKILL.md with `description: Use <this> for that`.",
+      "input_files": [],
+      "expectations": [
+        "Exit code: 1",
+        "Output: \"Description cannot contain angle brackets\""
+      ],
+      "pass_criteria": "Exit 1 with \"Description cannot contain angle brackets\" error.",
+      "fail_indicators": [
+        "Exit 0 for description with angle brackets",
+        "Angle brackets not detected"
+      ]
+    },
+    {
+      "id": "valid-edge-cases",
+      "name": "Valid Edge Cases",
+      "prompt": "Run quick_validate.py with edge-case valid names",
+      "setup": "Test with valid edge-case name and description combinations.",
+      "input_files": [],
+      "expectations": [
+        "`a` (single char name) passes validation",
+        "`a-b-c-d` (multiple hyphens) passes validation",
+        "`skill123` (digits in name) passes validation",
+        "`my-skill-v2` (version in name) passes validation"
+      ],
+      "pass_criteria": "All valid edge-case names pass validation successfully.",
+      "fail_indicators": [
+        "Any valid edge-case name fails validation",
+        "False positive validation errors"
+      ]
+    }
+  ]
+}
