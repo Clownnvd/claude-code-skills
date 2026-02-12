@@ -1,0 +1,75 @@
+{
+  "skill": "dataflow",
+  "eval_name": "eval-fix-patterns",
+  "description": "Verify specific fix patterns from references/fix-patterns/ produce correct code changes for data flow issues.",
+  "tests": [
+    {
+      "id": "convert-client-page-to-server-component",
+      "name": "Convert Client Page to Server Component (rsc-composition.md)",
+      "prompt": "Apply RSC conversion pattern to convert a client-side fetching page to a Server Component",
+      "setup": "Dashboard page uses `\"use client\"` with `useEffect` + `fetch(\"/api/user/purchase\")` to load data. No interactivity requires client-side rendering.",
+      "input_files": [],
+      "expectations": [
+        "Apply RSC conversion pattern",
+        "Verify `\"use client\"` removed from page component",
+        "Verify `useEffect`/`useState` replaced with `async function` and direct Prisma query",
+        "Verify interactive elements extracted to separate client components"
+      ],
+      "pass_criteria": "Page is an async Server Component. Data fetched via Prisma `select`. No client-side fetch for initial data. Interactive parts (buttons, forms) in separate `\"use client\"` files.",
+      "fail_indicators": [
+        "Page still has `\"use client\"`, or data fetching broken, or event handlers left in server component"
+      ]
+    },
+    {
+      "id": "add-select-to-prisma-queries",
+      "name": "Add select to Prisma Queries (prisma-api.md)",
+      "prompt": "Apply Add select pattern to add explicit select clauses to all Prisma queries",
+      "setup": "Multiple `prisma.user.findUnique()` calls without `select`, returning all columns including sensitive fields.",
+      "input_files": [],
+      "expectations": [
+        "Apply \"Add select\" pattern",
+        "Verify every `findUnique`/`findFirst`/`findMany` call has explicit `select`",
+        "Verify no password hash, tokens, or internal IDs returned to client"
+      ],
+      "pass_criteria": "All Prisma queries use `select` with only needed fields (id, name, email, image). No `include` used where `select` suffices. Sensitive fields never selected.",
+      "fail_indicators": [
+        "Some queries still return full model, or `select` only added to some queries"
+      ]
+    },
+    {
+      "id": "shared-zod-schemas",
+      "name": "Shared Zod Schemas (types-errors.md)",
+      "prompt": "Apply Shared Zod Schemas pattern to unify client and server validation",
+      "setup": "Client form uses inline validation. API route uses separate inline validation. Types duplicated between client and server.",
+      "input_files": [],
+      "expectations": [
+        "Apply Shared Zod Schemas pattern",
+        "Verify schema defined once in `src/lib/validations/`",
+        "Verify client form uses `zodResolver(schema)`",
+        "Verify API route uses `schema.safeParse(body)`",
+        "Verify type inferred via `z.infer<typeof schema>`"
+      ],
+      "pass_criteria": "Single schema source of truth. Both client and server import it. No duplicate `interface` or `type` for the same data shape. `z.infer` used instead of manual types.",
+      "fail_indicators": [
+        "Schema still duplicated, or client/server use different validation rules"
+      ]
+    },
+    {
+      "id": "error-tsx-per-route-segment",
+      "name": "error.tsx Per Route Segment (types-errors.md)",
+      "prompt": "Apply error.tsx pattern to add error boundaries per route segment",
+      "setup": "No error boundaries. Unhandled Prisma or Stripe errors crash the page with a generic Next.js error.",
+      "input_files": [],
+      "expectations": [
+        "Apply error.tsx pattern",
+        "Verify `src/app/dashboard/error.tsx` created with `\"use client\"` directive",
+        "Verify component accepts `error` and `reset` props",
+        "Verify error digest shown (not raw message) in production"
+      ],
+      "pass_criteria": "Error boundary catches runtime errors in dashboard. Displays \"Something went wrong\" with retry button. Production shows `error.digest`, not stack trace. Non-fatal side effects wrapped in try/catch.",
+      "fail_indicators": [
+        "No error.tsx created, or component missing `\"use client\"`, or raw error message displayed"
+      ]
+    }
+  ]
+}

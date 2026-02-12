@@ -1,0 +1,124 @@
+{
+  "skill": "dataflow",
+  "eval_name": "eval-edge-cases",
+  "description": "Verify correct behavior for data-flow-specific edge cases.",
+  "tests": [
+    {
+      "id": "client-side-useeffect-for-initial-data",
+      "name": "Client-Side useEffect for Initial Data",
+      "prompt": "Provide components using useEffect + fetch for initial page data and run dataflow-scoring",
+      "setup": "Provide components using useEffect + fetch for initial page data",
+      "input_files": [],
+      "expectations": [
+        "RSC Data Fetching scores <= 3 (CRITICAL)",
+        "Issue recommends converting to async server component",
+        "Server/Client Composition also penalized"
+      ],
+      "pass_criteria": "RSC Data Fetching score <= 3 (CRITICAL), server component conversion recommended, Composition penalized",
+      "fail_indicators": [
+        "RSC Data Fetching score above 3",
+        "Server component not recommended"
+      ]
+    },
+    {
+      "id": "use-client-at-page-level",
+      "name": "\"use client\" at Page Level",
+      "prompt": "Provide pages with \"use client\" at the top wrapping entire page trees and run dataflow-scoring",
+      "setup": "Provide pages with \"use client\" at the top, wrapping entire page trees",
+      "input_files": [],
+      "expectations": [
+        "Server/Client Composition scores <= 3",
+        "Issue identifies specific pages that should be server components",
+        "Fix recommends pushing \"use client\" to leaf components"
+      ],
+      "pass_criteria": "Composition score <= 3, specific pages identified, leaf component pattern recommended",
+      "fail_indicators": [
+        "Composition score above 3",
+        "Specific pages not identified"
+      ]
+    },
+    {
+      "id": "prisma-queries-without-select",
+      "name": "Prisma Queries Without select",
+      "prompt": "Provide services using findMany without select (fetching all fields) and run dataflow-scoring",
+      "setup": "Provide services using findMany without select (fetching all fields)",
+      "input_files": [],
+      "expectations": [
+        "Prisma Query Optimization scores <= 4",
+        "Issue references specific queries returning excess data",
+        "DTO category also penalized for Prisma model leaks"
+      ],
+      "pass_criteria": "Prisma Optimization score <= 4, excess data queries referenced, DTO category penalized",
+      "fail_indicators": [
+        "Prisma Optimization score above 4",
+        "Specific queries not referenced"
+      ]
+    },
+    {
+      "id": "no-zod-validation-at-api-boundaries",
+      "name": "No Zod Validation at API Boundaries",
+      "prompt": "Provide API routes accepting request bodies without schema validation and run dataflow-scoring",
+      "setup": "Provide API routes accepting request bodies without schema validation",
+      "input_files": [],
+      "expectations": [
+        "Type Safety scores <= 3 (CRITICAL)",
+        "API Route Design also penalized",
+        "Fix recommends Zod schema at route boundary"
+      ],
+      "pass_criteria": "Type Safety score <= 3 (CRITICAL), API Route Design penalized, Zod schema recommended",
+      "fail_indicators": [
+        "Type Safety score above 3",
+        "Zod not recommended"
+      ]
+    },
+    {
+      "id": "missing-error-tsx-boundaries",
+      "name": "Missing error.tsx Boundaries",
+      "prompt": "Provide app routes without error.tsx files and run dataflow-scoring",
+      "setup": "Provide app routes without error.tsx files",
+      "input_files": [],
+      "expectations": [
+        "Error Propagation scores <= 4",
+        "Issue lists route segments lacking error boundaries",
+        "Fix recommends adding error.tsx at key layout levels"
+      ],
+      "pass_criteria": "Error Propagation score <= 4, missing segments listed, error.tsx recommended",
+      "fail_indicators": [
+        "Error Propagation score above 4",
+        "Missing segments not listed"
+      ]
+    },
+    {
+      "id": "forms-without-loading-states",
+      "name": "Forms Without Loading States",
+      "prompt": "Provide form components with no useFormStatus or loading indicators and run dataflow-scoring",
+      "setup": "Provide form components with no useFormStatus or loading indicators",
+      "input_files": [],
+      "expectations": [
+        "Form Handling scores <= 5",
+        "Issue recommends pending state, optimistic updates, or loading UI"
+      ],
+      "pass_criteria": "Form Handling score <= 5, pending state or loading UI recommended",
+      "fail_indicators": [
+        "Form Handling score above 5"
+      ]
+    },
+    {
+      "id": "non-serializable-props-crossing-server-client",
+      "name": "Non-Serializable Props Crossing Server/Client",
+      "prompt": "Provide server components passing Date objects or functions to client components and run dataflow-scoring",
+      "setup": "Provide server components passing Date objects or functions to client components",
+      "input_files": [],
+      "expectations": [
+        "Server/Client Composition penalized",
+        "Type Safety also penalized for boundary violation",
+        "Fix recommends serializing to ISO strings or primitives"
+      ],
+      "pass_criteria": "Composition penalized, Type Safety penalized, serialization to ISO strings/primitives recommended",
+      "fail_indicators": [
+        "Composition not penalized",
+        "Serialization not recommended"
+      ]
+    }
+  ]
+}

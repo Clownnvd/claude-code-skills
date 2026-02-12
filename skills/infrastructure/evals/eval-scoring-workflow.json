@@ -1,0 +1,99 @@
+{
+  "skill": "infrastructure",
+  "eval_name": "eval-scoring-workflow",
+  "description": "Verify the infrastructure scoring process produces correct, complete output.",
+  "tests": [
+    {
+      "id": "valid-codebase-produces-score-0-100",
+      "name": "Valid Codebase Produces Score 0-100",
+      "prompt": "Run infra-scoring against a codebase with CI/CD and deployment config",
+      "setup": "Provide a codebase with CI/CD and deployment configuration files",
+      "input_files": [],
+      "expectations": [
+        "Output contains a numeric score between 0 and 100",
+        "All 10 categories (CI Pipeline, CD Pipeline, Production Deploy, Containerization, Environment Mgmt, Monitoring, Backup/DR, Third-Party, IaC, Deployment Security) have individual scores",
+        "Each raw score must be 0-10"
+      ],
+      "pass_criteria": "Score is 0-100, all 10 categories present with raw scores 0-10",
+      "fail_indicators": [
+        "Score outside 0-100 range",
+        "Missing categories",
+        "Raw score outside 0-10"
+      ]
+    },
+    {
+      "id": "each-criterion-scored-individually-with-weight",
+      "name": "Each Criterion Scored Individually With Weight",
+      "prompt": "Verify each scoring criterion is weighted correctly and totals are computed properly",
+      "setup": "Run infra-scoring and inspect the scorecard output",
+      "input_files": [],
+      "expectations": [
+        "CI Pipeline at 15%, CD Pipeline at 12%, Production Deploy at 10%",
+        "Containerization at 12%, Environment Mgmt at 10%, Monitoring at 15%",
+        "Backup/DR at 10%, Third-Party at 8%, IaC at 4%, Deploy Security at 4%",
+        "Weighted score = raw score x weight x 10",
+        "Total = sum of all weighted scores"
+      ],
+      "pass_criteria": "All weights match specification and total equals sum of weighted scores",
+      "fail_indicators": [
+        "Incorrect weight percentages",
+        "Total does not equal sum of weighted scores"
+      ]
+    },
+    {
+      "id": "output-includes-scorecard-and-issues-list",
+      "name": "Output Includes Scorecard AND Issues List",
+      "prompt": "Verify output contains both a scorecard table and a prioritized issues list",
+      "setup": "Run infra-scoring and inspect the full output",
+      "input_files": [],
+      "expectations": [
+        "Output contains a scorecard table with all 10 categories",
+        "Output contains a prioritized issues list with Severity, Category, Issue, Fix",
+        "Each issue references specific config files (CI YAML, Dockerfile, env files)",
+        "Quick wins section is present"
+      ],
+      "pass_criteria": "Both scorecard table and issues list present with correct columns and file references",
+      "fail_indicators": [
+        "Missing scorecard table",
+        "Missing issues list",
+        "Issues lack file references",
+        "No quick wins section"
+      ]
+    },
+    {
+      "id": "grade-letter-matches-score-range",
+      "name": "Grade Letter Matches Score Range",
+      "prompt": "Verify the grade letter assigned matches the numeric score range",
+      "setup": "Run infra-scoring and check grade output against score",
+      "input_files": [],
+      "expectations": [
+        "Score 90-100 produces A-range grade (A+/A/A-)",
+        "Score 75-89 produces B-range grade (B+/B/B-)",
+        "Score 60-74 produces C-range or D grade",
+        "Score 40-59 produces D grade",
+        "Score 0-39 produces F grade"
+      ],
+      "pass_criteria": "Grade letter correctly corresponds to numeric score range",
+      "fail_indicators": [
+        "Grade does not match score range"
+      ]
+    },
+    {
+      "id": "issues-sorted-by-severity",
+      "name": "Issues Sorted by Severity",
+      "prompt": "Verify issues are sorted from most to least severe",
+      "setup": "Run infra-scoring against a codebase with issues at multiple severity levels",
+      "input_files": [],
+      "expectations": [
+        "CRITICAL issues (score 0-3 or deployment risk) appear first",
+        "HIGH issues (score 4-5, weight >= 12%) appear second",
+        "MEDIUM issues (score 4-5, weight < 12%) appear third",
+        "LOW issues (score 7-8) appear last"
+      ],
+      "pass_criteria": "Issues strictly ordered: CRITICAL > HIGH > MEDIUM > LOW",
+      "fail_indicators": [
+        "Issues not grouped by severity"
+      ]
+    }
+  ]
+}

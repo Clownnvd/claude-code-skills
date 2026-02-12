@@ -103,6 +103,8 @@ End-to-end orchestration. Load `references/pipeline/pipeline-workflow.md`.
 - `references/research/anti-ai-patterns.md` — Red flags + fixes
 - `references/research/research-templates.md` — Design Brief contract
 - `references/research/stack-patterns.md` — Next.js/React/Tailwind patterns
+- `references/research/trending-2026.md` — Trending design patterns 2026
+- `references/research/page-sections.md` — Common page section patterns
 
 ### Scoring
 - `references/scoring/scoring-workflow.md` — Audit steps, scorecard template
@@ -124,7 +126,8 @@ End-to-end orchestration. Load `references/pipeline/pipeline-workflow.md`.
 ## Output Templates
 
 Use templates from `assets/templates/` matching the current mode:
-- Research: `design-brief.md.template`
+- Research (brief): `design-brief.md.template`
+- Research (per-page): `research-output.md.template` — per-page component comparison tables
 - Score (detailed): `scorecard.md.template` — full scorecard with Nielsen cross-check, anti-bias section, weighted breakdown
 - Score (compact): `ui-scorecard.md.template` — lightweight format for quick audits or feeding into fix mode
 - Fix: `fix-checklist.md.template`

@@ -14,6 +14,7 @@
 | One Page Love | onepagelove.com | Single-page designs |
 | Page Flows | pageflows.com | User flow recordings |
 | Refero | refero.design | Real product screenshots |
+| Landdding | landdding.com | Landing page trends & blog |
 | 21st.dev | 21st.dev | AI-ready React components, design engineer showcase |
 
 ## Component Libraries
@@ -26,6 +27,17 @@
 | Aceternity UI | ui.aceternity.com | Animated components |
 | Magic UI | magicui.design | Animated landing sections |
 | Origin UI | originui.com | Beautiful copy-paste blocks |
+| Inspira UI | inspira-ui.com | Vue/Nuxt animated components |
+| Motion Primitives | motion-primitives.com | Framer Motion building blocks |
+
+## Blog & Trend Sources
+
+| Source | URL | Best For |
+|--------|-----|----------|
+| Codrops | tympanus.net/codrops | Cutting-edge CSS/JS demos |
+| CSS-Tricks | css-tricks.com | CSS techniques & tutorials |
+| Smashing Magazine | smashingmagazine.com | Design & development deep dives |
+| Frontend Horse | frontend.horse | Creative frontend showcases |
 
 ## Search Query Templates
 
@@ -48,6 +60,15 @@ site:ui.shadcn.com [component]
 # Awards & curated
 site:awwwards.com [type]
 site:dribbble.com [component] UI
+
+# Trending patterns
+"UI design trends 2026 components"
+"most beautiful [type] website 2026"
+"trending web components" site:dev.to OR site:medium.com
+
+# Specific styles
+"[style] [component] examples" (e.g. "glassmorphism navbar")
+"[style] UI trend 2026"
 ```
 
 ## When to Use Each
@@ -57,3 +78,4 @@ site:dribbble.com [component] UI
 - **UX flow**: Mobbin or Page Flows for real user journeys
 - **Visual direction**: Dribbble/Behance for mood/style exploration
 - **Competitive research**: Search competitor names directly
+- **Trending patterns**: Codrops/Frontend Horse for cutting-edge demos

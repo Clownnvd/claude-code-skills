@@ -1,0 +1,73 @@
+{
+  "skill": "scalability",
+  "eval_name": "eval-fix-workflow",
+  "description": "Verify the scalability-fix skill correctly parses scoring output, prioritizes, fixes, and re-scores.",
+  "tests": [
+    {
+      "id": "accept-scoring-input",
+      "name": "Accept Scoring Input",
+      "prompt": "Run scalability-fix with the scorecard as input",
+      "setup": "Provide a scalability-scoring scorecard with 6 issues across Bundle Size, RSC Architecture, Concurrency.",
+      "input_files": [],
+      "expectations": [
+        "Run scalability-fix with the scorecard as input",
+        "Verify skill parses all 6 issues with correct severity and category",
+        "Verify skill identifies the weighted score and grade"
+      ],
+      "pass_criteria": "All issues extracted. No issue lost or duplicated.",
+      "fail_indicators": []
+    },
+    {
+      "id": "fix-in-severity-order",
+      "name": "Fix in Severity Order",
+      "prompt": "Run scalability-fix and observe fix application order",
+      "setup": "Scorecard contains CRITICAL (entire page is \"use client\"), HIGH (sequential DB queries in layout), MEDIUM (no event listener cleanup).",
+      "input_files": [],
+      "expectations": [
+        "Run scalability-fix",
+        "Observe fix application order"
+      ],
+      "pass_criteria": "RSC extraction fixed first (CRITICAL), then parallel queries (HIGH, RSC 15% weight), then event cleanup (MEDIUM). No MEDIUM fix applied before all HIGH items resolved.",
+      "fail_indicators": []
+    },
+    {
+      "id": "fix-references-correct-pattern",
+      "name": "Fix References Correct Pattern",
+      "prompt": "Run scalability-fix and check which reference file the skill loads",
+      "setup": "Issue in \"Bundle Size\" category scored 5/10.",
+      "input_files": [],
+      "expectations": [
+        "Run scalability-fix",
+        "Check which reference file the skill loads"
+      ],
+      "pass_criteria": "Skill loads `references/fix-patterns/bundle-images.md` and applies the \"Dynamic Import Heavy Libraries\" pattern. Fix converts top-level imports to `next/dynamic` with `{ ssr: false }`.",
+      "fail_indicators": []
+    },
+    {
+      "id": "verification-step-confirms-fix",
+      "name": "Verification Step Confirms Fix",
+      "prompt": "Run scalability-fix to apply the Suspense Boundaries fix and verify build and rendering",
+      "setup": "Apply the \"Suspense Boundaries\" fix from `rsc-dbperf.md`.",
+      "input_files": [],
+      "expectations": [
+        "Run scalability-fix to apply the fix",
+        "Check that skill verifies: `pnpm build` succeeds, page renders with streaming, no layout shift"
+      ],
+      "pass_criteria": "Skill confirms Suspense wrapper added with appropriate fallback. Reports verification result before moving to next fix.",
+      "fail_indicators": []
+    },
+    {
+      "id": "re-score-shows-improvement",
+      "name": "Re-Score Shows Improvement",
+      "prompt": "Run scalability-fix through full cycle and compare before/after scores",
+      "setup": "Initial score 56/100 (grade C). Apply fixes for 1 CRITICAL + 3 HIGH issues.",
+      "input_files": [],
+      "expectations": [
+        "Run scalability-fix through full cycle",
+        "Compare before/after scores per category"
+      ],
+      "pass_criteria": "Re-score produces a higher weighted score. Each fixed category shows improvement. Final grade is at least B+. Report uses `assets/templates/fix-report.md.template` format.",
+      "fail_indicators": []
+    }
+  ]
+}
