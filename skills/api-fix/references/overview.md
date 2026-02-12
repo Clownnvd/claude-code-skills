@@ -68,3 +68,21 @@ The scorecard contains:
 2. Run `api-fix` → implement fixes from scorecard
 3. Run `api-scoring` again → verify improvement
 4. Repeat if score < target (max 3 iterations)
+
+### Scorecard Schema Contract
+
+api-fix expects api-scoring output to contain:
+- **10 category rows** with: Category, Weight, Score (0-10), Weighted, Severity
+- **Issues list** with: severity (CRITICAL/HIGH/MEDIUM/LOW), category, file:line, description
+- **Grade** (A+ through F) and **total score** (0-100)
+
+If api-scoring output format changes, api-fix parsing will break. Verify scorecard matches `assets/templates/scorecard.md.template` in api-scoring.
+
+### Rollback Strategy
+
+If a fix causes regression (re-score shows any category dropped):
+1. `git diff` to identify the offending change
+2. Revert the specific fix (`git checkout -- <file>`)
+3. Re-score to confirm regression resolved
+4. Attempt alternative fix pattern from `references/fix-patterns/`
+5. If no alternative works, skip and document as "deferred"

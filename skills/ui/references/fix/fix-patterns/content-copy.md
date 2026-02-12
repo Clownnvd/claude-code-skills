@@ -73,7 +73,7 @@ Fixes for Content & Copy (8%) and Conversion & CTA (10%) categories — the 18% 
 "Get started"
 
 // After: action + value
-"Get King Template — $99"
+"Get [Product Name] — $99"
 "Start building your SaaS"
 "Deploy in 5 minutes"
 "Claim your lifetime access"

@@ -39,10 +39,19 @@ Verify correct behavior for API-specific edge cases.
 
 ## Test 6: All Categories Score 10
 
-- Provide exemplary codebase hitting all criteria
-- Verify total score is 100 and grade is A+
-- Verify issues list is empty or contains only LOW suggestions
-- Verify no false CRITICAL/HIGH issues on a perfect codebase
+**Sample input** (exemplary codebase must include):
+- Zod validation on every route + `Content-Type` check (Input 10)
+- `requireAuth()` + role-based `requireAdmin()` + CSRF token (Auth 10, Security 9+)
+- CSP with nonce, CORS allowlist, `X-Content-Type-Options`, dep scanning (Security 10)
+- `errorResponse()` helper with machine-readable codes, no stack traces (Error 10)
+- Per-user rate limiting with sliding window (Rate Limit 10)
+- Consistent `{ success, data, error }` envelope, cursor pagination (Response 10)
+- DB query timeouts, connection pooling, caching headers (Performance 10)
+- Structured JSON logging, `X-Request-Id`, Sentry (Observability 10)
+- OpenAPI spec or README with endpoints + examples (Docs 10)
+- Integration tests for happy + error paths, >80% coverage (Testing 10)
+
+**Expected**: Total 100, grade A+, issues empty or LOW only, no false CRITICAL/HIGH
 
 ## Test 7: Mixed HTTP Methods Without Validation
 

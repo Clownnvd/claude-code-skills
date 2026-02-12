@@ -125,6 +125,7 @@ End-to-end orchestration. Load `references/pipeline/pipeline-workflow.md`.
 
 Use templates from `assets/templates/` matching the current mode:
 - Research: `design-brief.md.template`
-- Score: `scorecard.md.template` and `ui-scorecard.md.template`
+- Score (detailed): `scorecard.md.template` — full scorecard with Nielsen cross-check, anti-bias section, weighted breakdown
+- Score (compact): `ui-scorecard.md.template` — lightweight format for quick audits or feeding into fix mode
 - Fix: `fix-checklist.md.template`
 Fill `{{VARIABLE}}` placeholders with actual values.

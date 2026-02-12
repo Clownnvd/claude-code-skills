@@ -35,6 +35,8 @@ Carry extracted tokens into the Design Brief. Never propose colors/fonts that co
 
 Use `WebSearch` to find live inspiration. Always search **3+ queries**.
 
+**Network fallback**: If `WebSearch`/`WebFetch` are unavailable (offline, restricted), fall back to `references/inspiration-sources.md` for curated galleries. Use training knowledge of common UI patterns for the target page type. Note in the Design Brief that research was offline-only.
+
 ### Query patterns
 ```
 "[type] [industry] website 2026"       → e.g., "SaaS pricing page 2026"

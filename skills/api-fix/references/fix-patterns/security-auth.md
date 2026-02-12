@@ -50,19 +50,7 @@ if (req.method === "OPTIONS") {
 
 ## Content-Type Enforcement
 
-### Problem: No check that request body is actually JSON
-
-### Fix: Validate Content-Type at route entry
-```typescript
-// In a shared helper or per-route
-function requireJson(req: NextRequest): NextResponse | null {
-  const ct = req.headers.get("content-type");
-  if (!ct || !ct.includes("application/json")) {
-    return errorResponse("Content-Type must be application/json", 415);
-  }
-  return null;
-}
-```
+See `fix-patterns/input-errors.md` → "Content-Type Enforcement" for the full pattern. Listed here for OWASP mapping (API8: Misconfiguration) but implementation lives in Input Validation.
 
 ## Audit Logging for Auth Events
 

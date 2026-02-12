@@ -41,22 +41,7 @@ Score any REST/HTTP API codebase against 10 enterprise-grade criteria. Produce a
 
 ## Scorecard Output Format
 
-```
-# API Scorecard — [Project Name]
-Date: YYYY-MM-DD | Stack: [framework + runtime]
-
-| # | Category | Weight | Score | Weighted | Status |
-|---|----------|--------|-------|----------|--------|
-| 1 | Security | 20% | X/10 | X.X | SEVERITY |
-...
-| Total | | 100% | | XX.X | Grade |
-
-## Issues (ordered by severity + weight)
-### 1. [Issue title] (Category, SEVERITY)
-[file:line] — description + fix suggestion
-
-## Quick Wins (items that move score most per effort)
-```
+Use `assets/templates/scorecard.md.template` for the full output format with all 10 category rows, OWASP cross-reference table, and quick wins section.
 
 ## OWASP API Top 10 Cross-Reference
 
