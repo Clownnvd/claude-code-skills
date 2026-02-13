@@ -1,0 +1,17 @@
+{
+  "skill": "auth",
+  "eval_name": "test-mode",
+  "description": "Verify test mode generates tests covering all 10 auth categories",
+  "tests": [
+    {
+      "id": "auth-test-1",
+      "name": "Generate tests for auth system",
+      "prompt": "generate tests for auth configuration",
+      "setup": "Next.js with Better Auth config",
+      "input_files": ["src/lib/auth/config.ts"],
+      "expectations": ["Session cookie flag tests", "Password hash verification test", "CSRF token test", "Rate limiting test", "Coverage matrix"],
+      "pass_criteria": "All applicable categories have test cases",
+      "fail_indicators": ["Missing session tests", "Missing CSRF tests", "No coverage matrix"]
+    }
+  ]
+}

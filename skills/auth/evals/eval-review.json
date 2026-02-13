@@ -1,0 +1,17 @@
+{
+  "skill": "auth",
+  "eval_name": "review-mode",
+  "description": "Verify review mode correctly identifies auth issues in specific files",
+  "tests": [
+    {
+      "id": "auth-rev-1",
+      "name": "Review auth config with weak session",
+      "prompt": "review src/lib/auth/config.ts",
+      "setup": "Auth config with non-httpOnly session cookie, no CSRF",
+      "input_files": ["src/lib/auth/config.ts"],
+      "expectations": ["Identifies non-httpOnly as CRITICAL", "Identifies missing CSRF as CRITICAL", "Provides secure cookie config fix"],
+      "pass_criteria": "Session and CSRF issues identified with concrete fixes",
+      "fail_indicators": ["Misses cookie flags", "Misses CSRF gap"]
+    }
+  ]
+}

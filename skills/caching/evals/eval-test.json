@@ -1,0 +1,17 @@
+{
+  "skill": "caching",
+  "eval_name": "test-mode",
+  "description": "Verify test mode generates caching tests covering all 10 categories",
+  "tests": [
+    {
+      "id": "cache-test-1",
+      "name": "Generate caching tests",
+      "prompt": "generate tests for caching strategy",
+      "setup": "Next.js 16 with ISR, cache(), revalidation",
+      "input_files": ["src/app/(app)/dashboard/page.tsx", "src/app/api/problems/route.ts"],
+      "expectations": ["Cache-Control header tests", "Revalidation after mutation tests", "Static/dynamic classification tests", "Coverage matrix"],
+      "pass_criteria": "All 10 categories have test cases",
+      "fail_indicators": ["Missing header tests", "No revalidation tests", "No coverage matrix"]
+    }
+  ]
+}

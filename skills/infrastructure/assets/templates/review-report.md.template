@@ -1,0 +1,29 @@
+# Review: {{FILE_PATH}}
+
+**Domain**: {{DOMAIN_SKILL}} | **Date**: {{DATE}}
+
+## Score
+
+| # | Category | Weight | Score | Status |
+|---|----------|--------|-------|--------|
+{{CATEGORY_ROWS}}
+
+**Applicable Score**: {{APPLICABLE_SCORE}}/100 ({{GRADE}}) — {{APPLICABLE_COUNT}}/10 categories
+
+## Issues
+
+{{ISSUES_LIST}}
+
+## Top 3 Priorities
+
+1. {{PRIORITY_1}}
+2. {{PRIORITY_2}}
+3. {{PRIORITY_3}}
+
+## Quick Wins
+
+{{QUICK_WINS_LIST}}
+
+## Assessment
+
+{{OVERALL_ASSESSMENT}}

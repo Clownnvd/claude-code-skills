@@ -1,12 +1,12 @@
 ---
 name: auth
-description: Auth quality system. 3 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score->fix until target). Better Auth + Next.js patterns.
+description: Auth quality system. 7 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score->fix until target). Better Auth + Next.js patterns.
 license: Complete terms in LICENSE.txt
 ---
 
 # Auth Quality System
 
-One skill, 3 modes. Score authentication & authorization quality, fix issues, or run the full loop.
+One skill, 7 modes. Score authentication & authorization quality, fix issues, or run the full loop.
 
 ## Modes
 
@@ -15,6 +15,10 @@ One skill, 3 modes. Score authentication & authorization quality, fix issues, or
 | **score** | Audit auth quality | Read auth config -> Score 10 categories -> Scorecard |
 | **fix** | Fix issues from scorecard | Parse -> Prioritize -> Fix -> Verify -> Re-score |
 | **loop** | End-to-end cycle | Score -> Fix -> Re-score until target |
+| **generate** | Create new code | Load criteria -> Generate meeting all 10 -> Self-check |
+| **review** | Quick 1-2 file check | Read files -> Score applicable categories -> Annotate + fix |
+| **migrate** | Framework upgrade | Detect versions -> Map breaking changes -> Migrate -> Verify |
+| **test** | Generate test cases | Map categories to assertions -> Generate test files |
 
 ## Mode: Score
 
@@ -73,6 +77,26 @@ Auto-iterate score->fix until target. Max 5 iterations. Stop on plateau (delta=0
 
 **Score Targets**: B+ (87) production, A- (90) enterprise, A+ (97) gold standard.
 
+## Mode: Generate
+
+Generate code meeting all 10 categories at 9-10/10. Load `references/generate/workflow.md`.
+Parse request → Load criteria → Generate with all patterns → Self-check → Output (`assets/templates/generated-code.md.template`)
+
+## Mode: Review
+
+Quick 1-2 file review. Load `references/review/workflow.md`.
+Read files → Score applicable categories → Annotate line numbers → Suggest fixes (`assets/templates/review-report.md.template`)
+
+## Mode: Migrate
+
+Upgrade code for framework changes. Load `references/migrate/workflow.md`.
+Detect versions → Map breaking changes → Apply migrations → Verify (`assets/templates/migration-report.md.template`)
+
+## Mode: Test
+
+Generate tests from scoring criteria. Load `references/test/workflow.md`.
+Map categories to assertions → Generate tests → Output suite (`assets/templates/test-suite.md.template`)
+
 ## OWASP Authentication Mapping
 
 | OWASP Risk | Covered By |
@@ -109,4 +133,8 @@ Auto-iterate score->fix until target. Max 5 iterations. Stop on plateau (delta=0
 
 - Score: `assets/templates/scorecard.md.template`
 - Fix: `assets/templates/fix-report.md.template`
+- Generate: `assets/templates/generated-code.md.template`
+- Review: `assets/templates/review-report.md.template`
+- Migrate: `assets/templates/migration-report.md.template`
+- Test: `assets/templates/test-suite.md.template`
 Fill `{{VARIABLE}}` placeholders with actual values.

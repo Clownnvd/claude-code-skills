@@ -1,0 +1,17 @@
+{
+  "skill": "database",
+  "eval_name": "review-mode",
+  "description": "Verify review mode identifies database issues in specific files",
+  "tests": [
+    {
+      "id": "db-rev-1",
+      "name": "Review schema with missing indexes",
+      "prompt": "review prisma/schema.prisma",
+      "setup": "Prisma schema with foreign keys but no indexes",
+      "input_files": ["prisma/schema.prisma"],
+      "expectations": ["Identifies missing FK indexes as CRITICAL", "Identifies missing timestamps as MEDIUM", "Suggests @@index syntax"],
+      "pass_criteria": "Indexing and integrity issues identified with fixes",
+      "fail_indicators": ["Misses index gaps", "No Prisma syntax in suggestions"]
+    }
+  ]
+}

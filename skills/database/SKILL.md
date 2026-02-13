@@ -1,12 +1,12 @@
 ---
 name: database
-description: Database quality system. 3 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score->fix until target). Prisma + Neon patterns.
+description: Database quality system. 7 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score->fix until target). Prisma + Neon patterns.
 license: Complete terms in LICENSE.txt
 ---
 
 # Database Quality System
 
-One skill, 3 modes. Score database design, fix issues, or run the full loop.
+One skill, 7 modes. Score database design, fix issues, or run the full loop.
 
 ## Modes
 
@@ -15,6 +15,10 @@ One skill, 3 modes. Score database design, fix issues, or run the full loop.
 | **score** | "score my database", "audit DB" | 10-category audit -> scorecard with grade (A+ to F) |
 | **fix** | "fix database issues", provide a scorecard | Parse scorecard -> prioritize -> apply fixes -> verify |
 | **loop** | "score and fix until B+", "database loop" | Run score, then fix, then re-score until target grade reached |
+| **generate** | Create new code | Load criteria -> Generate meeting all 10 -> Self-check |
+| **review** | Quick 1-2 file check | Read files -> Score applicable categories -> Annotate + fix |
+| **migrate** | Framework upgrade | Detect versions -> Map breaking changes -> Migrate -> Verify |
+| **test** | Generate test cases | Map categories to assertions -> Generate test files |
 
 ## Mode: Score
 
@@ -93,6 +97,26 @@ Default target: **B+ (87+)**. Override with "loop until A-" or similar.
 - Max 5 iterations
 - Stop on plateau (score unchanged after full fix cycle)
 
+## Mode: Generate
+
+Generate code meeting all 10 categories at 9-10/10. Load `references/generate/workflow.md`.
+Parse request → Load criteria → Generate with all patterns → Self-check → Output (`assets/templates/generated-code.md.template`)
+
+## Mode: Review
+
+Quick 1-2 file review. Load `references/review/workflow.md`.
+Read files → Score applicable categories → Annotate line numbers → Suggest fixes (`assets/templates/review-report.md.template`)
+
+## Mode: Migrate
+
+Upgrade code for framework changes. Load `references/migrate/workflow.md`.
+Detect versions → Map breaking changes → Apply migrations → Verify (`assets/templates/migration-report.md.template`)
+
+## Mode: Test
+
+Generate tests from scoring criteria. Load `references/test/workflow.md`.
+Map categories to assertions → Generate tests → Output suite (`assets/templates/test-suite.md.template`)
+
 ## Stack Adjustments
 
 | Stack | Additional Reference |
@@ -120,7 +144,7 @@ Default target: **B+ (87+)**. Override with "loop until A-" or similar.
 
 ## Output Templates
 
-- `assets/templates/scorecard.md.template` -- Scorecard output (Mode: Score)
-- `assets/templates/fix-report.md.template` -- Fix report output (Mode: Fix)
-
+- Score: `assets/templates/scorecard.md.template` | Fix: `assets/templates/fix-report.md.template`
+- Generate: `assets/templates/generated-code.md.template` | Review: `assets/templates/review-report.md.template`
+- Migrate: `assets/templates/migration-report.md.template` | Test: `assets/templates/test-suite.md.template`
 Fill `{{VARIABLE}}` placeholders with actual values.

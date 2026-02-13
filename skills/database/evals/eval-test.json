@@ -1,0 +1,17 @@
+{
+  "skill": "database",
+  "eval_name": "test-mode",
+  "description": "Verify test mode generates database tests covering all 10 categories",
+  "tests": [
+    {
+      "id": "db-test-1",
+      "name": "Generate database tests",
+      "prompt": "generate tests for database schema and queries",
+      "setup": "Next.js 16 with Prisma, Neon PostgreSQL",
+      "input_files": ["prisma/schema.prisma", "src/lib/api/problems.ts"],
+      "expectations": ["Schema validation tests", "Constraint enforcement tests", "N+1 detection tests", "SQL injection prevention tests", "Coverage matrix"],
+      "pass_criteria": "All 10 categories have test cases",
+      "fail_indicators": ["Missing constraint tests", "No performance tests", "No coverage matrix"]
+    }
+  ]
+}

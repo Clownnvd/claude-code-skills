@@ -1,12 +1,12 @@
 ---
 name: dataflow
-description: Data flow quality system. 3 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score then fix until target).
+description: Data flow quality system. 7 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score then fix until target), generate (create new code), review (quick file check), migrate (framework upgrade), test (generate test cases).
 license: Complete terms in LICENSE.txt
 ---
 
 # Data Flow Quality System
 
-One skill, 3 modes. Score data flow quality, fix issues, or run the full loop.
+One skill, 7 modes. Score data flow quality, fix issues, run the full loop, generate compliant code, review files, migrate frameworks, or generate tests.
 
 ## Modes
 
@@ -15,6 +15,10 @@ One skill, 3 modes. Score data flow quality, fix issues, or run the full loop.
 | **score** | "score dataflow", "dataflow audit" | Run 10-category audit, produce scorecard with grade A+ to F |
 | **fix** | "fix dataflow", provide a scorecard | Parse scorecard, prioritize by severity x weight, apply fixes, verify |
 | **loop** | "dataflow loop", "score and fix until B+" | Score -> fix -> re-score, repeat until target grade reached |
+| **generate** | Create new code | Load criteria -> Generate meeting all 10 -> Self-check |
+| **review** | Quick 1-2 file check | Read files -> Score applicable categories -> Annotate + fix |
+| **migrate** | Framework upgrade | Detect versions -> Map breaking changes -> Migrate -> Verify |
+| **test** | Generate test cases | Map categories to assertions -> Generate test files |
 
 ## Mode: Score
 
@@ -92,6 +96,26 @@ Auto-iterate: score -> fix all issues -> re-score -> repeat until target grade r
 - Max 5 iterations
 - Halts if any category regresses or if no improvement after a cycle
 
+## Mode: Generate
+
+Generate code meeting all 10 categories at 9-10/10. Load `references/generate/workflow.md`.
+Parse request → Load criteria → Generate with all patterns → Self-check → Output (`assets/templates/generated-code.md.template`)
+
+## Mode: Review
+
+Quick 1-2 file review. Load `references/review/workflow.md`.
+Read files → Score applicable categories → Annotate line numbers → Suggest fixes (`assets/templates/review-report.md.template`)
+
+## Mode: Migrate
+
+Upgrade code for framework changes. Load `references/migrate/workflow.md`.
+Detect versions → Map breaking changes → Apply migrations → Verify (`assets/templates/migration-report.md.template`)
+
+## Mode: Test
+
+Generate tests from scoring criteria. Load `references/test/workflow.md`.
+Map categories to assertions → Generate tests → Output suite (`assets/templates/test-suite.md.template`)
+
 ## Cross-Skill Overlap
 
 Some dataflow categories overlap with other skills. When auditing or fixing:
@@ -103,3 +127,7 @@ Some dataflow categories overlap with other skills. When auditing or fixing:
 
 - **Scorecard**: `assets/templates/scorecard.md.template` -- fill `{{VARIABLE}}` placeholders
 - **Fix Report**: `assets/templates/fix-report.md.template` -- fill `{{VARIABLE}}` placeholders
+- **Generate**: `assets/templates/generated-code.md.template`
+- **Review**: `assets/templates/review-report.md.template`
+- **Migrate**: `assets/templates/migration-report.md.template`
+- **Test**: `assets/templates/test-suite.md.template`

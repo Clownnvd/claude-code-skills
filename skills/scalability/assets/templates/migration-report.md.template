@@ -1,0 +1,26 @@
+# Migration Report: {{SKILL_DOMAIN}}
+
+**From**: {{FROM_VERSION}} | **To**: {{TO_VERSION}} | **Date**: {{DATE}}
+
+## Breaking Changes
+
+| # | Change | Category Affected | Severity | Status |
+|---|--------|------------------|----------|--------|
+{{BREAKING_CHANGES_ROWS}}
+
+## Migrations Applied
+
+{{MIGRATIONS_LIST}}
+
+## Verification
+
+- [ ] TypeScript: `pnpm typecheck` — {{TYPECHECK_STATUS}}
+- [ ] Tests: `pnpm test` — {{TEST_STATUS}}
+- [ ] Build: `pnpm build` — {{BUILD_STATUS}}
+- [ ] Re-score: {{RESCORE_STATUS}}
+
+## Score Comparison
+
+| Category | Before | After | Delta |
+|----------|--------|-------|-------|
+{{SCORE_COMPARISON_ROWS}}

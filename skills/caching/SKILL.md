@@ -1,12 +1,12 @@
 ---
 name: caching
-description: Caching quality system. 3 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score->fix until target). Next.js 16 App Router.
+description: Caching quality system. 7 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score->fix until target). Next.js 16 App Router.
 license: Complete terms in LICENSE.txt
 ---
 
 # Caching Quality System
 
-One skill, 3 modes. Score caching strategy, fix issues, or run the full loop.
+One skill, 7 modes. Score caching strategy, fix issues, or run the full loop.
 
 ## Modes
 
@@ -15,6 +15,10 @@ One skill, 3 modes. Score caching strategy, fix issues, or run the full loop.
 | **score** | Pre-launch audit, after adding/changing routes, after static/dynamic conversion | Gather files -> score 10 categories -> weighted total -> grade + issues |
 | **fix** | Scorecard has issues, score below target, CRITICAL/HIGH items found | Parse scorecard -> prioritize by severity*weight -> apply fixes -> verify |
 | **loop** | Want hands-off score->fix cycle until target grade reached | Score -> fix -> re-score -> repeat (max 5 iterations, stop on plateau) |
+| **generate** | Create new code | Load criteria -> Generate meeting all 10 -> Self-check |
+| **review** | Quick 1-2 file check | Read files -> Score applicable categories -> Annotate + fix |
+| **migrate** | Framework upgrade | Detect versions -> Map breaking changes -> Migrate -> Verify |
+| **test** | Generate test cases | Map categories to assertions -> Generate test files |
 
 ## Mode: Score
 
@@ -81,6 +85,26 @@ Auto-iterate score -> fix until target grade reached.
 - Stop on plateau (score unchanged after full fix cycle)
 - Each iteration: full score -> prioritized fix -> re-score
 
+## Mode: Generate
+
+Generate code meeting all 10 categories at 9-10/10. Load `references/generate/workflow.md`.
+Parse request → Load criteria → Generate with all patterns → Self-check → Output (`assets/templates/generated-code.md.template`)
+
+## Mode: Review
+
+Quick 1-2 file review. Load `references/review/workflow.md`.
+Read files → Score applicable categories → Annotate line numbers → Suggest fixes (`assets/templates/review-report.md.template`)
+
+## Mode: Migrate
+
+Upgrade code for framework changes. Load `references/migrate/workflow.md`.
+Detect versions → Map breaking changes → Apply migrations → Verify (`assets/templates/migration-report.md.template`)
+
+## Mode: Test
+
+Generate tests from scoring criteria. Load `references/test/workflow.md`.
+Map categories to assertions → Generate tests → Output suite (`assets/templates/test-suite.md.template`)
+
 ## Quick Reference -- All Files
 
 ### Scoring
@@ -107,3 +131,7 @@ Auto-iterate score -> fix until target grade reached.
 ## Output Templates
 - Score: `assets/templates/scorecard.md.template`
 - Fix: `assets/templates/fix-report.md.template`
+- Generate: `assets/templates/generated-code.md.template`
+- Review: `assets/templates/review-report.md.template`
+- Migrate: `assets/templates/migration-report.md.template`
+- Test: `assets/templates/test-suite.md.template`

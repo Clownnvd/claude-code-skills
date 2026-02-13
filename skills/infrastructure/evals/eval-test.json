@@ -1,0 +1,17 @@
+{
+  "skill": "infrastructure",
+  "eval_name": "test-mode",
+  "description": "Verify test mode generates infrastructure tests covering all 10 categories",
+  "tests": [
+    {
+      "id": "infra-test-1",
+      "name": "Generate infrastructure tests",
+      "prompt": "generate tests for infrastructure configuration",
+      "setup": "Next.js 16 with Dockerfile, docker-compose, CI pipeline",
+      "input_files": ["Dockerfile", "docker-compose.yml", ".github/workflows/ci.yml"],
+      "expectations": ["Docker build test", "Health check test", "Env validation test", "Security scan test", "Coverage matrix"],
+      "pass_criteria": "All 10 categories have test cases",
+      "fail_indicators": ["Missing Docker tests", "No health check test", "No coverage matrix"]
+    }
+  ]
+}

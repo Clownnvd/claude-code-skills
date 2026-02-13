@@ -1,0 +1,17 @@
+{
+  "skill": "infrastructure",
+  "eval_name": "generate-mode",
+  "description": "Verify generate mode produces infrastructure config meeting all 10 categories",
+  "tests": [
+    {
+      "id": "infra-gen-1",
+      "name": "Generate production Dockerfile",
+      "prompt": "generate production Dockerfile for Next.js app",
+      "setup": "Next.js 16 project with pnpm",
+      "input_files": ["Dockerfile", ".dockerignore"],
+      "expectations": ["Multi-stage build", "Non-root user", "Health check", ".dockerignore", "Layer caching", "Minimal image"],
+      "pass_criteria": "All 10 infrastructure categories addressed",
+      "fail_indicators": ["Single stage", "Root user", "No health check", "Secrets in build"]
+    }
+  ]
+}

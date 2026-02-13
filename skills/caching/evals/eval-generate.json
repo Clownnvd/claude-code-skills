@@ -1,0 +1,17 @@
+{
+  "skill": "caching",
+  "eval_name": "generate-mode",
+  "description": "Verify generate mode produces caching code meeting all 10 categories",
+  "tests": [
+    {
+      "id": "cache-gen-1",
+      "name": "Generate cached data loader",
+      "prompt": "generate cached data loader for problems list",
+      "setup": "Next.js 16 with Prisma, ISR-enabled pages",
+      "input_files": ["src/lib/cache/problems.ts"],
+      "expectations": ["cache() wrapper", "revalidateTag integration", "Cache-Control headers", "Monitoring hooks", "Type-safe return"],
+      "pass_criteria": "All 10 caching categories addressed",
+      "fail_indicators": ["No cache()", "No revalidation", "Caches auth data"]
+    }
+  ]
+}

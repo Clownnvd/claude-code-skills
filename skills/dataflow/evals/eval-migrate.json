@@ -1,0 +1,17 @@
+{
+  "skill": "dataflow",
+  "eval_name": "migrate-mode",
+  "description": "Verify migrate mode handles data flow changes across framework versions",
+  "tests": [
+    {
+      "id": "df-mig-1",
+      "name": "Migrate data flow from Next.js 15 to 16",
+      "prompt": "migrate data flow patterns from Next.js 15 to 16",
+      "setup": "Next.js 15 with fetch-based caching, middleware auth",
+      "input_files": ["src/app/(app)/problems/page.tsx", "src/lib/api/client.ts"],
+      "expectations": ["Maps dynamicIO impact on fetching", "Updates cache directives", "Preserves server component patterns"],
+      "pass_criteria": "All data flow breaking changes migrated",
+      "fail_indicators": ["Breaks server components", "Loses loading states", "Introduces client fetch"]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "skill": "scalability",
+  "eval_name": "review-mode",
+  "description": "Verify review mode identifies scalability issues in specific files",
+  "tests": [
+    {
+      "id": "scale-rev-1",
+      "name": "Review component with performance issues",
+      "prompt": "review src/components/dashboard/dashboard-charts.tsx",
+      "setup": "Component importing Recharts directly, not dynamically",
+      "input_files": ["src/components/dashboard/dashboard-charts.tsx"],
+      "expectations": ["Identifies non-dynamic Recharts import as HIGH", "Checks for barrel imports", "Suggests dynamic(() => import(...))"],
+      "pass_criteria": "Bundle size issues identified with severity and fixes",
+      "fail_indicators": ["Misses Recharts issue", "No dynamic import suggestion"]
+    }
+  ]
+}

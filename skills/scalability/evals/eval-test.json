@@ -1,0 +1,17 @@
+{
+  "skill": "scalability",
+  "eval_name": "test-mode",
+  "description": "Verify test mode generates scalability tests covering all 10 categories",
+  "tests": [
+    {
+      "id": "scale-test-1",
+      "name": "Generate scalability tests",
+      "prompt": "generate scalability tests for the application",
+      "setup": "Next.js 16 with Prisma, Recharts, server components",
+      "input_files": ["src/app/(app)/problems/page.tsx", "src/components/dashboard/dashboard-charts.tsx"],
+      "expectations": ["Bundle size tests", "Render performance tests", "Query performance tests", "Memory leak tests", "Coverage matrix"],
+      "pass_criteria": "All 10 categories have test cases",
+      "fail_indicators": ["Missing bundle tests", "No performance tests", "No coverage matrix"]
+    }
+  ]
+}

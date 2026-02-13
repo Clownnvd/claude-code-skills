@@ -1,0 +1,17 @@
+{
+  "skill": "security",
+  "eval_name": "test-mode",
+  "description": "Verify test mode generates security tests covering all 10 categories",
+  "tests": [
+    {
+      "id": "sec-test-1",
+      "name": "Generate security tests",
+      "prompt": "generate security tests for the application",
+      "setup": "Next.js 16 with security headers, CSP, CORS, auth",
+      "input_files": ["proxy.ts", "next.config.ts", "src/app/api/problems/route.ts"],
+      "expectations": ["XSS prevention tests", "Header presence tests", "CORS validation tests", "Secret scan tests", "Dependency audit tests", "Coverage matrix"],
+      "pass_criteria": "All 10 categories have test cases",
+      "fail_indicators": ["Missing XSS tests", "No header tests", "No coverage matrix"]
+    }
+  ]
+}

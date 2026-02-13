@@ -1,0 +1,27 @@
+{
+  "skill": "api",
+  "eval_name": "generate-mode",
+  "description": "Verify generate mode produces API routes meeting all 10 categories at 9-10/10",
+  "tests": [
+    {
+      "id": "api-gen-1",
+      "name": "Generate POST route with full compliance",
+      "prompt": "generate API route for POST /api/checkout",
+      "setup": "Next.js 16 project with Clerk auth, Prisma ORM, Upstash rate limiter",
+      "input_files": ["src/app/api/checkout/route.ts"],
+      "expectations": ["Zod validation schema", "Auth guard with auth() check", "Rate limiting", "Error envelope { success, data, error }", "Structured logging", "TypeScript strict"],
+      "pass_criteria": "All 10 api categories addressed in compliance checklist, each scored >= 9",
+      "fail_indicators": ["Missing auth", "No Zod", "No error handling", "Uses any type", "No rate limiting"]
+    },
+    {
+      "id": "api-gen-2",
+      "name": "Generate CRUD routes",
+      "prompt": "generate full CRUD for /api/problems",
+      "setup": "Next.js 16 with Clerk, Prisma",
+      "input_files": ["src/app/api/problems/route.ts", "src/app/api/problems/[id]/route.ts"],
+      "expectations": ["GET with pagination", "POST with validation", "PUT with partial validation", "DELETE with ownership check", "Consistent envelope"],
+      "pass_criteria": "Complete CRUD with all 10 categories per route",
+      "fail_indicators": ["Missing CRUD operation", "Inconsistent shapes", "No pagination"]
+    }
+  ]
+}
