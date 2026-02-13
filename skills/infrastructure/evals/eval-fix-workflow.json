@@ -60,7 +60,7 @@
       "id": "re-score-shows-improvement",
       "name": "Re-Score Shows Improvement",
       "prompt": "Run infra-fix through full cycle and compare before/after scores",
-      "setup": "Initial score 40/100 (grade D). Apply fixes for 3 CRITICAL + 2 HIGH issues.",
+      "setup": "Initial score 40/100 (grade F). Apply fixes for 3 CRITICAL + 2 HIGH issues.",
       "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run infra-fix through full cycle",

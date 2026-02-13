@@ -60,7 +60,7 @@
       "id": "re-score-shows-improvement",
       "name": "Re-Score Shows Improvement",
       "prompt": "Run security-fix through full cycle and compare before/after scores",
-      "setup": "Initial score 48/100 (grade D+). Apply fixes for 3 CRITICAL + 3 HIGH issues.",
+      "setup": "Initial score 48/100 (grade F). Apply fixes for 3 CRITICAL + 3 HIGH issues.",
       "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run security-fix through full cycle",

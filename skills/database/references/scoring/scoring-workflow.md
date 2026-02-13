@@ -66,9 +66,9 @@ Classify each finding:
 | Severity | Criteria | Examples |
 |----------|----------|---------|
 | CRITICAL | Score 0-3 or security vulnerability | No auth on API, SQL injection, exposed secrets |
-| HIGH | Score 4-5 on weight >= 12% | Missing indexes on FK, no constraints |
-| MEDIUM | Score 4-5 on weight < 12% or 6 on any | No updatedAt, weak naming |
-| LOW | Score 7-8, minor improvement | Could add composite index, missing seed |
+| HIGH | Score 4-5 | Missing indexes on FK, no constraints |
+| MEDIUM | Score 6-7 | No updatedAt, weak naming |
+| LOW | Score 8, minor improvement | Could add composite index, missing seed |
 
 ### Issue Format
 
