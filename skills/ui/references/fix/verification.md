@@ -110,10 +110,10 @@ After all fixes pass verification, invoke `ui-scoring` skill on the same page.
 
 | Target | Score | When |
 |--------|-------|------|
-| Minimum viable | 70+ (C-) | Internal/prototype |
-| Production-ready | 80+ (B-) | Public launch |
-| Professional | 85+ (B+) | Premium product |
-| Award-worthy | 90+ (A-) | Portfolio / showcase |
+| Minimum viable | 70+ (C) | Internal/prototype |
+| Production-ready | 83+ (B) | Public launch |
+| Premium | 90+ (A-) | Premium product |
+| Showcase | 95+ (A+) | Portfolio / showcase |
 
 ## Iteration Decision
 

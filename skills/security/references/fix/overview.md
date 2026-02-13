@@ -17,7 +17,7 @@ Systematically fix all issues found by security-scoring. Follows severity * weig
 
 | Context | Target | Action if Below |
 |---------|--------|-----------------|
-| Enterprise | A (93+) | Fix all CRITICAL+HIGH+MEDIUM |
+| Enterprise | A- (90+) | Fix all CRITICAL+HIGH+MEDIUM |
 | Production | B+ (87+) | Fix all CRITICAL+HIGH |
 | MVP/Demo | C+ (77+) | Fix all CRITICAL |
 
@@ -40,7 +40,7 @@ Systematically fix all issues found by security-scoring. Follows severity * weig
 
 ## Loop Mode
 
-When score < target:
+Max 5 iterations. When score < target:
 1. Run security-scoring → get scorecard
 2. Parse issues sorted by priority
 3. Fix top priority issues

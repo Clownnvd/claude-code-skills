@@ -19,8 +19,8 @@ Objectively score application security design in Next.js App Router applications
 |-------|-------|---------|
 | A+/A/A- | 90-100 | Yes — enterprise-grade |
 | B+/B/B- | 80-89 | Yes — production-ready |
-| C+/C | 70-79 | Conditional — fix HIGH items first |
-| D | 60-69 | No — major issues |
+| C+/C | 73-79 | Conditional — fix HIGH items first |
+| D | 60-72 | No — major issues |
 | F | <60 | No — critical issues |
 
 ## OWASP Top 10 (2025) Mapping

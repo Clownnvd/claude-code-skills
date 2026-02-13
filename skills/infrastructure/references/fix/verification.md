@@ -66,6 +66,8 @@ Round 3: XX/100 (Grade) — Final
 ## When to Stop
 
 - Target grade reached (B+ for production, A- for enterprise)
+- Max 5 iterations
+- Stop on plateau (no score improvement between iterations)
 - Remaining issues are external dependencies (provider features, paid services)
 - Remaining issues require infrastructure changes beyond code (DNS, firewall, etc.)
 - User confirms acceptable score

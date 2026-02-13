@@ -17,6 +17,7 @@
 
 ## Fixes Applied
 
+<!-- Repeat this block for each fix. Increment {{FIX_NUMBER}} sequentially. -->
 ### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
 
 - **Severity**: {{SEVERITY}}
@@ -47,16 +48,16 @@
 
 | Category | Before | After | Delta |
 |----------|--------|-------|-------|
-| Bundle Size (12%) | {{BUNDLE_BEFORE}} | {{BUNDLE_AFTER}} | {{BUNDLE_DELTA}} |
-| Image Optimization (8%) | {{IMG_BEFORE}} | {{IMG_AFTER}} | {{IMG_DELTA}} |
-| RSC Architecture (15%) | {{RSC_BEFORE}} | {{RSC_AFTER}} | {{RSC_DELTA}} |
+| Bundle Size (15%) | {{BUNDLE_BEFORE}} | {{BUNDLE_AFTER}} | {{BUNDLE_DELTA}} |
+| Image Optimization (12%) | {{IMG_BEFORE}} | {{IMG_AFTER}} | {{IMG_DELTA}} |
+| RSC Architecture (12%) | {{RSC_BEFORE}} | {{RSC_AFTER}} | {{RSC_DELTA}} |
 | DB Performance (12%) | {{DB_BEFORE}} | {{DB_AFTER}} | {{DB_DELTA}} |
 | API Performance (10%) | {{API_BEFORE}} | {{API_AFTER}} | {{API_DELTA}} |
 | Client Performance (10%) | {{CLIENT_BEFORE}} | {{CLIENT_AFTER}} | {{CLIENT_DELTA}} |
 | Edge/CDN (8%) | {{EDGE_BEFORE}} | {{EDGE_AFTER}} | {{EDGE_DELTA}} |
 | Memory Management (8%) | {{MEM_BEFORE}} | {{MEM_AFTER}} | {{MEM_DELTA}} |
-| Concurrency (10%) | {{CONC_BEFORE}} | {{CONC_AFTER}} | {{CONC_DELTA}} |
-| Monitoring (7%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
+| Concurrency (7%) | {{CONC_BEFORE}} | {{CONC_AFTER}} | {{CONC_DELTA}} |
+| Monitoring (6%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
 
 - **Final Grade**: {{GRADE_AFTER}}
 - **Final Score**: {{SCORE_AFTER}}/100

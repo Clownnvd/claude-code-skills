@@ -8,7 +8,7 @@ Systematically implement all fixes from a scalability-scoring scorecard. Priorit
 | Context | Target | Action |
 |---------|--------|--------|
 | Production | >= 87 (B+) | Fix CRITICAL + HIGH |
-| Enterprise | >= 93 (A) | Fix all CRITICAL + HIGH + MEDIUM |
+| Enterprise | >= 90 (A-) | Fix all CRITICAL + HIGH + MEDIUM |
 | Perfect | 100 (A+) | Fix everything including LOW |
 
 ## Priority Matrix
@@ -42,4 +42,4 @@ Fix highest impact number first.
 - Adding streaming to API responses (may break existing consumers)
 
 ## Loop Mode
-After applying all fixes: `tsc` + `pnpm test` + re-run `scalability-scoring`. If score < target, repeat with remaining issues.
+After applying all fixes: `tsc` + `pnpm test` + re-run `scalability-scoring`. If score < target, repeat with remaining issues. Max 5 iterations.

@@ -1,6 +1,7 @@
 ---
 name: api
 description: API quality system. 3 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score->fix until target). OWASP API Top 10 mapped.
+license: Complete terms in LICENSE.txt
 ---
 
 # API Quality System

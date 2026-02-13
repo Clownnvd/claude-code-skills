@@ -1,6 +1,7 @@
 ---
 name: infrastructure
 description: Infrastructure quality system. 3 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score->fix until target). CI/CD, Docker, monitoring patterns.
+license: Complete terms in LICENSE.txt
 ---
 
 # Infrastructure Quality System
@@ -36,14 +37,12 @@ Load `references/scoring/scoring-workflow.md` for the full audit process.
 
 ### Grades
 
-| Grade | Score | Meaning |
-|-------|-------|---------|
-| A+/A/A- | 90-100 | Enterprise-grade |
-| B+/B | 83-89 | Production-ready |
-| B- | 80-82 | Acceptable |
-| C+/C | 70-79 | Needs improvement |
-| D | 60-69 | Below standard |
-| F | <60 | Critical issues |
+| Grade | Score | Grade | Score | Grade | Score |
+|-------|-------|-------|-------|-------|-------|
+| A+ | 97-100 | B+ | 87-89 | C+ | 77-79 |
+| A | 93-96 | B | 83-86 | C | 73-76 |
+| A- | 90-92 | B- | 80-82 | D | 60-72 |
+| | | | | F | <60 |
 
 ### Issue Severity
 
@@ -90,6 +89,8 @@ Automated score-fix cycle. Runs score -> fix -> re-score until target grade is m
 2. If grade < target, **fix** all CRITICAL + HIGH issues (Mode: Fix)
 3. **Re-score** and compare
 4. Repeat until target grade reached or no score improvement between iterations
+   - Max 5 iterations
+   - Stop on plateau (no score improvement between iterations)
 
 Default target: **B+ (87+)**. Override with "loop until A-" or similar.
 

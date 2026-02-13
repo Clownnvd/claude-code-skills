@@ -17,6 +17,7 @@
 
 ## Fixes Applied
 
+<!-- Repeat this block for each fix. Increment {{FIX_NUMBER}} sequentially. -->
 ### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
 
 - **Severity**: {{SEVERITY}}
@@ -49,14 +50,14 @@
 |----------|--------|-------|-------|
 | CI Pipeline (15%) | {{CI_BEFORE}} | {{CI_AFTER}} | {{CI_DELTA}} |
 | CD Pipeline (12%) | {{CD_BEFORE}} | {{CD_AFTER}} | {{CD_DELTA}} |
-| Production Deploy (12%) | {{PROD_BEFORE}} | {{PROD_AFTER}} | {{PROD_DELTA}} |
-| Containerization (8%) | {{CONT_BEFORE}} | {{CONT_AFTER}} | {{CONT_DELTA}} |
-| Environment Mgmt (12%) | {{ENV_BEFORE}} | {{ENV_AFTER}} | {{ENV_DELTA}} |
-| Monitoring (10%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
-| Backup/DR (8%) | {{BAK_BEFORE}} | {{BAK_AFTER}} | {{BAK_DELTA}} |
+| Production Deploy (10%) | {{PROD_BEFORE}} | {{PROD_AFTER}} | {{PROD_DELTA}} |
+| Containerization (12%) | {{CONT_BEFORE}} | {{CONT_AFTER}} | {{CONT_DELTA}} |
+| Environment Mgmt (10%) | {{ENV_BEFORE}} | {{ENV_AFTER}} | {{ENV_DELTA}} |
+| Monitoring (15%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
+| Backup/DR (10%) | {{BAK_BEFORE}} | {{BAK_AFTER}} | {{BAK_DELTA}} |
 | Third-Party (8%) | {{TP_BEFORE}} | {{TP_AFTER}} | {{TP_DELTA}} |
-| IaC (8%) | {{IAC_BEFORE}} | {{IAC_AFTER}} | {{IAC_DELTA}} |
-| Deploy Security (7%) | {{DSEC_BEFORE}} | {{DSEC_AFTER}} | {{DSEC_DELTA}} |
+| IaC (4%) | {{IAC_BEFORE}} | {{IAC_AFTER}} | {{IAC_DELTA}} |
+| Deploy Security (4%) | {{DSEC_BEFORE}} | {{DSEC_AFTER}} | {{DSEC_DELTA}} |
 
 - **Final Grade**: {{GRADE_AFTER}}
 - **Final Score**: {{SCORE_AFTER}}/100

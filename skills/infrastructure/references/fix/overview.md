@@ -21,8 +21,13 @@ Fix order = severity * category weight. Higher weight categories move total scor
 | Context | Target | Grade |
 |---------|--------|-------|
 | MVP/Prototype | 70+ | C |
-| Production launch | 85+ | B+ |
-| Enterprise/regulated | 93+ | A |
+| Production launch | 87+ | B+ |
+| Enterprise/regulated | 90+ | A- |
+
+## Loop Constraints
+
+- Max 5 iterations
+- Stop on plateau (no score improvement between iterations)
 
 ## What This Skill Does NOT Fix
 

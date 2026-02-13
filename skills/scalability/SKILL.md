@@ -1,6 +1,7 @@
 ---
 name: scalability
 description: Scalability quality system. 3 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score then fix until target).
+license: Complete terms in LICENSE.txt
 ---
 
 # Scalability Quality System
@@ -39,8 +40,8 @@ Audit scalability and performance against 10 weighted categories. Produces score
 | Grade | Score | Grade | Score | Grade | Score |
 |-------|-------|-------|-------|-------|-------|
 | A+ | 97-100 | B+ | 87-89 | C+ | 77-79 |
-| A | 93-96 | B | 83-86 | C | 70-76 |
-| A- | 90-92 | B- | 80-82 | D | 60-69 |
+| A | 93-96 | B | 83-86 | C | 73-76 |
+| A- | 90-92 | B- | 80-82 | D | 60-72 |
 | | | | | F | <60 |
 
 ### Scoring References
@@ -87,7 +88,7 @@ Parse a scorecard and systematically implement all fixes. Prioritize by severity
 
 ## Mode: Loop
 
-Auto-iterate: score -> fix all issues -> re-score -> repeat until target grade reached (default B+ for production, A- for enterprise). Halts if any category regresses or if no improvement after a cycle.
+Auto-iterate: score -> fix all issues -> re-score -> repeat until target grade reached (default B+ for production, A- for enterprise). Max 5 iterations. Halts if any category regresses or if no improvement after a cycle.
 
 ## Output Templates
 

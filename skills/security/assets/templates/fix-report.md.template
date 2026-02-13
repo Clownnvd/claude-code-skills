@@ -17,6 +17,7 @@
 
 ## Fixes Applied
 
+<!-- Repeat this block for each fix. Increment {{FIX_NUMBER}} sequentially. -->
 ### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
 
 - **Severity**: {{SEVERITY}}
@@ -50,8 +51,8 @@
 | Input Validation (15%) | {{INPUT_BEFORE}} | {{INPUT_AFTER}} | {{INPUT_DELTA}} |
 | Secrets Management (12%) | {{SECRET_BEFORE}} | {{SECRET_AFTER}} | {{SECRET_DELTA}} |
 | Dependencies (10%) | {{DEPS_BEFORE}} | {{DEPS_AFTER}} | {{DEPS_DELTA}} |
-| Error Handling (10%) | {{ERR_BEFORE}} | {{ERR_AFTER}} | {{ERR_DELTA}} |
-| CSP (12%) | {{CSP_BEFORE}} | {{CSP_AFTER}} | {{CSP_DELTA}} |
+| Error Handling (12%) | {{ERR_BEFORE}} | {{ERR_AFTER}} | {{ERR_DELTA}} |
+| CSP (10%) | {{CSP_BEFORE}} | {{CSP_AFTER}} | {{CSP_DELTA}} |
 | Data Protection (10%) | {{DATA_BEFORE}} | {{DATA_AFTER}} | {{DATA_DELTA}} |
 | Redirects (8%) | {{REDIR_BEFORE}} | {{REDIR_AFTER}} | {{REDIR_DELTA}} |
 | Webhooks (8%) | {{HOOK_BEFORE}} | {{HOOK_AFTER}} | {{HOOK_DELTA}} |

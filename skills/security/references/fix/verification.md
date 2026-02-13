@@ -36,7 +36,7 @@ pnpm test  # all pass, no regressions
 
 ## Loop Mode Protocol
 
-Target: A+ (97-100) for enterprise, A- (90+) for production
+Max 5 iterations. Target: A- (90+) for enterprise, B+ (87+) for production
 
 ```
 Round 1: Fix all CRITICAL + HIGH issues

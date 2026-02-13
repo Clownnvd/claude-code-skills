@@ -37,13 +37,12 @@ Load `references/scoring/scoring-workflow.md` for the full 6-step process.
 
 ### Grades
 
-| Grade | Range | Production Ready? |
-|-------|-------|-------------------|
-| A+/A/A- | 90-100 | Enterprise-grade |
-| B+/B | 83-89 | Production-ready |
-| B- | 80-82 | Acceptable with caveats |
-| C+/C | 73-79 | Needs work first |
-| D/F | <73 | Not ready |
+| Grade | Score | Grade | Score | Grade | Score |
+|-------|-------|-------|-------|-------|-------|
+| A+ | 97-100 | B+ | 87-89 | C+ | 77-79 |
+| A | 93-96 | B | 83-86 | C | 73-76 |
+| A- | 90-92 | B- | 80-82 | D | 60-72 |
+| | | | | F | <60 |
 
 ### Issue Severity
 
