@@ -135,3 +135,4 @@ Map categories to assertions → Generate tests → Output suite (`assets/templa
 - Review: `assets/templates/review-report.md.template`
 - Migrate: `assets/templates/migration-report.md.template`
 - Test: `assets/templates/test-suite.md.template`
+Fill `{{VARIABLE}}` placeholders with actual values.

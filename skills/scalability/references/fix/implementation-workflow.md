@@ -54,7 +54,7 @@ Run `scalability-scoring` again on the modified codebase:
 If score < target:
 1. Re-read new issues list
 2. Repeat Steps 2-5
-3. Maximum 3 loops (if still below target after 3, flag remaining issues as "requires architectural change")
+3. Maximum 5 iterations (if still below target after 5, flag remaining issues as "requires architectural change")
 
 ## Common Fix Sequences
 
