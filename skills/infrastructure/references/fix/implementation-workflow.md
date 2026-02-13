@@ -65,4 +65,4 @@ If target score not reached after first pass:
 2. Identify remaining issues
 3. Apply next round of fixes
 4. Verify and re-score again
-5. Maximum 3 loops before reporting remaining issues to user
+5. Maximum 5 iterations before reporting remaining issues to user

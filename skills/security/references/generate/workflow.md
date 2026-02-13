@@ -8,16 +8,16 @@
 
 | Category | Code Pattern |
 |----------|-------------|
-| OWASP Top 10 Coverage (15%) | Injection prevention, broken auth checks, XSS guards |
-| Input Sanitization (12%) | DOMPurify, parameterized queries, Zod validation |
-| Auth Security (12%) | Session validation, token rotation, secure cookies |
-| Data Protection (10%) | Encryption at rest/transit, PII handling, field masking |
-| Security Headers (10%) | CSP, X-Frame-Options, HSTS, Referrer-Policy, Permissions |
-| CORS Configuration (8%) | Explicit origins, no wildcard in production, preflight |
-| CSP Policy (8%) | Nonce-based, no unsafe-inline, report-uri |
-| Secrets Management (8%) | Env vars, no hardcoded secrets, rotation support |
-| Dependency Security (7%) | npm audit, no known CVEs, lockfile integrity |
-| Security Logging (10%) | Auth events, access logs, anomaly detection |
+| Input Validation & Sanitization (15%) | Zod at boundaries, DOMPurify for HTML, parameterized queries, XSS prevention |
+| Secrets & Environment Management (12%) | Env vars only, .env.example, no hardcoded secrets, rotation support |
+| Dependency Security (10%) | npm audit clean, lockfile integrity, no known CVEs |
+| Error Handling & Info Disclosure (12%) | No stack traces to client, safe error messages, no internal IDs leaked |
+| Content Security Policy (10%) | CSP header with nonces, script-src, no unsafe-eval/unsafe-inline |
+| Data Protection & PII (10%) | HTTPS enforced, PII minimization, field masking, encryption at rest |
+| Open Redirect & URL Validation (8%) | Redirect allowlist, `//` and `/\` blocked, URL parsing validation |
+| Webhook & External API Security (8%) | Signature verification, idempotency keys, replay protection |
+| Security Monitoring & Logging (8%) | Security events logged, request IDs, anomaly detection, no PII in logs |
+| Supply Chain & Build Security (7%) | Lockfile committed, poweredByHeader off, source maps disabled in prod |
 
 4. **Generate** — Write security-hardened code with all patterns
 5. **Self-Check** — Verify all 10 categories
@@ -27,5 +27,5 @@
 
 - All 10 categories addressed
 - Score >= 90 (A-) if audited with security scoring
-- No XSS vectors, no SQL injection, no CSRF gaps
+- No XSS vectors, no SQL injection, no info disclosure
 - All secrets from environment, never hardcoded

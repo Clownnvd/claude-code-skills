@@ -8,16 +8,16 @@
 
 | Category | Code Pattern |
 |----------|-------------|
-| Production Readiness (10%) | Multi-stage Docker, standalone output, health check |
-| Container Optimization (12%) | Alpine base, layer caching, non-root user, minimal image |
-| CI/CD Pipeline (10%) | GitHub Actions, lint→test→build→deploy stages |
-| Env Configuration (10%) | .env.example, runtime validation, no secrets in code |
-| Monitoring & Alerting (15%) | Sentry setup, health endpoint, uptime checks |
-| Logging (8%) | Structured JSON logs, log levels, request context |
-| CDN & Static Assets (8%) | Asset hashing, CDN config, immutable headers |
-| SSL & DNS (4%) | HTTPS redirect, HSTS, cert auto-renewal |
-| IaC (4%) | Terraform/Pulumi config or docker-compose |
-| Security Hardening (4%) | Read-only filesystem, resource limits, no root |
+| CI Pipeline — Lint + Test + Build (15%) | GitHub Actions, lint→test→build stages, parallel jobs, caching |
+| CD Pipeline — Deploy to Staging (12%) | Auto-deploy on merge, staging env, smoke tests, rollback |
+| Production Deploy & Approval (10%) | Manual approval gate, blue-green/canary, health check wait |
+| Containerization (12%) | Multi-stage Docker, Alpine base, non-root user, layer caching |
+| Environment Management (10%) | .env.example, runtime validation, no secrets in code, per-env config |
+| Monitoring & Observability (15%) | Sentry setup, health endpoint, structured logs, uptime checks, dashboards |
+| Backup & Disaster Recovery (10%) | Automated backups, PITR, restore testing, RTO/RPO defined |
+| Third-Party Integrations (8%) | Webhook retry, circuit breaker, timeout config, fallback |
+| Infrastructure as Code (4%) | Terraform/Pulumi or docker-compose, version-controlled infra |
+| Security in Deployment (4%) | Read-only filesystem, resource limits, no root, secrets in vault |
 
 4. **Generate** — Write infrastructure config with all patterns
 5. **Self-Check** — Verify all 10 categories
