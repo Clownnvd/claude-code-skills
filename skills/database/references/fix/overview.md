@@ -57,7 +57,7 @@ The scorecard contains:
 | Target | Score | When |
 |--------|-------|------|
 | Minimum viable | 73+ (C+) | Internal/prototype |
-| Production-ready | 83+ (B) | Public launch |
+| Production-ready | 87+ (B+) | Public launch |
 | Enterprise-grade | 90+ (A-) | Critical systems |
 
 ## Integration with db-scoring
@@ -65,4 +65,4 @@ The scorecard contains:
 1. Run `db-scoring` → get scorecard
 2. Run `db-fix` → implement fixes from scorecard
 3. Run `db-scoring` again → verify improvement
-4. Repeat if score < target (max 3 iterations)
+4. Repeat if score < target (max 5 iterations)

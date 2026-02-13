@@ -70,7 +70,7 @@ After re-scoring:
 
 When "fix until target" is requested:
 1. Each iteration: parse new scorecard → fix remaining → verify → re-score
-2. Track iteration count (max 3)
+2. Track iteration count (max 5)
 3. Track score delta per iteration — if delta = 0 for 2 consecutive, stop
 4. Final output: full before/after comparison across ALL iterations
 

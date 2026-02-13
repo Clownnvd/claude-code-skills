@@ -53,9 +53,9 @@
 | Security (15%) | {{SEC_BEFORE}} | {{SEC_AFTER}} | {{SEC_DELTA}} |
 | Indexing (12%) | {{IDX_BEFORE}} | {{IDX_AFTER}} | {{IDX_DELTA}} |
 | Query Performance (10%) | {{PERF_BEFORE}} | {{PERF_AFTER}} | {{PERF_DELTA}} |
-| Scalability (8%) | {{SCALE_BEFORE}} | {{SCALE_AFTER}} | {{SCALE_DELTA}} |
-| Migration (8%) | {{MIG_BEFORE}} | {{MIG_AFTER}} | {{MIG_DELTA}} |
-| Monitoring (7%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
+| Scalability (5%) | {{SCALE_BEFORE}} | {{SCALE_AFTER}} | {{SCALE_DELTA}} |
+| Migration (10%) | {{MIG_BEFORE}} | {{MIG_AFTER}} | {{MIG_DELTA}} |
+| Monitoring (8%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
 | Backup (8%) | {{BAK_BEFORE}} | {{BAK_AFTER}} | {{BAK_DELTA}} |
 | DevEx (5%) | {{DEV_BEFORE}} | {{DEV_AFTER}} | {{DEV_DELTA}} |
 

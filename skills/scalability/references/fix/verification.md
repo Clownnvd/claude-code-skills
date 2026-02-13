@@ -39,12 +39,12 @@ After ALL fixes applied, verify:
 | Context | Minimum | Ideal |
 |---------|---------|-------|
 | MVP | 70 (C) | 80 (B-) |
-| Production | 83 (B) | 90 (A-) |
+| Production | 87 (B+) | 90 (A-) |
 | Enterprise | 90 (A-) | 97 (A+) |
 
 ## Loop Mode Decision
 
 After re-scoring:
 - **Score >= target**: Done. Document final scorecard.
-- **Score < target, issues remain**: Loop (max 3 iterations)
+- **Score < target, issues remain**: Loop (max 5 iterations)
 - **Score < target, no fixable issues**: Flag as architectural limitation, document in scorecard

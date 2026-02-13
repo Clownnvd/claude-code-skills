@@ -36,9 +36,8 @@ Systematically fix caching issues identified by caching-scoring. Prioritize by i
 
 | Target | Score | When |
 |--------|-------|------|
-| Minimum viable | 70+ (C) | Internal/prototype |
-| Production-ready | 80+ (B-) | Public launch |
-| Professional | 85+ (B+) | Premium product |
+| Minimum viable | 73+ (C) | Internal/prototype |
+| Production-ready | 87+ (B+) | Public launch |
 | Enterprise | 90+ (A-) | Enterprise/showcase |
 
 ## Loop Mode

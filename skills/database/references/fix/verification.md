@@ -67,7 +67,7 @@ After all fixes pass verification, invoke `db-scoring` skill to produce a new sc
 1. [Issue] — [reason not fixed]
 
 ### Score Target Met?
-- [ ] Target: >= B (83+)
+- [ ] Target: >= B+ (87+)
 - [ ] All CRITICALs resolved
 - [ ] No new issues introduced
 ```
@@ -77,7 +77,7 @@ After all fixes pass verification, invoke `db-scoring` skill to produce a new sc
 | Target | Score | When |
 |--------|-------|------|
 | Minimum viable | 73+ (C+) | Internal/prototype |
-| Production-ready | 83+ (B) | Public launch |
+| Production-ready | 87+ (B+) | Public launch |
 | Enterprise-grade | 90+ (A-) | Critical systems |
 
 ## Iteration Decision
@@ -95,7 +95,7 @@ After re-scoring:
 
 When "fix until target" is requested:
 1. Each iteration: parse new scorecard -> fix remaining -> verify -> re-score
-2. Track iteration count (max 3)
+2. Track iteration count (max 5)
 3. Track score delta per iteration — if delta = 0 for 2 consecutive, stop
 4. Final output: full before/after comparison across ALL iterations
 

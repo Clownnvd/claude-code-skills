@@ -22,7 +22,7 @@ Objectively score caching quality in Next.js App Router applications. Framework:
 
 | Gate | Minimum | Blocking Categories |
 |------|---------|-------------------|
-| Production | B- (80) | No category below 6 |
+| Production | B+ (87) | No category below 6 |
 | Enterprise | A- (90) | No category below 8 |
 
 ## Output Format

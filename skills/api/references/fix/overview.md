@@ -67,7 +67,7 @@ The scorecard contains:
 1. Run `api-scoring` → get scorecard
 2. Run `api-fix` → implement fixes from scorecard
 3. Run `api-scoring` again → verify improvement
-4. Repeat if score < target (max 3 iterations)
+4. Repeat if score < target (max 5 iterations)
 
 ### Scorecard Schema Contract
 
