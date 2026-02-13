@@ -8,7 +8,7 @@
       "name": "Compile + Test Verification",
       "prompt": "Apply the GitHub Actions CI Workflow fix and verify compilation and tests pass",
       "setup": "Scorecard with CRITICAL issue: no CI pipeline (CI Pipeline 2/10). Apply the GitHub Actions CI Workflow fix from `ci-cd.md` which creates `.github/workflows/ci.yml` with lint, typecheck, test, and build jobs.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Create `.github/workflows/ci.yml` with parallel jobs for lint, typecheck, test, build",
         "Run `npx tsc --noEmit`. Verify the project itself still compiles (no broken imports from new env files)",
@@ -25,7 +25,7 @@
       "name": "Re-Score Improvement Verification",
       "prompt": "Apply fixes for CI Pipeline and Environment Mgmt categories and verify re-score improvement",
       "setup": "Initial infra-scoring scorecard: CI Pipeline 2/10, Environment Mgmt 4/10, Monitoring 3/10. Total 35/100 (D-). Apply fixes for CI workflow (CI Pipeline) and Zod env validation (Environment Mgmt).",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run infra-fix for both issues",
         "Invoke `infra-scoring` to produce a new scorecard",
@@ -42,7 +42,7 @@
       "name": "Regression Detection",
       "prompt": "Apply a Docker fix that introduces a Docker regression and verify pipeline detects it",
       "setup": "Initial scorecard: CI Pipeline 8/10, Docker 7/10, Environment Mgmt 7/10. Apply a Docker fix that adds a multi-stage build but removes the `.dockerignore`, causing `node_modules` and `.env` to leak into the image. Docker drops from 7/10 to 3/10.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Apply Docker multi-stage build that deletes `.dockerignore`",
         "Run `infra-scoring` re-score",
@@ -59,7 +59,7 @@
       "name": "Fix Idempotency",
       "prompt": "Run infra-fix with an already-fixed CI pipeline issue and verify no changes are made",
       "setup": "Scorecard with CRITICAL issue: no CI pipeline. The `.github/workflows/ci.yml` already exists with lint, typecheck, test, and build jobs from a previous fix run.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run infra-fix with the same CI pipeline issue",
         "Check `git diff` after the fix attempt",

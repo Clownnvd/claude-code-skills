@@ -8,7 +8,7 @@
       "name": "Compile + Test Verification",
       "prompt": "Apply the CSP Hardening fix and verify compilation and tests pass without regression",
       "setup": "Scorecard with HIGH issue: API routes missing CSP headers (Security 5/10). Apply the CSP Hardening fix from `security-auth.md` which adds `Content-Security-Policy` to the proxy middleware.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Apply the CSP header fix to `middleware.ts` or proxy config",
         "Run `npx tsc --noEmit`. Verify zero type errors",
@@ -25,7 +25,7 @@
       "name": "Re-Score Improvement Verification",
       "prompt": "Apply fixes for Security and Rate Limiting categories and verify re-score improvement",
       "setup": "Initial api-scoring scorecard: Security 5/10, Rate Limiting 4/10, Input Validation 6/10. Total 58/100 (C). Apply fixes for CSP headers (Security) and per-user rate limiting (Rate Limiting).",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run api-fix for both issues",
         "Invoke `api-scoring` to produce a new scorecard",
@@ -42,7 +42,7 @@
       "name": "Regression Detection",
       "prompt": "Apply a rate limiting fix that introduces a Performance regression and verify pipeline detects it",
       "setup": "Initial scorecard: Security 7/10, Rate Limiting 6/10, Performance 8/10. Apply a rate limiting fix that adds synchronous Redis lookups to every request, regressing Performance from 8/10 to 5/10.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Apply the rate limiting fix with blocking Redis calls",
         "Run `api-scoring` re-score",
@@ -59,7 +59,7 @@
       "name": "Fix Idempotency",
       "prompt": "Run api-fix with an already-fixed rate limiting issue and verify no changes are made",
       "setup": "Scorecard with HIGH issue: no per-user rate limiting. The `rateLimit()` function in `src/lib/api/rate-limit.ts` already has `userId` parameter and key prefix `user:${userId}` from a previous fix run.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run api-fix with the same rate limiting issue",
         "Check `git diff` after the fix attempt",

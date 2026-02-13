@@ -8,7 +8,7 @@
       "name": "No Responsive Breakpoints",
       "prompt": "Provide components with fixed pixel widths and no media queries and run ui scoring",
       "setup": "Provide components with fixed pixel widths and no media queries",
-      "input_files": [],
+      "input_files": ["references/scoring/criteria/visual-design.md", "references/scoring/criteria/responsive-perf.md"],
       "expectations": [
         "Responsiveness scores <= 3 (CRITICAL)",
         "Spacing & Layout also penalized for non-fluid layout",
@@ -22,7 +22,7 @@
       "name": "Missing ARIA Labels and Alt Text",
       "prompt": "Provide interactive elements without ARIA attributes and images without alt text and run ui scoring",
       "setup": "Provide interactive elements without ARIA attributes and images without alt text",
-      "input_files": [],
+      "input_files": ["references/scoring/criteria/visual-design.md", "references/scoring/criteria/responsive-perf.md"],
       "expectations": [
         "Accessibility scores <= 2 (CRITICAL)",
         "Issue lists each failing element and its location",
@@ -36,7 +36,7 @@
       "name": "No Visual Hierarchy (Flat Design)",
       "prompt": "Provide page where all text is same size, weight, and color and run ui scoring",
       "setup": "Provide page where all text is same size, weight, and color",
-      "input_files": [],
+      "input_files": ["references/scoring/criteria/visual-design.md", "references/scoring/criteria/responsive-perf.md"],
       "expectations": [
         "Visual Hierarchy scores <= 3",
         "Typography also penalized for missing type scale",
@@ -50,7 +50,7 @@
       "name": "Hardcoded Colors Instead of Design Tokens",
       "prompt": "Provide components using hex values instead of CSS variables from globals.css and run ui scoring",
       "setup": "Provide components using hex values instead of CSS variables from globals.css",
-      "input_files": [],
+      "input_files": ["references/scoring/criteria/visual-design.md", "references/scoring/criteria/responsive-perf.md"],
       "expectations": [
         "Color & Theme scores <= 4",
         "Issue identifies hardcoded color values",
@@ -64,7 +64,7 @@
       "name": "No Loading or Feedback States",
       "prompt": "Provide interactive components (buttons, forms) with no loading indicators and run ui scoring",
       "setup": "Provide interactive components (buttons, forms) with no loading indicators",
-      "input_files": [],
+      "input_files": ["references/scoring/criteria/visual-design.md", "references/scoring/criteria/responsive-perf.md"],
       "expectations": [
         "Interactions scores <= 3",
         "Content & Copy penalized for missing feedback messaging",
@@ -78,7 +78,7 @@
       "name": "CTA Below the Fold With No Visual Weight",
       "prompt": "Provide landing page with primary CTA buried or styled like secondary elements and run ui scoring",
       "setup": "Provide landing page with primary CTA buried below the fold or styled like secondary elements",
-      "input_files": [],
+      "input_files": ["references/scoring/criteria/visual-design.md", "references/scoring/criteria/responsive-perf.md"],
       "expectations": [
         "Conversion & CTA scores <= 4",
         "Visual Hierarchy also penalized",
@@ -92,7 +92,7 @@
       "name": "Anti-Bias Baseline Enforcement",
       "prompt": "Run ui scoring and verify anti-bias baseline is enforced across all categories",
       "setup": "Run ui scoring against any page",
-      "input_files": [],
+      "input_files": ["references/scoring/criteria/visual-design.md", "references/scoring/criteria/responsive-perf.md"],
       "expectations": [
         "No category starts above 7 without evidence",
         "Scores of 9-10 cite specific positive evidence in Notes column",

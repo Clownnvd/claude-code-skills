@@ -8,7 +8,7 @@
       "name": "Large Bundle With Barrel Re-Exports",
       "prompt": "Provide codebase using export * from barrel files importing heavy libraries and run scalability-scoring",
       "setup": "Provide codebase using export * from barrel files importing heavy libraries",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Bundle Size scores <= 3 (CRITICAL)",
         "Issue identifies specific barrel files and their import cost",
@@ -25,7 +25,7 @@
       "name": "Images Without next/image",
       "prompt": "Provide pages using raw <img> tags instead of next/image and run scalability-scoring",
       "setup": "Provide pages using raw <img> tags instead of next/image",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Image Optimization scores <= 3",
         "Issue lists specific image elements missing optimization",
@@ -42,7 +42,7 @@
       "name": "N+1 Database Queries",
       "prompt": "Provide code looping over records and querying DB inside the loop and run scalability-scoring",
       "setup": "Provide code looping over records and querying DB inside the loop",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "DB Query Performance scores <= 2 (CRITICAL)",
         "Issue identifies the N+1 pattern with file and line reference",
@@ -59,7 +59,7 @@
       "name": "No Code Splitting on Heavy Components",
       "prompt": "Provide pages importing large libraries (chart, editor, map) statically and run scalability-scoring",
       "setup": "Provide pages importing large libraries (chart, editor, map) statically",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Bundle Size penalized for missing dynamic() or React.lazy",
         "Client-Side Performance also flagged for initial load impact",
@@ -76,7 +76,7 @@
       "name": "Sequential Fetches Instead of Parallel",
       "prompt": "Provide server components with await chains for independent data and run scalability-scoring",
       "setup": "Provide server components with await chains for independent data",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Concurrency scores <= 4",
         "Issue identifies specific sequential await patterns",
@@ -93,7 +93,7 @@
       "name": "No Web Vitals Tracking",
       "prompt": "Provide codebase with no performance monitoring or Lighthouse CI and run scalability-scoring",
       "setup": "Provide codebase with no performance monitoring or Lighthouse CI",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Performance Monitoring scores <= 2",
         "Issue recommends Web Vitals reporting and bundle budgets",
@@ -110,7 +110,7 @@
       "name": "Memory Leaks in Client Components",
       "prompt": "Provide components with event listeners or intervals without cleanup and run scalability-scoring",
       "setup": "Provide components with event listeners or intervals without cleanup in useEffect",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Memory & Resource Management scores <= 3",
         "Issue identifies missing cleanup in useEffect return",

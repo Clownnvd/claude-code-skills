@@ -8,7 +8,7 @@
       "name": "Compile + Test Verification",
       "prompt": "Apply the NO_CACHE_HEADERS fix and verify compilation and tests pass",
       "setup": "Scorecard with HIGH issue: API routes missing `Cache-Control: no-store` on authenticated responses (Headers & Revalidation 4/10). Apply the NO_CACHE_HEADERS fix from `headers-revalidation.md`.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Apply `Cache-Control: no-store, no-cache, must-revalidate` headers to all authenticated API route responses",
         "Add `export const dynamic = \"force-dynamic\"` to each API route file",
@@ -25,7 +25,7 @@
       "name": "Re-Score Improvement Verification",
       "prompt": "Apply fixes for Headers & Revalidation and Static/Dynamic/ISR categories and verify re-score improvement",
       "setup": "Initial caching-scoring scorecard: Headers & Revalidation 4/10, Static/Dynamic/ISR 5/10, React Cache 3/10. Total 45/100 (D+). Apply fixes for cache-control headers and ISR `revalidatePath` after mutations.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run caching-fix for both issues",
         "Invoke `caching-scoring` to produce a new scorecard",
@@ -42,7 +42,7 @@
       "name": "Regression Detection",
       "prompt": "Apply a React cache() fix that introduces a Static/Dynamic/ISR regression and verify pipeline detects it",
       "setup": "Initial scorecard: Headers & Revalidation 7/10, Static/Dynamic/ISR 8/10, React Cache 6/10. Apply a React `cache()` fix that wraps page-level data fetches, accidentally making the landing page dynamic. Static/Dynamic/ISR drops from 8/10 to 4/10.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Apply `cache()` wrapper that adds `cookies()` call inside cached function",
         "Run `caching-scoring` re-score",
@@ -59,7 +59,7 @@
       "name": "Fix Idempotency",
       "prompt": "Run caching-fix with an already-fixed cache-control issue and verify no changes are made",
       "setup": "Scorecard with HIGH issue: no `Cache-Control` headers on API responses. All API routes already have `NO_CACHE_HEADERS` applied and `export const dynamic = \"force-dynamic\"` from a previous fix run.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run caching-fix with the same cache-control issue",
         "Check `git diff` after the fix attempt",

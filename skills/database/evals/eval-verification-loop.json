@@ -8,7 +8,7 @@
       "name": "Compile + Test Verification",
       "prompt": "Apply the FK Index fix and verify Prisma validation, compilation, and tests pass",
       "setup": "Scorecard with HIGH issue: missing indexes on foreign key columns (Indexing 3/10). Apply the FK Index fix from `performance-scaling.md` which adds `@@index` directives to the Prisma schema.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Add `@@index([userId])`, `@@index([teamId])` to relevant models in `prisma/schema.prisma`",
         "Run `npx prisma validate` to confirm schema syntax",
@@ -26,7 +26,7 @@
       "name": "Re-Score Improvement Verification",
       "prompt": "Apply fixes for Indexing and Schema Design categories and verify re-score improvement",
       "setup": "Initial db-scoring scorecard: Indexing 3/10, Schema Design 5/10, Security 4/10. Total 48/100 (D+). Apply fixes for FK indexes (Indexing) and `@@unique` constraints on email fields (Schema Design).",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run db-fix for both issues",
         "Invoke `db-scoring` to produce a new scorecard",
@@ -43,7 +43,7 @@
       "name": "Regression Detection",
       "prompt": "Apply a schema fix that introduces a Migration & Versioning regression and verify pipeline detects it",
       "setup": "Initial scorecard: Schema Design 8/10, Indexing 7/10, Migration & Versioning 7/10. Apply a schema fix that renames a column without a migration rename step, causing `prisma migrate dev` to generate DROP + ADD instead of ALTER RENAME. Migration & Versioning drops from 7/10 to 3/10.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Apply schema fix that renames `userName` to `displayName` without using `@map`",
         "Run `db-scoring` re-score",
@@ -60,7 +60,7 @@
       "name": "Fix Idempotency",
       "prompt": "Run db-fix with an already-fixed FK indexing issue and verify no changes are made",
       "setup": "Scorecard with HIGH issue: missing FK indexes. The `prisma/schema.prisma` already has `@@index([userId])` on all models from a previous fix run.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run db-fix with the same indexing issue",
         "Check `git diff` after the fix attempt",

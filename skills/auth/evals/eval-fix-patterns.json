@@ -8,7 +8,7 @@
       "name": "Cookie Security Flags (sessions-passwords.md)",
       "prompt": "Apply Cookie Security Flags pattern to Better Auth config",
       "setup": "Better Auth config missing `useSecureCookies` and explicit `defaultCookieSameSite`.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/sessions-passwords.md", "references/fix/fix-patterns/oauth-email.md", "references/fix/fix-patterns/csrf-headers.md", "references/fix/fix-patterns/ratelimit-audit.md", "references/fix/fix-patterns/authz-2fa.md"],
       "expectations": [
         "Apply Cookie Security Flags pattern",
         "Verify `advanced.useSecureCookies` set to `process.env.NODE_ENV === \"production\"`",
@@ -24,7 +24,7 @@
       "name": "Origin Validation in Proxy (csrf-headers.md)",
       "prompt": "Apply Origin Validation pattern to add CSRF protection on state-changing requests",
       "setup": "No CSRF protection on state-changing requests. POST to `/api/auth/*` accepts any origin.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/sessions-passwords.md", "references/fix/fix-patterns/oauth-email.md", "references/fix/fix-patterns/csrf-headers.md", "references/fix/fix-patterns/ratelimit-audit.md", "references/fix/fix-patterns/authz-2fa.md"],
       "expectations": [
         "Apply Origin Validation pattern",
         "Verify `validateOrigin()` function added to proxy.ts",
@@ -41,7 +41,7 @@
       "name": "Strict Auth Rate Limits (ratelimit-audit.md)",
       "prompt": "Apply Strict Auth Rate Limits pattern with tiered rate limiting for auth endpoints",
       "setup": "No rate limiting on login, signup, or password reset endpoints.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/sessions-passwords.md", "references/fix/fix-patterns/oauth-email.md", "references/fix/fix-patterns/csrf-headers.md", "references/fix/fix-patterns/ratelimit-audit.md", "references/fix/fix-patterns/authz-2fa.md"],
       "expectations": [
         "Apply Strict Auth Rate Limits pattern",
         "Verify `AUTH_RATE_LIMITS` config defined with strict (5 req/15min), standard (100 req/15min), verification (3 req/1hr) tiers",
@@ -57,7 +57,7 @@
       "name": "Two-Layer Auth Pattern (authz-2fa.md)",
       "prompt": "Apply Two-Layer Auth pattern with proxy-level cookie check and API-level session validation",
       "setup": "No proxy-level cookie check. All auth relies on API route `getSession()` calls.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/sessions-passwords.md", "references/fix/fix-patterns/oauth-email.md", "references/fix/fix-patterns/csrf-headers.md", "references/fix/fix-patterns/ratelimit-audit.md", "references/fix/fix-patterns/authz-2fa.md"],
       "expectations": [
         "Apply Two-Layer Auth pattern",
         "Verify Layer 1: Proxy checks `better-auth.session_token` cookie for protected paths",

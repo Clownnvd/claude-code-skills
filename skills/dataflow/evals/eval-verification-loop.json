@@ -8,7 +8,7 @@
       "name": "Compile + Test Verification",
       "prompt": "Apply the Prisma Select fix and verify compilation and tests pass",
       "setup": "Scorecard with HIGH issue: Prisma queries use `findMany()` without `select`, returning full models to client (Prisma & API 4/10). Apply the Prisma Select fix from `prisma-api.md`.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Add explicit `select` clauses to all `findMany`/`findFirst` calls, returning only fields needed by the UI",
         "Update corresponding TypeScript return types to match narrowed select shape",
@@ -25,7 +25,7 @@
       "name": "Re-Score Improvement Verification",
       "prompt": "Apply fixes for RSC Composition and Prisma & API categories and verify re-score improvement",
       "setup": "Initial dataflow-scoring scorecard: RSC Composition 5/10, Prisma & API 4/10, Types & Errors 6/10. Total 50/100 (C-). Apply fixes for RSC boundary extraction (RSC Composition) and Prisma `select` clauses (Prisma & API).",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run dataflow-fix for both issues",
         "Invoke `dataflow-scoring` to produce a new scorecard",
@@ -42,7 +42,7 @@
       "name": "Regression Detection",
       "prompt": "Apply an RSC boundary fix that introduces a Forms & DTOs regression and verify pipeline detects it",
       "setup": "Initial scorecard: RSC Composition 8/10, Prisma & API 7/10, Types & Errors 7/10. Apply an RSC boundary fix that moves a form handler into a Server Component without `\"use server\"`, breaking client-side form submission. Forms & DTOs drops from 6/10 to 2/10.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Apply RSC extraction that moves `onSubmit` handler into a Server Component file without adding `\"use server\"` directive",
         "Run `dataflow-scoring` re-score",
@@ -59,7 +59,7 @@
       "name": "Fix Idempotency",
       "prompt": "Run dataflow-fix with an already-fixed Prisma select issue and verify no changes are made",
       "setup": "Scorecard with HIGH issue: Prisma queries lack `select`. All `findMany` calls in `src/lib/db/` already have explicit `select` clauses from a previous fix run.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run dataflow-fix with the same Prisma select issue",
         "Check `git diff` after the fix attempt",

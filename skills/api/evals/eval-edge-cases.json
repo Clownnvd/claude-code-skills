@@ -8,7 +8,7 @@
       "name": "No API Routes Found",
       "prompt": "Run api-scoring against a codebase with zero API route files",
       "setup": "Provide a codebase containing no API route files",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Scoring does not crash",
         "Output notes the absence and scores relevant categories at 0",
@@ -25,7 +25,7 @@
       "name": "API Routes Without Auth Middleware",
       "prompt": "Provide API routes with no auth checks and run api-scoring",
       "setup": "Provide routes with no auth middleware or checks",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Security scores <= 3 (CRITICAL)",
         "Auth & AuthZ scores <= 3 (CRITICAL)",
@@ -42,7 +42,7 @@
       "name": "Missing Rate Limiting on Public Endpoints",
       "prompt": "Provide public API routes with no rate limiting and run api-scoring",
       "setup": "Provide public API routes without any rate limiting configuration",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Rate Limiting scores 0-2",
         "OWASP API4 (Resource Consumption) flagged as CRITICAL",
@@ -60,7 +60,7 @@
       "name": "Sensitive Data in Error Responses",
       "prompt": "Provide API routes that leak stack traces or internal details in error responses",
       "setup": "Provide API routes returning stack traces or internal details in error responses",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Error Handling penalized (score <= 4)",
         "OWASP API8 (Misconfiguration) flagged",
@@ -77,7 +77,7 @@
       "name": "Next.js App Router API Routes",
       "prompt": "Provide Next.js route.ts files using App Router conventions and run api-scoring",
       "setup": "Provide Next.js App Router route.ts files",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Framework-specific adjustments from nextjs-patterns.md are applied",
         "Two-layer auth pattern is checked (middleware + route handler)",
@@ -95,7 +95,7 @@
       "name": "All Categories Score 10",
       "prompt": "Run api-scoring against an exemplary codebase that should score 10 in all categories",
       "setup": "Provide an exemplary codebase including: Zod validation on every route + Content-Type check (Input 10); requireAuth() + role-based requireAdmin() + CSRF token (Auth 10, Security 9+); CSP with nonce, CORS allowlist, X-Content-Type-Options, dep scanning (Security 10); errorResponse() helper with machine-readable codes, no stack traces (Error 10); Per-user rate limiting with sliding window (Rate Limit 10); Consistent { success, data, error } envelope, cursor pagination (Response 10); DB query timeouts, connection pooling, caching headers (Performance 10); Structured JSON logging, X-Request-Id, Sentry (Observability 10); OpenAPI spec or README with endpoints + examples (Docs 10); Integration tests for happy + error paths, >80% coverage (Testing 10)",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Total score is 100",
         "Grade is A+",
@@ -114,7 +114,7 @@
       "name": "Mixed HTTP Methods Without Validation",
       "prompt": "Provide routes accepting POST/PUT/PATCH without input validation and run api-scoring",
       "setup": "Provide routes handling POST/PUT/PATCH methods without any input validation",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Input Validation scores <= 3",
         "OWASP API3 (BOPLA) and API7 (SSRF) flagged"

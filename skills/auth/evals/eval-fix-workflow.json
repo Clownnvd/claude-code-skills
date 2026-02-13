@@ -8,7 +8,7 @@
       "name": "Accept Scoring Input",
       "prompt": "Run auth-fix with the scorecard as input",
       "setup": "Provide an auth-scoring scorecard with 7 issues across Session Management, CSRF, Rate Limiting.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run auth-fix with the scorecard as input",
         "Verify skill parses all 7 issues with correct severity and category",
@@ -22,7 +22,7 @@
       "name": "Fix in Severity Order",
       "prompt": "Run auth-fix and observe fix application order",
       "setup": "Scorecard contains CRITICAL (no CSRF validation on POST), HIGH (missing cookie security flags), MEDIUM (no audit logging).",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run auth-fix",
         "Observe fix application order"
@@ -35,7 +35,7 @@
       "name": "Fix References Correct Pattern",
       "prompt": "Run auth-fix and check which reference file the skill loads",
       "setup": "Issue in \"Session Management\" category scored 4/10.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run auth-fix",
         "Check which reference file the skill loads"
@@ -48,7 +48,7 @@
       "name": "Verification Step Confirms Fix",
       "prompt": "Run auth-fix to apply the Origin Validation in Proxy fix and verify it works",
       "setup": "Apply the \"Origin Validation in Proxy\" fix from `csrf-headers.md`.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run auth-fix to apply the fix",
         "Check that skill verifies: code compiles, Better Auth config valid, auth flow not broken"
@@ -61,7 +61,7 @@
       "name": "Re-Score Shows Improvement",
       "prompt": "Run auth-fix through full cycle and compare before/after scores",
       "setup": "Initial score 58/100 (grade C). Apply fixes for 2 CRITICAL + 3 HIGH issues.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run auth-fix through full cycle",
         "Compare before/after scores per category"

@@ -8,7 +8,7 @@
       "name": "Client-Side useEffect for Initial Data",
       "prompt": "Provide components using useEffect + fetch for initial page data and run dataflow-scoring",
       "setup": "Provide components using useEffect + fetch for initial page data",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "RSC Data Fetching scores <= 3 (CRITICAL)",
         "Issue recommends converting to async server component",
@@ -25,7 +25,7 @@
       "name": "\"use client\" at Page Level",
       "prompt": "Provide pages with \"use client\" at the top wrapping entire page trees and run dataflow-scoring",
       "setup": "Provide pages with \"use client\" at the top, wrapping entire page trees",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Server/Client Composition scores <= 3",
         "Issue identifies specific pages that should be server components",
@@ -42,7 +42,7 @@
       "name": "Prisma Queries Without select",
       "prompt": "Provide services using findMany without select (fetching all fields) and run dataflow-scoring",
       "setup": "Provide services using findMany without select (fetching all fields)",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Prisma Query Optimization scores <= 4",
         "Issue references specific queries returning excess data",
@@ -59,7 +59,7 @@
       "name": "No Zod Validation at API Boundaries",
       "prompt": "Provide API routes accepting request bodies without schema validation and run dataflow-scoring",
       "setup": "Provide API routes accepting request bodies without schema validation",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Type Safety scores <= 3 (CRITICAL)",
         "API Route Design also penalized",
@@ -76,7 +76,7 @@
       "name": "Missing error.tsx Boundaries",
       "prompt": "Provide app routes without error.tsx files and run dataflow-scoring",
       "setup": "Provide app routes without error.tsx files",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Error Propagation scores <= 4",
         "Issue lists route segments lacking error boundaries",
@@ -93,7 +93,7 @@
       "name": "Forms Without Loading States",
       "prompt": "Provide form components with no useFormStatus or loading indicators and run dataflow-scoring",
       "setup": "Provide form components with no useFormStatus or loading indicators",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Form Handling scores <= 5",
         "Issue recommends pending state, optimistic updates, or loading UI"
@@ -108,7 +108,7 @@
       "name": "Non-Serializable Props Crossing Server/Client",
       "prompt": "Provide server components passing Date objects or functions to client components and run dataflow-scoring",
       "setup": "Provide server components passing Date objects or functions to client components",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Server/Client Composition penalized",
         "Type Safety also penalized for boundary violation",

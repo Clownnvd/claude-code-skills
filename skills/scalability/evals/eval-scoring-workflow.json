@@ -8,7 +8,7 @@
       "name": "Valid Codebase Produces Score 0-100",
       "prompt": "Run scalability-scoring against a Next.js App Router codebase",
       "setup": "Provide a Next.js App Router codebase",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Output contains a numeric score between 0 and 100",
         "All 10 categories (Bundle Size, Image Optimization, RSC Architecture, DB Query Perf, API Response Perf, Client-Side Perf, Edge/CDN, Memory Mgmt, Concurrency, Perf Monitoring) have individual scores",
@@ -26,7 +26,7 @@
       "name": "Each Criterion Scored Individually With Weight",
       "prompt": "Verify each scoring criterion is weighted correctly and totals are computed properly",
       "setup": "Run scalability-scoring and inspect the scorecard output",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Bundle Size at 15%, Images at 12%, RSC at 12%, DB Perf at 12%",
         "API Perf at 10%, Client Perf at 10%, Edge/CDN at 8%",
@@ -45,7 +45,7 @@
       "name": "Output Includes Scorecard AND Issues List",
       "prompt": "Verify output contains both a scorecard table and a prioritized issues list",
       "setup": "Run scalability-scoring and inspect the full output",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Output contains a scorecard table with all 10 categories",
         "Output contains a prioritized issues list with Severity, Category, Issue, Fix",
@@ -65,7 +65,7 @@
       "name": "Grade Letter Matches Score Range",
       "prompt": "Verify the grade letter assigned matches the numeric score range",
       "setup": "Run scalability-scoring and check grade output against score",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Score 90-100 produces A-range grade (A+/A/A-)",
         "Score 75-89 produces B-range grade (B+/B/B-)",
@@ -83,7 +83,7 @@
       "name": "Issues Sorted by Severity",
       "prompt": "Verify issues are sorted from most to least severe",
       "setup": "Run scalability-scoring against a codebase with issues at multiple severity levels",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "CRITICAL issues (score 0-3 or severe perf bottleneck) appear first",
         "HIGH issues (score 4-5, weight >= 12%) appear second",

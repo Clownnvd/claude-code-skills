@@ -8,7 +8,7 @@
       "name": "Convert Client Page to Server Component (rsc-composition.md)",
       "prompt": "Apply RSC conversion pattern to convert a client-side fetching page to a Server Component",
       "setup": "Dashboard page uses `\"use client\"` with `useEffect` + `fetch(\"/api/user/purchase\")` to load data. No interactivity requires client-side rendering.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/rsc-composition.md", "references/fix/fix-patterns/prisma-api.md", "references/fix/fix-patterns/state-cache.md", "references/fix/fix-patterns/types-errors.md", "references/fix/fix-patterns/forms-dtos.md"],
       "expectations": [
         "Apply RSC conversion pattern",
         "Verify `\"use client\"` removed from page component",
@@ -25,7 +25,7 @@
       "name": "Add select to Prisma Queries (prisma-api.md)",
       "prompt": "Apply Add select pattern to add explicit select clauses to all Prisma queries",
       "setup": "Multiple `prisma.user.findUnique()` calls without `select`, returning all columns including sensitive fields.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/rsc-composition.md", "references/fix/fix-patterns/prisma-api.md", "references/fix/fix-patterns/state-cache.md", "references/fix/fix-patterns/types-errors.md", "references/fix/fix-patterns/forms-dtos.md"],
       "expectations": [
         "Apply \"Add select\" pattern",
         "Verify every `findUnique`/`findFirst`/`findMany` call has explicit `select`",
@@ -41,7 +41,7 @@
       "name": "Shared Zod Schemas (types-errors.md)",
       "prompt": "Apply Shared Zod Schemas pattern to unify client and server validation",
       "setup": "Client form uses inline validation. API route uses separate inline validation. Types duplicated between client and server.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/rsc-composition.md", "references/fix/fix-patterns/prisma-api.md", "references/fix/fix-patterns/state-cache.md", "references/fix/fix-patterns/types-errors.md", "references/fix/fix-patterns/forms-dtos.md"],
       "expectations": [
         "Apply Shared Zod Schemas pattern",
         "Verify schema defined once in `src/lib/validations/`",
@@ -59,7 +59,7 @@
       "name": "error.tsx Per Route Segment (types-errors.md)",
       "prompt": "Apply error.tsx pattern to add error boundaries per route segment",
       "setup": "No error boundaries. Unhandled Prisma or Stripe errors crash the page with a generic Next.js error.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/rsc-composition.md", "references/fix/fix-patterns/prisma-api.md", "references/fix/fix-patterns/state-cache.md", "references/fix/fix-patterns/types-errors.md", "references/fix/fix-patterns/forms-dtos.md"],
       "expectations": [
         "Apply error.tsx pattern",
         "Verify `src/app/dashboard/error.tsx` created with `\"use client\"` directive",

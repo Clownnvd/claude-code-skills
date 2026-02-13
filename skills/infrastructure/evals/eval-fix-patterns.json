@@ -8,7 +8,7 @@
       "name": "GitHub Actions CI Workflow (ci-cd.md)",
       "prompt": "Apply CI Workflow pattern to create a GitHub Actions pipeline with parallel quality gates",
       "setup": "No CI pipeline. Code pushed directly to main without lint, typecheck, or test gates.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/backup-integrations.md", "references/fix/fix-patterns/ci-cd.md", "references/fix/fix-patterns/deploy-container.md", "references/fix/fix-patterns/env-monitoring.md", "references/fix/fix-patterns/iac-security.md"],
       "expectations": [
         "Apply CI Workflow pattern",
         "Verify `.github/workflows/ci.yml` created",
@@ -26,7 +26,7 @@
       "name": "Env Validation with Zod (env-monitoring.md)",
       "prompt": "Apply Env Validation pattern to add Zod-based runtime validation of environment variables",
       "setup": "No runtime validation of environment variables. App crashes with cryptic errors when env vars missing.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/backup-integrations.md", "references/fix/fix-patterns/ci-cd.md", "references/fix/fix-patterns/deploy-container.md", "references/fix/fix-patterns/env-monitoring.md", "references/fix/fix-patterns/iac-security.md"],
       "expectations": [
         "Apply Env Validation pattern",
         "Verify `src/lib/env.ts` created with `serverSchema` and `clientSchema`",
@@ -43,7 +43,7 @@
       "name": "Health and Readiness Endpoints (env-monitoring.md)",
       "prompt": "Apply Health/Readiness endpoint pattern to add monitoring endpoints",
       "setup": "No health check endpoint. Deployment platform cannot verify app is running.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/backup-integrations.md", "references/fix/fix-patterns/ci-cd.md", "references/fix/fix-patterns/deploy-container.md", "references/fix/fix-patterns/env-monitoring.md", "references/fix/fix-patterns/iac-security.md"],
       "expectations": [
         "Apply Health/Readiness endpoint pattern",
         "Verify `/api/health` returns `{ status: \"healthy\", timestamp, uptime }`",
@@ -60,7 +60,7 @@
       "name": "Webhook Idempotency (backup-integrations.md)",
       "prompt": "Apply Idempotency pattern to prevent duplicate webhook processing",
       "setup": "Stripe webhook creates duplicate purchases when same event delivered twice.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/backup-integrations.md", "references/fix/fix-patterns/ci-cd.md", "references/fix/fix-patterns/deploy-container.md", "references/fix/fix-patterns/env-monitoring.md", "references/fix/fix-patterns/iac-security.md"],
       "expectations": [
         "Apply Idempotency pattern",
         "Verify check-before-create: `findUnique` by `stripePaymentId` before `create`",

@@ -41,6 +41,15 @@ A+ (97-100) | A (93-96) | A- (90-92) | B+ (87-89) | B (83-86) | B- (80-82) | C+ 
 | API4: Resource Consumption | {{RESOURCE_STATUS}} | Rate Limiting, Perf |
 | API5: BFLA | {{BFLA_STATUS}} | Auth & AuthZ |
 
+## Framework Status
+
+| Component | Detected |
+|-----------|----------|
+| Next.js Version | {{NEXTJS_VERSION}} |
+| Route Handler Type | {{ROUTE_TYPE}} |
+| Middleware | {{MIDDLEWARE_STATUS}} |
+| Validation Library | {{VALIDATION_LIB}} |
+
 ## Quick Wins
 
 {{QUICK_WINS_LIST}}

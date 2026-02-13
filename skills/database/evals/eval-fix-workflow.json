@@ -8,7 +8,7 @@
       "name": "Accept Scoring Input",
       "prompt": "Run db-fix with the scorecard as input",
       "setup": "Provide a db-scoring scorecard with 8 issues across Schema Design, Security, Indexing, Operations.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run db-fix with the scorecard as input",
         "Verify skill parses all 8 issues with correct severity and category",
@@ -22,7 +22,7 @@
       "name": "Fix in Severity Order",
       "prompt": "Run db-fix and observe fix application order",
       "setup": "Scorecard contains CRITICAL (no SSL on connection string), HIGH (missing FK indexes), MEDIUM (no schema comments).",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run db-fix",
         "Observe fix application order"
@@ -35,7 +35,7 @@
       "name": "Fix References Correct Pattern",
       "prompt": "Run db-fix and check which reference file the skill loads",
       "setup": "Issue in \"Indexing\" category scored 3/10.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run db-fix",
         "Check which reference file the skill loads"
@@ -48,7 +48,7 @@
       "name": "Verification Step Confirms Fix",
       "prompt": "Run db-fix to apply the String-to-Enum Conversion fix and verify results",
       "setup": "Apply the \"String-to-Enum Conversion\" fix from `schema-integrity.md`.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run db-fix to apply the fix",
         "Check that skill verifies: `prisma validate` passes, migration SQL reviewed, application code updated to use enum"
@@ -61,7 +61,7 @@
       "name": "Re-Score Shows Improvement",
       "prompt": "Run db-fix through full cycle and compare before/after scores",
       "setup": "Initial score 52/100 (grade C-). Apply fixes for 2 CRITICAL + 4 HIGH issues.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run db-fix through full cycle",
         "Compare before/after scores per category"

@@ -8,7 +8,7 @@
       "name": "Accept Scoring Input",
       "prompt": "Run security-fix with the scorecard as input",
       "setup": "Provide a security-scoring scorecard with 8 issues across Input Validation, CSP, Webhooks, Monitoring.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run security-fix with the scorecard as input",
         "Verify skill parses all 8 issues with correct severity and category",
@@ -22,7 +22,7 @@
       "name": "Fix in Severity Order",
       "prompt": "Run security-fix and observe fix application order",
       "setup": "Scorecard contains CRITICAL (no input validation on API routes), HIGH (missing CSP headers), MEDIUM (no request IDs in logs).",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run security-fix",
         "Observe fix application order"
@@ -35,7 +35,7 @@
       "name": "Fix References Correct Pattern",
       "prompt": "Run security-fix and check which reference file the skill loads",
       "setup": "Issue in \"Input Validation\" category scored 3/10.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run security-fix",
         "Check which reference file the skill loads"
@@ -48,7 +48,7 @@
       "name": "Verification Step Confirms Fix",
       "prompt": "Run security-fix to apply the CSP Directives fix and verify headers are correct",
       "setup": "Apply the \"CSP Directives\" fix from `csp-data.md`.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run security-fix to apply the fix",
         "Check that skill verifies: CSP header present on responses, no unsafe-eval in script-src, frame-ancestors set to 'none'"
@@ -61,7 +61,7 @@
       "name": "Re-Score Shows Improvement",
       "prompt": "Run security-fix through full cycle and compare before/after scores",
       "setup": "Initial score 48/100 (grade D+). Apply fixes for 3 CRITICAL + 3 HIGH issues.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run security-fix through full cycle",
         "Compare before/after scores per category"

@@ -8,7 +8,7 @@
       "name": "Dynamic Import Heavy Libraries (bundle-images.md)",
       "prompt": "Apply Dynamic Import pattern to lazy-load heavy browser-only libraries",
       "setup": "`chart.js` imported at top level in a dashboard component, adding 200KB to initial bundle.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/api-client.md", "references/fix/fix-patterns/bundle-images.md", "references/fix/fix-patterns/concurrency-monitoring.md", "references/fix/fix-patterns/edge-memory.md", "references/fix/fix-patterns/rsc-dbperf.md"],
       "expectations": [
         "Apply Dynamic Import pattern",
         "Verify top-level `import { Chart } from 'chart.js'` replaced with `next/dynamic`",
@@ -25,7 +25,7 @@
       "name": "Extract Client Interactivity (rsc-dbperf.md)",
       "prompt": "Apply Extract Client Interactivity pattern to isolate interactive elements into leaf client components",
       "setup": "Entire product page has `\"use client\"` because one button uses `useState`. Static content (headings, descriptions) shipped as client JS.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/api-client.md", "references/fix/fix-patterns/bundle-images.md", "references/fix/fix-patterns/concurrency-monitoring.md", "references/fix/fix-patterns/edge-memory.md", "references/fix/fix-patterns/rsc-dbperf.md"],
       "expectations": [
         "Apply Extract Client Interactivity pattern",
         "Verify button extracted to separate `\"use client\"` component",
@@ -42,7 +42,7 @@
       "name": "Promise.all for Parallel Fetches (concurrency-monitoring.md)",
       "prompt": "Apply Promise.all pattern to parallelize independent sequential queries",
       "setup": "Layout fetches user, preferences, and history sequentially. Total waterfall time is sum of all three queries.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/api-client.md", "references/fix/fix-patterns/bundle-images.md", "references/fix/fix-patterns/concurrency-monitoring.md", "references/fix/fix-patterns/edge-memory.md", "references/fix/fix-patterns/rsc-dbperf.md"],
       "expectations": [
         "Apply Promise.all pattern",
         "Verify sequential `await` calls replaced with `Promise.all([...])`",
@@ -59,7 +59,7 @@
       "name": "Bounded In-Memory Cache (edge-memory.md)",
       "prompt": "Apply Bounded Cache pattern to replace unbounded Map with size-limited TTL cache",
       "setup": "Rate limiter uses unbounded `new Map()` that grows indefinitely in long-running processes.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/api-client.md", "references/fix/fix-patterns/bundle-images.md", "references/fix/fix-patterns/concurrency-monitoring.md", "references/fix/fix-patterns/edge-memory.md", "references/fix/fix-patterns/rsc-dbperf.md"],
       "expectations": [
         "Apply Bounded Cache pattern",
         "Verify `BoundedCache` class with `maxSize` and `ttlMs` parameters",

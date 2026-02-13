@@ -8,7 +8,7 @@
       "name": "Valid Codebase Produces Score 0-100",
       "prompt": "Run infra-scoring against a codebase with CI/CD and deployment config",
       "setup": "Provide a codebase with CI/CD and deployment configuration files",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Output contains a numeric score between 0 and 100",
         "All 10 categories (CI Pipeline, CD Pipeline, Production Deploy, Containerization, Environment Mgmt, Monitoring, Backup/DR, Third-Party, IaC, Deployment Security) have individual scores",
@@ -26,7 +26,7 @@
       "name": "Each Criterion Scored Individually With Weight",
       "prompt": "Verify each scoring criterion is weighted correctly and totals are computed properly",
       "setup": "Run infra-scoring and inspect the scorecard output",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "CI Pipeline at 15%, CD Pipeline at 12%, Production Deploy at 10%",
         "Containerization at 12%, Environment Mgmt at 10%, Monitoring at 15%",
@@ -45,7 +45,7 @@
       "name": "Output Includes Scorecard AND Issues List",
       "prompt": "Verify output contains both a scorecard table and a prioritized issues list",
       "setup": "Run infra-scoring and inspect the full output",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Output contains a scorecard table with all 10 categories",
         "Output contains a prioritized issues list with Severity, Category, Issue, Fix",
@@ -65,7 +65,7 @@
       "name": "Grade Letter Matches Score Range",
       "prompt": "Verify the grade letter assigned matches the numeric score range",
       "setup": "Run infra-scoring and check grade output against score",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Score 90-100 produces A-range grade (A+/A/A-)",
         "Score 75-89 produces B-range grade (B+/B/B-)",
@@ -83,7 +83,7 @@
       "name": "Issues Sorted by Severity",
       "prompt": "Verify issues are sorted from most to least severe",
       "setup": "Run infra-scoring against a codebase with issues at multiple severity levels",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "CRITICAL issues (score 0-3 or deployment risk) appear first",
         "HIGH issues (score 4-5, weight >= 12%) appear second",

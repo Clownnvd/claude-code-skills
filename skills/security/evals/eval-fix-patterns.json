@@ -8,7 +8,7 @@
       "name": "Zod Validation on API Routes (input-secrets.md)",
       "prompt": "Apply Zod Validation pattern to add strict input validation to API routes",
       "setup": "API route reads `await req.json()` and uses `body.email` without validation. Accepts any shape.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/csp-data.md", "references/fix/fix-patterns/deps-errors.md", "references/fix/fix-patterns/input-secrets.md", "references/fix/fix-patterns/monitoring-supply.md", "references/fix/fix-patterns/redirect-webhook.md"],
       "expectations": [
         "Apply Zod Validation pattern",
         "Verify schema created in `src/lib/validations/` with `.strict()`",
@@ -25,7 +25,7 @@
       "name": "CSP Headers in Proxy (csp-data.md)",
       "prompt": "Apply CSP pattern to add Content-Security-Policy headers to all responses",
       "setup": "No Content-Security-Policy header on any response. Scripts can load from any origin.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/csp-data.md", "references/fix/fix-patterns/deps-errors.md", "references/fix/fix-patterns/input-secrets.md", "references/fix/fix-patterns/monitoring-supply.md", "references/fix/fix-patterns/redirect-webhook.md"],
       "expectations": [
         "Apply CSP pattern",
         "Verify CSP directives include: `default-src 'self'`, `script-src 'self'`, `frame-ancestors 'none'`, `base-uri 'self'`",
@@ -42,7 +42,7 @@
       "name": "Open Redirect Blocking (redirect-webhook.md)",
       "prompt": "Apply Open Redirect Blocking pattern to validate callbackUrl parameters",
       "setup": "`callbackUrl` query parameter used after login redirect. No validation on the URL value. Attacker can set `callbackUrl=https://evil.com`.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/csp-data.md", "references/fix/fix-patterns/deps-errors.md", "references/fix/fix-patterns/input-secrets.md", "references/fix/fix-patterns/monitoring-supply.md", "references/fix/fix-patterns/redirect-webhook.md"],
       "expectations": [
         "Apply Open Redirect Blocking pattern",
         "Verify `isValidRedirectUrl()` function rejects protocol-relative URLs (`//evil.com`)",
@@ -59,7 +59,7 @@
       "name": "Webhook Signature Verification (redirect-webhook.md)",
       "prompt": "Apply Signature Verification pattern to validate Stripe webhook signatures",
       "setup": "Stripe webhook handler processes events without verifying the `stripe-signature` header. Any POST to the endpoint is accepted.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/csp-data.md", "references/fix/fix-patterns/deps-errors.md", "references/fix/fix-patterns/input-secrets.md", "references/fix/fix-patterns/monitoring-supply.md", "references/fix/fix-patterns/redirect-webhook.md"],
       "expectations": [
         "Apply Signature Verification pattern",
         "Verify `stripe.webhooks.constructEvent()` called with raw body and signature",

@@ -23,13 +23,22 @@
 
 ## Grade Scale
 
-A+ (97-100) | A (93-96) | A- (90-92) | B+ (87-89) | B (83-86) | B- (80-82) | C+ (77-79) | C (70-76) | D (60-69) | F (<60)
+A+ (97-100) | A (93-96) | A- (90-92) | B+ (87-89) | B (83-86) | B- (80-82) | C+ (77-79) | C (73-76) | D (60-72) | F (<60)
 
 ## Prioritized Issues
 
 | # | Severity | Category | Issue | Affected Files | Fix |
 |---|----------|----------|-------|----------------|-----|
 {{ISSUES_LIST}}
+
+## Framework Status
+
+| Component | Detected |
+|-----------|----------|
+| Next.js Version | {{NEXTJS_VERSION}} |
+| ORM / DB Client | {{ORM}} |
+| State Library | {{STATE_LIB}} |
+| Form Library | {{FORM_LIB}} |
 
 ## Quick Wins
 

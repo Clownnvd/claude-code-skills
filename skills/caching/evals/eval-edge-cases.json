@@ -8,7 +8,7 @@
       "name": "No Cache Headers on Auth Responses",
       "prompt": "Provide API routes returning auth tokens without no-store/no-cache and run caching-scoring",
       "setup": "Provide API routes returning auth tokens without no-store or no-cache headers",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Cache-Control Headers penalized (score <= 3, CRITICAL)",
         "Issue flags specific routes caching sensitive data",
@@ -25,7 +25,7 @@
       "name": "force-dynamic on Every Page",
       "prompt": "Provide app with force-dynamic on all pages including static-eligible ones and run caching-scoring",
       "setup": "Provide app with force-dynamic on all pages including static-eligible ones",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Static vs Dynamic Classification scores <= 3",
         "Issue identifies pages that should be static",
@@ -42,7 +42,7 @@
       "name": "Mutations Without Revalidation",
       "prompt": "Provide Server Actions or API routes that mutate data without revalidatePath/revalidateTag and run caching-scoring",
       "setup": "Provide Server Actions or API routes that mutate data without revalidatePath or revalidateTag",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Revalidation Strategy scores <= 2 (CRITICAL)",
         "Each mutation route is listed as an issue",
@@ -59,7 +59,7 @@
       "name": "Duplicate Fetch Calls in RSC Tree",
       "prompt": "Provide server components making the same DB/fetch call multiple times per request and run caching-scoring",
       "setup": "Provide server components making the same DB/fetch call multiple times per request",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Request Deduplication scores <= 4",
         "React cache() Deduplication also penalized if cache() not used",
@@ -75,7 +75,7 @@
       "name": "No Cache Observability in Dev",
       "prompt": "Provide codebase with no x-cache headers or cache hit/miss logging and run caching-scoring",
       "setup": "Provide codebase with no x-cache headers or cache hit/miss logging",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Cache Monitoring scores <= 3",
         "Issue recommends adding debug headers in development"
@@ -90,7 +90,7 @@
       "name": "Heavy Operations in Proxy",
       "prompt": "Provide proxy/middleware running expensive operations (DB queries, external fetches) and run caching-scoring",
       "setup": "Provide proxy/middleware running expensive operations such as DB queries and external fetches",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Proxy Caching scores <= 3",
         "Issue recommends moving logic out of proxy path"
@@ -105,7 +105,7 @@
       "name": "Static Assets Without CDN Headers",
       "prompt": "Provide static asset responses missing s-maxage or stale-while-revalidate and run caching-scoring",
       "setup": "Provide static asset responses missing s-maxage or stale-while-revalidate headers",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "CDN & Edge Caching scores <= 4",
         "Fix recommends Vercel edge config or CDN-friendly headers"

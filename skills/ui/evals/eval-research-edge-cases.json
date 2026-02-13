@@ -8,7 +8,7 @@
       "name": "Unknown Page Type",
       "prompt": "Research components for an onboarding wizard page",
       "setup": "",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Skill does NOT refuse or error out",
         "Maps to nearest known type or creates a reasonable section list",
@@ -26,7 +26,7 @@
       "name": "Unreachable Source Site",
       "prompt": "Research components",
       "setup": "Research triggers WebFetch on a URL that returns 404 or timeout",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Skip the unreachable source and continue with remaining sources",
         "Do NOT include broken links in the output table",
@@ -45,7 +45,7 @@
       "name": "Framework-Specific Filtering",
       "prompt": "Research landing page components for Vue/Nuxt (not React)",
       "setup": "",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Prioritize Vue-compatible sources (Inspira UI, general CSS solutions)",
         "Exclude React-only libraries (Aceternity, Magic UI) or note incompatibility",
@@ -63,7 +63,7 @@
       "name": "Single Section Deep Dive",
       "prompt": "Find 5 hero section variants for my landing page",
       "setup": "",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Output is a single table focused on hero sections only",
         "Contains at least 5 rows, all Section = \"Hero\"",
@@ -82,7 +82,7 @@
       "name": "Follow-Up Numbering Continuity",
       "prompt": "Show me more",
       "setup": "User first requests landing page research (gets #1-#6), then asks \"show me more\"",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Additional results continue numbering from #7 onward",
         "No duplicate components from the first batch",
@@ -101,7 +101,7 @@
       "name": "Empty Search Results",
       "prompt": "Research 3D product configurator component",
       "setup": "Research a very niche section type with likely no results from standard sources",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "If no results found from standard sources, report honestly",
         "Suggest alternative search terms or related components",

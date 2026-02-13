@@ -8,7 +8,7 @@
       "name": "Compile + Test Verification",
       "prompt": "Apply the Zod Validation fix and verify compilation and tests pass",
       "setup": "Scorecard with CRITICAL issue: no input validation on API routes (Input Validation 2/10). Apply the Zod Validation fix from `input-secrets.md` which adds `schema.safeParse(body)` with `.strict()` to route handlers.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Create Zod schemas for each API route's expected body shape",
         "Add `safeParse` with `.strict()` at the top of each POST/PUT/PATCH handler",
@@ -25,7 +25,7 @@
       "name": "Re-Score Improvement Verification",
       "prompt": "Apply fixes for Input Validation and CSP categories and verify re-score improvement",
       "setup": "Initial security-scoring scorecard: Input Validation 2/10, CSP 3/10, Secrets Management 6/10. Total 42/100 (D). Apply fixes for Zod validation (Input Validation) and Content-Security-Policy headers (CSP).",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run security-fix for both issues",
         "Invoke `security-scoring` to produce a new scorecard",
@@ -42,7 +42,7 @@
       "name": "Regression Detection",
       "prompt": "Apply a CSP fix that introduces an Auth Integration regression and verify pipeline detects it",
       "setup": "Initial scorecard: Input Validation 8/10, CSP 7/10, Auth Integration 7/10. Apply a CSP fix that sets `frame-ancestors 'none'` and `form-action 'self'`, breaking the OAuth popup flow. Auth Integration drops from 7/10 to 3/10.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Apply strict CSP that blocks OAuth provider redirect with `form-action 'self'`",
         "Run `security-scoring` re-score",
@@ -59,7 +59,7 @@
       "name": "Fix Idempotency",
       "prompt": "Run security-fix with an already-fixed input validation issue and verify no changes are made",
       "setup": "Scorecard with CRITICAL issue: no input validation. All API routes already have Zod `safeParse` with `.strict()` from a previous fix run.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run security-fix with the same input validation issue",
         "Check `git diff` after the fix attempt",

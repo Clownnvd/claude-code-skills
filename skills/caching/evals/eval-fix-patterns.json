@@ -8,7 +8,7 @@
       "name": "NO_CACHE_HEADERS on Authenticated Responses (headers-revalidation.md)",
       "prompt": "Apply NO_CACHE_HEADERS pattern to prevent caching of authenticated API responses",
       "setup": "Authenticated API routes return `successResponse(data)` without cache headers. User-specific data could be cached by intermediaries.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/headers-revalidation.md", "references/fix/fix-patterns/static-dynamic-isr.md", "references/fix/fix-patterns/react-cache-use-cache.md", "references/fix/fix-patterns/cdn-dedup.md", "references/fix/fix-patterns/proxy-monitoring.md"],
       "expectations": [
         "Apply NO_CACHE_HEADERS pattern",
         "Verify `NO_CACHE_HEADERS` constant defined as `{ \"Cache-Control\": \"private, no-store\" }`",
@@ -24,7 +24,7 @@
       "name": "cache() Session Dedup (react-cache-use-cache.md)",
       "prompt": "Apply cache() wrapper pattern to deduplicate session queries across Server Components",
       "setup": "Multiple Server Components in the same request tree each call `auth.api.getSession()`, causing duplicate DB queries.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/headers-revalidation.md", "references/fix/fix-patterns/static-dynamic-isr.md", "references/fix/fix-patterns/react-cache-use-cache.md", "references/fix/fix-patterns/cdn-dedup.md", "references/fix/fix-patterns/proxy-monitoring.md"],
       "expectations": [
         "Apply `cache()` wrapper pattern",
         "Verify `getServerSession` exported from `src/lib/auth/server.ts` wrapped with `cache()`",
@@ -40,7 +40,7 @@
       "name": "Static Page Conversion (static-dynamic-isr.md)",
       "prompt": "Apply Static Page Conversion pattern to convert dynamic landing page to static",
       "setup": "Landing page renders dynamically because header reads server session via `headers()`.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/headers-revalidation.md", "references/fix/fix-patterns/static-dynamic-isr.md", "references/fix/fix-patterns/react-cache-use-cache.md", "references/fix/fix-patterns/cdn-dedup.md", "references/fix/fix-patterns/proxy-monitoring.md"],
       "expectations": [
         "Apply Static Page Conversion pattern",
         "Verify server-side session check moved to client component using `useSession()`",
@@ -57,7 +57,7 @@
       "name": "revalidatePath After Mutations (headers-revalidation.md)",
       "prompt": "Apply revalidatePath pattern to trigger cache revalidation after data mutations",
       "setup": "Prisma `create`/`update` calls in API routes and webhooks do not trigger cache revalidation. Dashboard shows stale data after purchase.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/headers-revalidation.md", "references/fix/fix-patterns/static-dynamic-isr.md", "references/fix/fix-patterns/react-cache-use-cache.md", "references/fix/fix-patterns/cdn-dedup.md", "references/fix/fix-patterns/proxy-monitoring.md"],
       "expectations": [
         "Apply revalidatePath pattern",
         "Verify `revalidatePath(\"/dashboard\")` called after purchase creation",

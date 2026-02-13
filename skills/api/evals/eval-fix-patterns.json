@@ -8,7 +8,7 @@
       "name": "CSP Hardening (security-auth.md)",
       "prompt": "Apply CSP Hardening pattern to remove unsafe-eval and add nonce-based or strict-dynamic approach",
       "setup": "Proxy has `Content-Security-Policy` with `'unsafe-inline' 'unsafe-eval'`.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/input-errors.md", "references/fix/fix-patterns/observability-docs-testing.md", "references/fix/fix-patterns/ratelimit-response-perf.md", "references/fix/fix-patterns/security-auth.md"],
       "expectations": [
         "Apply CSP Hardening pattern",
         "Verify `'unsafe-eval'` removed from script-src",
@@ -24,7 +24,7 @@
       "name": "Per-User Rate Limiting (ratelimit-response-perf.md)",
       "prompt": "Apply Per-User Rate Limiting pattern to add userId-based rate limit keys",
       "setup": "Rate limiter uses only IP-based keys: `${identifier}:${ip}`.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/input-errors.md", "references/fix/fix-patterns/observability-docs-testing.md", "references/fix/fix-patterns/ratelimit-response-perf.md", "references/fix/fix-patterns/security-auth.md"],
       "expectations": [
         "Apply Per-User Rate Limiting pattern",
         "Verify `userId` parameter added to `rateLimit()` function",
@@ -40,7 +40,7 @@
       "name": "Machine-Readable Error Codes (input-errors.md)",
       "prompt": "Apply Machine-Readable Error Codes pattern to add error code fields to API responses",
       "setup": "API returns `{ success: false, error: \"Validation failed\" }` without a `code` field.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/input-errors.md", "references/fix/fix-patterns/observability-docs-testing.md", "references/fix/fix-patterns/ratelimit-response-perf.md", "references/fix/fix-patterns/security-auth.md"],
       "expectations": [
         "Apply Machine-Readable Error Codes pattern",
         "Verify `errorResponse()` signature updated with `code` parameter",
@@ -57,7 +57,7 @@
       "name": "Request-Level Structured Logging (observability-docs-testing.md)",
       "prompt": "Apply Request-Level Structured Logging pattern to add per-request logging to API routes",
       "setup": "No per-request logging; only Prisma slow query logs exist.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/input-errors.md", "references/fix/fix-patterns/observability-docs-testing.md", "references/fix/fix-patterns/ratelimit-response-perf.md", "references/fix/fix-patterns/security-auth.md"],
       "expectations": [
         "Apply Request-Level Structured Logging pattern",
         "Verify `logRequest()` function created in `src/lib/api/logger.ts`",

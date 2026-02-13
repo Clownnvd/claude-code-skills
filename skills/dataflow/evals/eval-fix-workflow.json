@@ -8,7 +8,7 @@
       "name": "Accept Scoring Input",
       "prompt": "Run dataflow-fix with the scorecard as input",
       "setup": "Provide a dataflow-scoring scorecard with 6 issues across RSC Fetching, Prisma Optimization, Type Safety.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run dataflow-fix with the scorecard as input",
         "Verify skill parses all 6 issues with correct severity and category",
@@ -22,7 +22,7 @@
       "name": "Fix in Severity Order",
       "prompt": "Run dataflow-fix and observe fix application order",
       "setup": "Scorecard contains CRITICAL (client fetch where RSC needed), HIGH (no select on Prisma queries), MEDIUM (missing error.tsx boundaries).",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run dataflow-fix",
         "Observe fix application order"
@@ -35,7 +35,7 @@
       "name": "Fix References Correct Pattern",
       "prompt": "Run dataflow-fix and check which reference file the skill loads",
       "setup": "Issue in \"Prisma Optimization\" category scored 4/10.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run dataflow-fix",
         "Check which reference file the skill loads"
@@ -48,7 +48,7 @@
       "name": "Verification Step Confirms Fix",
       "prompt": "Run dataflow-fix to apply the Push use client to Leaves fix and verify results",
       "setup": "Apply the \"Push use client to Leaves\" fix from `rsc-composition.md`.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run dataflow-fix to apply the fix",
         "Check that skill verifies: TypeScript compiles, \"use client\" only on leaf components, server data still flows correctly"
@@ -61,7 +61,7 @@
       "name": "Re-Score Shows Improvement",
       "prompt": "Run dataflow-fix through full cycle and compare before/after scores",
       "setup": "Initial score 60/100 (grade C+). Apply fixes for 2 CRITICAL + 2 HIGH issues.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run dataflow-fix through full cycle",
         "Compare before/after scores per category"

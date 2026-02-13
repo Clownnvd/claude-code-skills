@@ -8,7 +8,7 @@
       "name": "Accept Scoring Input",
       "prompt": "Run api-fix with the scorecard as input",
       "setup": "Provide an api-scoring scorecard with 6 issues across Security, Input Validation, Rate Limiting.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run api-fix with the scorecard as input",
         "Verify skill parses all 6 issues with correct severity and category",
@@ -22,7 +22,7 @@
       "name": "Fix in Severity Order",
       "prompt": "Run api-fix and observe fix application order",
       "setup": "Scorecard contains CRITICAL (CSP unsafe-eval), HIGH (no per-user rate limiting), MEDIUM (missing error codes).",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run api-fix",
         "Observe fix application order"
@@ -35,7 +35,7 @@
       "name": "Fix References Correct Pattern",
       "prompt": "Run api-fix and check which reference file the skill loads",
       "setup": "Issue in \"Rate Limiting\" category scored 4/10.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run api-fix",
         "Check which reference file the skill loads"
@@ -48,7 +48,7 @@
       "name": "Verification Step Confirms Fix",
       "prompt": "Run api-fix to apply the Content-Type Enforcement fix and verify compilation and tests",
       "setup": "Apply the \"Content-Type Enforcement\" fix from `input-errors.md`.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run api-fix to apply the fix",
         "Check that skill verifies: TypeScript compiles, existing tests pass, the specific criterion improves"
@@ -61,7 +61,7 @@
       "name": "Re-Score Shows Improvement",
       "prompt": "Run api-fix through full cycle and compare before/after scores",
       "setup": "Initial score 62/100 (grade C+). Apply fixes for 3 CRITICAL + 2 HIGH issues.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run api-fix through full cycle",
         "Compare before/after scores per category"

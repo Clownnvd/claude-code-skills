@@ -8,7 +8,7 @@
       "name": "Valid Page Produces Score 0-100",
       "prompt": "Run ui score mode against a page with UI components",
       "setup": "Provide a page with UI components",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/criteria/visual-design.md"],
       "expectations": [
         "Output contains a numeric score between 0 and 100",
         "All 10 categories (Visual Hierarchy, Color & Theme, Typography, Spacing & Layout, Responsiveness, Interactions, Accessibility, Content & Copy, Conversion & CTA, Performance) have individual scores",
@@ -22,7 +22,7 @@
       "name": "Each Criterion Scored Individually With Weight",
       "prompt": "Verify each scoring criterion is weighted correctly and totals are computed properly",
       "setup": "Run ui score mode and inspect the scorecard output",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/criteria/visual-design.md"],
       "expectations": [
         "Visual Hierarchy at 15%, Color at 10%, Typography at 10%",
         "Spacing at 12%, Responsiveness at 12%, Interactions at 8%",
@@ -38,7 +38,7 @@
       "name": "Output Includes Scorecard AND Issues List",
       "prompt": "Verify output contains both a scorecard table and a prioritized issues list",
       "setup": "Run ui score mode and inspect the full output",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/criteria/visual-design.md"],
       "expectations": [
         "Output contains a scorecard table with all 10 categories",
         "Output contains a prioritized issues list with Severity, Category, Issue, Fix",
@@ -54,7 +54,7 @@
       "name": "Grade Letter Matches Score Range",
       "prompt": "Verify the grade letter assigned matches the numeric score range",
       "setup": "Run ui score mode and check grade output against score",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/criteria/visual-design.md"],
       "expectations": [
         "Score 90-100 produces A-range grade (A+/A/A-)",
         "Score 75-89 produces B-range grade (B+/B/B-)",
@@ -70,7 +70,7 @@
       "name": "Issues Sorted by Severity",
       "prompt": "Verify issues are sorted from most to least severe",
       "setup": "Run ui score mode against a page with issues at multiple severity levels",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/criteria/visual-design.md"],
       "expectations": [
         "CRITICAL issues (severe usability or accessibility failures) appear first",
         "HIGH issues (high-weight categories scoring below 5) appear second",

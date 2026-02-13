@@ -8,9 +8,7 @@
       "name": "SKILL.md Size Limit",
       "prompt": "Validate a skill with an oversized SKILL.md",
       "setup": "SKILL.md with 160 lines (over 150 limit).",
-      "input_files": [
-        "SKILL.md"
-      ],
+      "input_files": ["references/writing-guide.md", "references/token-efficiency-criteria.md", "references/script-quality-criteria.md"],
       "expectations": [
         "Validation warns about size",
         "Packager should flag as issue"
@@ -26,9 +24,7 @@
       "name": "Reference File Size Limit",
       "prompt": "Validate a skill with an oversized reference file",
       "setup": "Single reference file with 200 lines (over 150 limit).",
-      "input_files": [
-        "references/large-reference.md"
-      ],
+      "input_files": ["references/writing-guide.md", "references/token-efficiency-criteria.md", "references/script-quality-criteria.md"],
       "expectations": [
         "Should recommend splitting into 2 files of ~100 lines each"
       ],
@@ -43,7 +39,7 @@
       "name": "Description Length",
       "prompt": "Validate skills with various description lengths",
       "setup": "Test with multiple description lengths: 50 chars, 199 chars, 200 chars, 250 chars.",
-      "input_files": [],
+      "input_files": ["references/writing-guide.md", "references/token-efficiency-criteria.md", "references/script-quality-criteria.md"],
       "expectations": [
         "50 chars: Pass",
         "199 chars: Pass",
@@ -61,10 +57,7 @@
       "name": "No Duplication Rule",
       "prompt": "Validate a skill with duplicated content between SKILL.md and references",
       "setup": "Same paragraph appears in both SKILL.md and `references/overview.md`.",
-      "input_files": [
-        "SKILL.md",
-        "references/overview.md"
-      ],
+      "input_files": ["references/writing-guide.md", "references/token-efficiency-criteria.md", "references/script-quality-criteria.md"],
       "expectations": [
         "Should be flagged",
         "Info lives in ONE place only"
@@ -80,7 +73,7 @@
       "name": "Writing Style Check",
       "prompt": "Validate writing style in skill documentation",
       "setup": "Test with both valid and invalid writing style examples.",
-      "input_files": [],
+      "input_files": ["references/writing-guide.md", "references/token-efficiency-criteria.md", "references/script-quality-criteria.md"],
       "expectations": [
         "Pass: \"To configure auth, set the `AUTH_SECRET` environment variable\"",
         "Pass: \"Run `scripts/init.py` to scaffold the project\"",
@@ -99,9 +92,7 @@
       "name": "Script Test Requirement",
       "prompt": "Validate a skill where scripts lack corresponding tests",
       "setup": "`scripts/main.py` exists but no `scripts/test_main.py`.",
-      "input_files": [
-        "scripts/main.py"
-      ],
+      "input_files": ["references/writing-guide.md", "references/token-efficiency-criteria.md", "references/script-quality-criteria.md"],
       "expectations": [
         "Flag as issue — all scripts must have corresponding tests"
       ],
@@ -116,7 +107,7 @@
       "name": "Consolidated Topics",
       "prompt": "Evaluate two separate but related skills for consolidation",
       "setup": "Two separate skills: `mongodb-scoring` and `postgresql-scoring`.",
-      "input_files": [],
+      "input_files": ["references/writing-guide.md", "references/token-efficiency-criteria.md", "references/script-quality-criteria.md"],
       "expectations": [
         "Should recommend consolidating into `db-scoring` with subdirectories"
       ],

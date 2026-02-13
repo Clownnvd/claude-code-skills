@@ -8,7 +8,7 @@
       "name": "Valid Codebase Produces Score 0-100",
       "prompt": "Run security-scoring against a codebase with security controls",
       "setup": "Provide a codebase with security controls implemented",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Output contains a numeric score between 0 and 100",
         "All 10 categories (Input Validation, Secrets Mgmt, Dependencies, Error Handling, CSP, Data Protection, Redirects, Webhooks, Security Monitoring, Supply Chain) have individual scores",
@@ -26,7 +26,7 @@
       "name": "Each Criterion Scored Individually With Weight",
       "prompt": "Verify each scoring criterion is weighted correctly and totals are computed properly",
       "setup": "Run security-scoring and inspect the scorecard output",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Input Validation at 15%, Secrets at 12%, Dependencies at 10%",
         "Error Handling at 12%, CSP at 10%, Data Protection at 10%",
@@ -45,7 +45,7 @@
       "name": "Output Includes Scorecard AND Issues List",
       "prompt": "Verify output contains both a scorecard table and a prioritized issues list",
       "setup": "Run security-scoring and inspect the full output",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Output contains a scorecard table with all 10 categories and OWASP column",
         "Output contains a prioritized issues list with Severity, Category, Issue, OWASP, Fix",
@@ -66,7 +66,7 @@
       "name": "Grade Letter Matches Score Range",
       "prompt": "Verify the grade letter assigned matches the numeric score range",
       "setup": "Run security-scoring and check grade output against score",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Score 90-100 produces A-range grade (A+/A/A-)",
         "Score 75-89 produces B-range grade (B+/B/B-)",
@@ -84,7 +84,7 @@
       "name": "Issues Sorted by Severity",
       "prompt": "Verify issues are sorted from most to least severe",
       "setup": "Run security-scoring against a codebase with issues at multiple severity levels",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "CRITICAL issues (score 0-3 or exploitable vulnerability) appear first",
         "HIGH issues (score 4-5, weight >= 12%) appear second",

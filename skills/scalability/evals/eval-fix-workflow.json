@@ -8,7 +8,7 @@
       "name": "Accept Scoring Input",
       "prompt": "Run scalability-fix with the scorecard as input",
       "setup": "Provide a scalability-scoring scorecard with 6 issues across Bundle Size, RSC Architecture, Concurrency.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run scalability-fix with the scorecard as input",
         "Verify skill parses all 6 issues with correct severity and category",
@@ -22,7 +22,7 @@
       "name": "Fix in Severity Order",
       "prompt": "Run scalability-fix and observe fix application order",
       "setup": "Scorecard contains CRITICAL (entire page is \"use client\"), HIGH (sequential DB queries in layout), MEDIUM (no event listener cleanup).",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run scalability-fix",
         "Observe fix application order"
@@ -35,7 +35,7 @@
       "name": "Fix References Correct Pattern",
       "prompt": "Run scalability-fix and check which reference file the skill loads",
       "setup": "Issue in \"Bundle Size\" category scored 5/10.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run scalability-fix",
         "Check which reference file the skill loads"
@@ -48,7 +48,7 @@
       "name": "Verification Step Confirms Fix",
       "prompt": "Run scalability-fix to apply the Suspense Boundaries fix and verify build and rendering",
       "setup": "Apply the \"Suspense Boundaries\" fix from `rsc-dbperf.md`.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run scalability-fix to apply the fix",
         "Check that skill verifies: `pnpm build` succeeds, page renders with streaming, no layout shift"
@@ -61,7 +61,7 @@
       "name": "Re-Score Shows Improvement",
       "prompt": "Run scalability-fix through full cycle and compare before/after scores",
       "setup": "Initial score 56/100 (grade C). Apply fixes for 1 CRITICAL + 3 HIGH issues.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run scalability-fix through full cycle",
         "Compare before/after scores per category"

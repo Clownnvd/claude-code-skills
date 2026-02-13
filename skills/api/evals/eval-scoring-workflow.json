@@ -8,7 +8,7 @@
       "name": "Valid Codebase Produces Score 0-100",
       "prompt": "Run api-scoring against a codebase with API routes",
       "setup": "Provide a codebase containing API route files",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Output contains a numeric score between 0 and 100",
         "All 10 categories (Security, Auth & AuthZ, Input Validation, Error Handling, Rate Limiting, Response Design, Performance, Observability, Documentation & DX, Testing) have individual scores",
@@ -26,7 +26,7 @@
       "name": "Each Criterion Scored Individually With Weight",
       "prompt": "Verify each scoring criterion is weighted correctly and totals are computed properly",
       "setup": "Run api-scoring and inspect the scorecard output",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Security is weighted at 20%, Auth & AuthZ at 15%, Input Validation at 12%",
         "Error Handling at 10%, Rate Limiting at 10%, Response Design at 8%",
@@ -45,7 +45,7 @@
       "name": "Output Includes Scorecard AND Issues List",
       "prompt": "Verify output contains both a scorecard table and a prioritized issues list",
       "setup": "Run api-scoring and inspect the full output",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Output contains a scorecard table with all 10 categories",
         "Output contains a prioritized issues list with columns: Severity, Category, Issue, Fix",
@@ -65,7 +65,7 @@
       "name": "Grade Letter Matches Score Range",
       "prompt": "Verify the grade letter assigned matches the numeric score range",
       "setup": "Run api-scoring and check grade output against score",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Score 90-100 produces A-range grade (A+/A/A-)",
         "Score 75-89 produces B-range grade (B+/B/B-)",
@@ -85,7 +85,7 @@
       "name": "Issues Sorted by Severity",
       "prompt": "Verify issues are sorted from most to least severe",
       "setup": "Run api-scoring against a codebase with issues at multiple severity levels",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "CRITICAL issues (score 0-3 or security hole) appear first",
         "HIGH issues (score 4-5, weight >= 12%) appear second",

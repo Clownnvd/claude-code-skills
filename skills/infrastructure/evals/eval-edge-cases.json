@@ -8,7 +8,7 @@
       "name": "No CI/CD Pipeline Configured",
       "prompt": "Run infra-scoring against a codebase with no GitHub Actions or CI config files",
       "setup": "Provide a codebase with no GitHub Actions or CI config files",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "CI Pipeline and CD Pipeline both score 0",
         "CRITICAL issue flags absence of automated testing",
@@ -25,7 +25,7 @@
       "name": "Dockerfile Without Multi-Stage Build",
       "prompt": "Provide a single-stage Dockerfile including dev dependencies in final image and run infra-scoring",
       "setup": "Provide a single-stage Dockerfile including dev dependencies in final image",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Containerization scores <= 4",
         "Issue flags bloated image size",
@@ -42,7 +42,7 @@
       "name": "Hardcoded Secrets in CI Config",
       "prompt": "Provide workflow YAML with hardcoded API keys or passwords and run infra-scoring",
       "setup": "Provide workflow YAML with hardcoded API keys or passwords",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Environment Management scores <= 1 (CRITICAL)",
         "Security in Deployment also penalized",
@@ -59,7 +59,7 @@
       "name": "No Health Check Endpoints",
       "prompt": "Provide deployed service with no /health or readiness probe and run infra-scoring",
       "setup": "Provide deployed service with no /health or readiness probe",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Monitoring & Observability scores <= 3",
         "Issue recommends health check endpoint with dependency checks",
@@ -76,7 +76,7 @@
       "name": "No Rollback Strategy",
       "prompt": "Provide deployment config with no rollback mechanism and run infra-scoring",
       "setup": "Provide deployment config with no rollback mechanism",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Production Deploy scores <= 3",
         "Issue flags risk of stuck bad deployments",
@@ -93,7 +93,7 @@
       "name": "Third-Party Calls Without Timeout",
       "prompt": "Provide code calling external APIs without timeout or retry logic and run infra-scoring",
       "setup": "Provide code calling external APIs without timeout or retry logic",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Third-Party Integrations scores <= 3",
         "Issue recommends timeout, retry with backoff, and circuit breaker",
@@ -110,7 +110,7 @@
       "name": "Missing .dockerignore",
       "prompt": "Provide Docker setup with no .dockerignore file and run infra-scoring",
       "setup": "Provide Docker setup with no .dockerignore file",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Containerization penalized for including node_modules, .git, .env",
         "Security in Deployment also flagged for secret leak risk"

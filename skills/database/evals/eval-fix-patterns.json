@@ -8,7 +8,7 @@
       "name": "String-to-Enum Conversion (schema-integrity.md)",
       "prompt": "Apply String-to-Enum pattern to convert string fields to Prisma enums",
       "setup": "`Purchase.paymentMethod` is `String @default(\"stripe\")` instead of an enum. No type safety on values.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/schema-integrity.md", "references/fix/fix-patterns/security.md", "references/fix/fix-patterns/performance-scaling.md", "references/fix/fix-patterns/operations.md"],
       "expectations": [
         "Apply String-to-Enum pattern",
         "Verify `enum PaymentMethod { STRIPE SEPAY }` created in schema.prisma",
@@ -25,7 +25,7 @@
       "name": "Foreign Key Indexes (performance-scaling.md)",
       "prompt": "Apply FK Indexes pattern to add indexes on foreign key columns",
       "setup": "`Purchase.userId` is a foreign key with no `@@index`. Queries by userId do sequential scans.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/schema-integrity.md", "references/fix/fix-patterns/security.md", "references/fix/fix-patterns/performance-scaling.md", "references/fix/fix-patterns/operations.md"],
       "expectations": [
         "Apply FK Indexes pattern",
         "Verify `@@index([userId])` added to Purchase model",
@@ -42,7 +42,7 @@
       "name": "Sensitive Field Exposure Fix (security.md)",
       "prompt": "Apply Sensitive Field Exposure pattern to prevent leaking password hashes and tokens",
       "setup": "API route calls `prisma.user.findUnique({ where: { id } })` without `select`, exposing password hash and tokens in response.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/schema-integrity.md", "references/fix/fix-patterns/security.md", "references/fix/fix-patterns/performance-scaling.md", "references/fix/fix-patterns/operations.md"],
       "expectations": [
         "Apply Sensitive Field Exposure pattern",
         "Verify all user queries have explicit `select` clause",
@@ -59,7 +59,7 @@
       "name": "Connection Pooling (performance-scaling.md)",
       "prompt": "Apply Connection Pooling pattern to configure separate pooled and direct database URLs",
       "setup": "Single `DATABASE_URL` used for both queries and migrations. No pgbouncer parameter. `DIRECT_URL` not configured.",
-      "input_files": [],
+      "input_files": ["references/fix/fix-patterns/schema-integrity.md", "references/fix/fix-patterns/security.md", "references/fix/fix-patterns/performance-scaling.md", "references/fix/fix-patterns/operations.md"],
       "expectations": [
         "Apply Connection Pooling pattern",
         "Verify `prisma.config.ts` has separate `url` and `directUrl`",

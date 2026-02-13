@@ -8,7 +8,7 @@
       "name": "Per-Page Component Table",
       "prompt": "Research components for a landing page",
       "setup": "",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Output contains a `## Landing Page` section",
         "Table has columns: #, Section, Component, Style, Link, Complexity",
@@ -28,7 +28,7 @@
       "name": "Direct URL Links",
       "prompt": "Research dashboard components",
       "setup": "",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Every Link cell contains a markdown link: `[Source](https://full-url)`",
         "Links point to specific component pages, not site homepages",
@@ -47,7 +47,7 @@
       "name": "Multiple Sources",
       "prompt": "Research auth page components",
       "setup": "",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Results include components from at least 3 different sources",
         "Sources drawn from: 21st.dev, Aceternity, Magic UI, Origin UI, shadcn, Godly",
@@ -66,7 +66,7 @@
       "name": "Per-Page Organization",
       "prompt": "Research all pages (landing, dashboard, auth, billing)",
       "setup": "",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Output has 4 separate `## [Page] Page` sections",
         "Each section has its own table with independent numbering starting at 1",
@@ -86,7 +86,7 @@
       "name": "Complexity and Style Labels",
       "prompt": "Research landing page hero sections",
       "setup": "",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Complexity column uses only: Simple, Medium, Advanced",
         "Style column uses labels from the defined set (Glassmorphism, Aurora, Parallax, etc.)",

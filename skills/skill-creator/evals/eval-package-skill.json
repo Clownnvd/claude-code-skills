@@ -8,7 +8,7 @@
       "name": "Valid Skill Packages Successfully",
       "prompt": "python scripts/package_skill.py /path/to/valid-skill",
       "setup": "A valid skill directory that passes quick_validate.py.",
-      "input_files": [],
+      "input_files": ["references/creation-workflow.md", "references/validation-checklist.md"],
       "expectations": [
         "Runs validation first (prints \"Skill is valid!\")",
         "Creates `valid-skill.zip` in current directory",
@@ -27,7 +27,7 @@
       "name": "Invalid Skill Rejects Packaging",
       "prompt": "python scripts/package_skill.py /path/to/invalid-skill",
       "setup": "Skill with missing `name:` in frontmatter.",
-      "input_files": [],
+      "input_files": ["references/creation-workflow.md", "references/validation-checklist.md"],
       "expectations": [
         "Prints validation error",
         "No zip created",
@@ -44,7 +44,7 @@
       "name": "Custom Output Directory",
       "prompt": "python scripts/package_skill.py /path/to/skill ./dist",
       "setup": "./dist directory does not exist yet.",
-      "input_files": [],
+      "input_files": ["references/creation-workflow.md", "references/validation-checklist.md"],
       "expectations": [
         "`./dist/` created if not exists",
         "`./dist/skill.zip` created",
@@ -61,7 +61,7 @@
       "name": "Nonexistent Skill Path",
       "prompt": "python scripts/package_skill.py /nonexistent/path",
       "setup": "Path /nonexistent/path does not exist.",
-      "input_files": [],
+      "input_files": ["references/creation-workflow.md", "references/validation-checklist.md"],
       "expectations": [
         "Exit code: 1",
         "Output: \"Skill folder not found\""
@@ -77,12 +77,7 @@
       "name": "Zip Content Verification",
       "prompt": "Package a skill and verify zip contents",
       "setup": "Skill directory with `SKILL.md`, `references/a.md`, `scripts/b.py`, `assets/c.txt`.",
-      "input_files": [
-        "SKILL.md",
-        "references/a.md",
-        "scripts/b.py",
-        "assets/c.txt"
-      ],
+      "input_files": ["references/creation-workflow.md", "references/validation-checklist.md"],
       "expectations": [
         "Zip structure contains: skill-name/SKILL.md",
         "Zip structure contains: skill-name/references/a.md",

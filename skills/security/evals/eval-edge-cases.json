@@ -8,7 +8,7 @@
       "name": "No Input Validation on User Input",
       "prompt": "Provide API routes accepting user input without Zod or any validation and run security-scoring",
       "setup": "Provide API routes accepting user input without Zod or any validation",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Input Validation scores <= 2 (CRITICAL)",
         "OWASP A03 (Injection) flagged",
@@ -25,7 +25,7 @@
       "name": "Hardcoded Secrets in Source Code",
       "prompt": "Provide code with API keys, DB URLs, or tokens in source files and run security-scoring",
       "setup": "Provide code with API keys, DB URLs, or tokens in source files",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Secrets & Environment Mgmt scores 0 (CRITICAL)",
         "Issue identifies specific files and variable names",
@@ -42,7 +42,7 @@
       "name": "Known CVEs in Dependencies",
       "prompt": "Provide package.json with dependencies that have known vulnerabilities and run security-scoring",
       "setup": "Provide package.json with dependencies that have known vulnerabilities",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Dependency Security scores <= 3",
         "Issue lists specific packages and CVE identifiers",
@@ -59,7 +59,7 @@
       "name": "Stack Traces Leaked to Client",
       "prompt": "Provide error handling that sends full stack traces in production responses and run security-scoring",
       "setup": "Provide error handling that sends full stack traces in production responses",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Error Handling & Info Disclosure scores <= 2 (CRITICAL)",
         "OWASP A09 flagged",
@@ -76,7 +76,7 @@
       "name": "Missing CSP Header",
       "prompt": "Provide app with no Content-Security-Policy header configured and run security-scoring",
       "setup": "Provide app with no Content-Security-Policy header configured",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "CSP scores <= 2",
         "Issue flags XSS risk from missing script-src directive",
@@ -93,7 +93,7 @@
       "name": "Webhook Endpoints Without Signature Verification",
       "prompt": "Provide webhook handler routes that process payloads without verifying signatures and run security-scoring",
       "setup": "Provide webhook handler routes that process payloads without verifying signatures",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Webhook Security scores <= 2 (CRITICAL)",
         "Issue flags replay attack and spoofing risk",
@@ -110,7 +110,7 @@
       "name": "Open Redirect Vulnerability",
       "prompt": "Provide redirect logic using unvalidated user-supplied URLs and run security-scoring",
       "setup": "Provide redirect logic using unvalidated user-supplied URLs",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Open Redirect scores <= 2 (CRITICAL)",
         "Issue identifies the redirect code and attack vector",

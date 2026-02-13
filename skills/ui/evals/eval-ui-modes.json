@@ -8,7 +8,7 @@
       "name": "Research Mode — Design Brief Output",
       "prompt": "Research UI for a SaaS landing page",
       "setup": "Mode: Research",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Output contains all required sections: Direction, Component Plan, Design Tokens, Anti-Patterns",
         "Direction includes vibe, layout, primary color from CSS variables, 3+ inspiration URLs",
@@ -28,9 +28,7 @@
       "name": "Research Mode — Token Extraction",
       "prompt": "Research UI tokens for the project",
       "setup": "Mode: Research. Project has `globals.css` containing custom properties.",
-      "input_files": [
-        "globals.css"
-      ],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Design Tokens table references `var(--primary)`, `var(--accent)`, etc.",
         "Values match actual `globals.css` content",
@@ -47,7 +45,7 @@
       "name": "Score Mode — 10-Category Scorecard",
       "prompt": "Score my landing page",
       "setup": "Mode: Score. Existing component files present for the landing page.",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/criteria/visual-design.md"],
       "expectations": [
         "Scorecard table has exactly 10 rows matching the weighted categories",
         "Each row has: #, Category, Score (0-10), Grade, Key Issues",
@@ -67,7 +65,7 @@
       "name": "Score Mode — Anti-Bias Baseline",
       "prompt": "Score a well-built page with standard components",
       "setup": "Mode: Score. Page uses standard, well-built components.",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/criteria/visual-design.md"],
       "expectations": [
         "Baseline starts at 7/10 per category (not inflated 9-10)",
         "Scores of 9-10 require specific evidence cited in the issues column",
@@ -84,7 +82,7 @@
       "name": "Fix Mode — Scorecard-Driven Fixes",
       "prompt": "Fix the issues identified in the scorecard",
       "setup": "Mode: Fix. Scorecard shows Visual Hierarchy 4/10, Accessibility 3/10.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Fixes prioritized: Accessibility (Critical, 10% weight) before Visual Hierarchy (Major, 15% weight)",
         "Each fix references the specific scorecard issue",
@@ -105,7 +103,7 @@
       "name": "Fix Mode — Fix Loop Iteration",
       "prompt": "Fix until score reaches 85+",
       "setup": "Mode: Fix. Current score is below 85.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Loop runs: fix -> verify -> re-score -> check target",
         "Stops when score >= 85, or delta=0 for 2 rounds, or 5 iterations max",
@@ -124,7 +122,7 @@
       "name": "Pipeline Mode — Full Pipeline (research -> build -> score -> fix)",
       "prompt": "Run full UI pipeline for pricing page, target 83+",
       "setup": "Mode: Pipeline.",
-      "input_files": [],
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
       "expectations": [
         "Phase 1: Design Brief produced",
         "Phase 2: Components built following the brief",
@@ -144,7 +142,7 @@
       "name": "Pipeline Mode — Audit Pipeline Variant",
       "prompt": "Audit my existing dashboard page",
       "setup": "Mode: Pipeline (audit variant). Existing dashboard page with component files.",
-      "input_files": [],
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/criteria/visual-design.md"],
       "expectations": [
         "Skips research and build phases",
         "Starts directly at scoring existing component files",

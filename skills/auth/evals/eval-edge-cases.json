@@ -8,7 +8,7 @@
       "name": "No Auth Implementation Found",
       "prompt": "Run auth-scoring against a codebase with no auth library or session handling",
       "setup": "Provide a codebase with no auth library or session handling",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Scoring does not crash",
         "All auth categories score 0",
@@ -25,7 +25,7 @@
       "name": "Sessions Without Expiry or Rotation",
       "prompt": "Provide session config with no expiresIn or token rotation and run auth-scoring",
       "setup": "Provide session config with no expiresIn or token rotation",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Session Management scores <= 3 (CRITICAL)",
         "Issue recommends session expiry and rotation settings",
@@ -43,7 +43,7 @@
       "name": "Plaintext or Weak Password Hashing",
       "prompt": "Provide auth config using MD5/SHA1 or no hashing and run auth-scoring",
       "setup": "Provide auth config using MD5/SHA1 or no hashing",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Password Security scores 0-1 (CRITICAL)",
         "Issue specifically names the weak algorithm",
@@ -61,7 +61,7 @@
       "name": "OAuth Without State Parameter",
       "prompt": "Provide OAuth setup missing CSRF state verification and run auth-scoring",
       "setup": "Provide OAuth setup missing CSRF state verification",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "OAuth scores <= 4",
         "CSRF & Origin Validation also penalized",
@@ -79,7 +79,7 @@
       "name": "Missing CSRF Protection on Mutations",
       "prompt": "Provide forms/routes with POST/PUT/DELETE and no CSRF token and run auth-scoring",
       "setup": "Provide forms/routes with POST/PUT/DELETE and no CSRF token",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "CSRF & Origin Validation scores <= 3 (CRITICAL)",
         "OWASP A01 (Broken Access Control) flagged"
@@ -95,7 +95,7 @@
       "name": "Better Auth Plugin Configuration",
       "prompt": "Provide Better Auth config with missing plugins (e.g., no twoFactor) and run auth-scoring",
       "setup": "Provide Better Auth config with missing plugins such as no twoFactor",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Framework-specific adjustments from better-auth-patterns.md apply",
         "2FA/MFA scores 0 when plugin is absent",
@@ -112,7 +112,7 @@
       "name": "No Rate Limiting on Login/Register",
       "prompt": "Provide login and register routes with no rate limiting and run auth-scoring",
       "setup": "Provide login and register routes with no rate limiting",
-      "input_files": [],
+      "input_files": ["references/scoring/best-practices.md"],
       "expectations": [
         "Rate Limiting scores <= 2 (CRITICAL)",
         "Brute force attack vector noted in issues",

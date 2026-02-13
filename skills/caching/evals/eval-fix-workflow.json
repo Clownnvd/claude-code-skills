@@ -8,7 +8,7 @@
       "name": "Accept Scoring Input",
       "prompt": "Run caching-fix with the scorecard as input",
       "setup": "Provide a caching-scoring scorecard with 5 issues across Cache-Control Headers, Static/Dynamic, Request Dedup.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run caching-fix with the scorecard as input",
         "Verify skill parses all 5 issues with correct severity and category",
@@ -22,7 +22,7 @@
       "name": "Fix in Severity Order",
       "prompt": "Run caching-fix and observe fix application order",
       "setup": "Scorecard contains CRITICAL (authenticated data cached publicly), HIGH (no revalidation after mutations), MEDIUM (no cache() dedup).",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run caching-fix",
         "Observe fix application order"
@@ -35,7 +35,7 @@
       "name": "Fix References Correct Pattern",
       "prompt": "Run caching-fix and check which reference file the skill loads",
       "setup": "Issue in \"Cache-Control Headers\" category scored 3/10.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run caching-fix",
         "Check which reference file the skill loads"
@@ -48,7 +48,7 @@
       "name": "Verification Step Confirms Fix",
       "prompt": "Run caching-fix to apply the Static Page Conversion fix and verify build output",
       "setup": "Apply the \"Static Page Conversion\" fix from `static-dynamic-isr.md`.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run caching-fix to apply the fix",
         "Check that skill verifies: `pnpm build` output shows correct static/dynamic classification"
@@ -61,7 +61,7 @@
       "name": "Re-Score Shows Improvement",
       "prompt": "Run caching-fix through full cycle and compare before/after scores",
       "setup": "Initial score 55/100 (grade C). Apply fixes for 1 CRITICAL + 3 HIGH issues.",
-      "input_files": [],
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run caching-fix through full cycle",
         "Compare before/after scores per category"

@@ -8,7 +8,7 @@
       "name": "Compile + Test Verification",
       "prompt": "Apply the CSRF token fix and verify compilation and auth flow tests pass",
       "setup": "Scorecard with CRITICAL issue: sessions lack CSRF protection (CSRF & Headers 3/10). Apply the CSRF token fix from `csrf-headers.md` which adds token generation, validation middleware, and hidden form fields.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Apply CSRF token generation to session creation in `src/lib/auth.ts`",
         "Add CSRF validation middleware to state-changing API routes",
@@ -25,7 +25,7 @@
       "name": "Re-Score Improvement Verification",
       "prompt": "Apply fixes for Sessions and CSRF & Headers categories and verify re-score improvement",
       "setup": "Initial auth-scoring scorecard: Sessions 5/10, CSRF & Headers 3/10, Passwords 7/10. Total 52/100 (C-). Apply fixes for session `httpOnly`/`secure` flags (Sessions) and CSRF token validation (CSRF & Headers).",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run auth-fix for both issues",
         "Invoke `auth-scoring` to produce a new scorecard",
@@ -42,7 +42,7 @@
       "name": "Regression Detection",
       "prompt": "Apply a CSRF fix that introduces an OAuth regression and verify pipeline detects it",
       "setup": "Initial scorecard: Sessions 8/10, OAuth 7/10, CSRF & Headers 5/10. Apply a CSRF fix that adds strict `SameSite=Strict` cookies, breaking the OAuth callback flow. OAuth drops from 7/10 to 3/10.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Apply CSRF fix with `SameSite=Strict` on all cookies including OAuth state",
         "Run `auth-scoring` re-score",
@@ -59,7 +59,7 @@
       "name": "Fix Idempotency",
       "prompt": "Run auth-fix with an already-fixed CSRF issue and verify no changes are made",
       "setup": "Scorecard with CRITICAL issue: no CSRF protection. The `src/lib/auth.ts` already generates CSRF tokens and `src/middleware.ts` already validates them from a previous fix run.",
-      "input_files": [],
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
       "expectations": [
         "Run auth-fix with the same CSRF issue",
         "Check `git diff` after the fix attempt",

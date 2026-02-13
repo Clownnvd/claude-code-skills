@@ -8,7 +8,7 @@
       "name": "Basic Initialization",
       "prompt": "python scripts/init_skill.py test-skill --path /tmp/skills",
       "setup": "Clean /tmp/skills directory with no pre-existing test-skill folder.",
-      "input_files": [],
+      "input_files": ["references/creation-workflow.md", "references/structure-organization-criteria.md"],
       "expectations": [
         "Directory `/tmp/skills/test-skill/` created",
         "`SKILL.md` exists with valid YAML frontmatter (`name: test-skill`)",
@@ -31,7 +31,7 @@
       "name": "Duplicate Skill Rejection",
       "prompt": "python scripts/init_skill.py test-skill --path /tmp/skills",
       "setup": "Run init_skill.py twice for the same skill name and path. First run succeeds.",
-      "input_files": [],
+      "input_files": ["references/creation-workflow.md", "references/structure-organization-criteria.md"],
       "expectations": [
         "Second run prints error: \"Skill directory already exists\"",
         "Exit code: 1",
@@ -48,7 +48,7 @@
       "name": "Invalid Arguments",
       "prompt": "python scripts/init_skill.py",
       "setup": "Run with no arguments.",
-      "input_files": [],
+      "input_files": ["references/creation-workflow.md", "references/structure-organization-criteria.md"],
       "expectations": [
         "Prints usage instructions",
         "Exit code: 1"
@@ -64,7 +64,7 @@
       "name": "Nested Path Creation",
       "prompt": "python scripts/init_skill.py deep-skill --path /tmp/a/b/c",
       "setup": "Parent directories /tmp/a/b/c do not exist yet.",
-      "input_files": [],
+      "input_files": ["references/creation-workflow.md", "references/structure-organization-criteria.md"],
       "expectations": [
         "All parent directories created (`/tmp/a/b/c/deep-skill/`)",
         "Full structure generated",
