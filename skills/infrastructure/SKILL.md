@@ -53,9 +53,9 @@ Load `references/scoring/scoring-workflow.md` for the full audit process.
 | Severity | Criteria | Action |
 |----------|----------|--------|
 | CRITICAL | Score 0-3 or security risk | Fix before deploy |
-| HIGH | Score 4-5, weight >= 12% | Fix in current sprint |
-| MEDIUM | Score 4-5, weight < 12% | Fix next sprint |
-| LOW | Score 7-8 | Backlog |
+| HIGH | Score 4-5 | Fix in current sprint |
+| MEDIUM | Score 6-7 | Fix next sprint |
+| LOW | Score 8 | Backlog |
 
 ## Mode: Fix
 

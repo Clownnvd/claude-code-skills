@@ -52,10 +52,22 @@ Common terms used across all skills.
 
 ## Cross-Skill Boundaries
 
-| Overlap Area | Primary Skill | Secondary Skill | Boundary |
-|-------------|---------------|-----------------|----------|
-| Prisma queries | dataflow | database | dataflow = app code queries; database = schema design |
+When categories overlap between skills, each skill audits its own perspective. Use this table to decide which skill to run.
+
+| Overlap Area | Skill A | Skill B | Boundary |
+|-------------|---------|---------|----------|
+| Prisma queries | dataflow | database | dataflow = app-code query patterns; database = schema & indexing |
 | API routes | dataflow | api | dataflow = data flow through routes; api = route architecture |
-| Cache strategy | dataflow | caching | dataflow = cache in pipelines; caching = cache config |
+| Cache strategy | dataflow | caching | dataflow = cache in pipelines; caching = cache config & headers |
 | Auth in routes | api | auth | api = auth middleware pattern; auth = auth system design |
-| Security headers | auth | security | auth = auth-specific headers; security = all headers |
+| Security headers | auth | security | auth = auth-specific headers (CSRF, session); security = all headers (CSP, HSTS) |
+| Input validation | api | security | api = request schema validation (Zod); security = sanitization & injection defense |
+| Error handling | api | security | api = error response format; security = info disclosure prevention |
+| Rate limiting | api | auth | api = general rate limit architecture; auth = auth-route-specific limits |
+| Monitoring | api | infrastructure | api = API observability; infrastructure = system monitoring & alerting |
+| Security (broad) | api | security | api = route-level security (20%); security = full OWASP audit (10 categories) |
+| Query performance | database | scalability | database = indexing & schema optimization; scalability = query patterns & caching |
+| Server components | dataflow | scalability | dataflow = RSC data fetching; scalability = RSC architecture for bundle/perf |
+| CDN & edge | caching | scalability | caching = CDN cache config & headers; scalability = edge runtime optimization |
+| Backup & recovery | database | infrastructure | database = data backup & PITR; infrastructure = system-level DR & RTO/RPO |
+| Security in deploy | infrastructure | security | infrastructure = container/CI security (4%); security = full security posture |

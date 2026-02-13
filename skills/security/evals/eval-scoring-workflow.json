@@ -69,10 +69,10 @@
       "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
       "expectations": [
         "Score 90-100 produces A-range grade (A+/A/A-)",
-        "Score 75-89 produces B-range grade (B+/B/B-)",
-        "Score 60-74 produces C-range or D grade",
-        "Score 40-59 produces D grade",
-        "Score 0-39 produces F grade"
+        "Score 80-89 produces B-range grade (B+/B/B-)",
+        "Score 73-79 produces C-range grade (C+/C)",
+        "Score 60-72 produces D grade",
+        "Score 0-59 produces F grade"
       ],
       "pass_criteria": "Grade letter correctly corresponds to numeric score range",
       "fail_indicators": [

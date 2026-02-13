@@ -35,9 +35,9 @@ Score any REST/HTTP API codebase against 10 enterprise-grade criteria. Produce a
 | Severity | Criteria | Action |
 |----------|----------|--------|
 | CRITICAL | Score 0-3 or security hole | Fix before deploy |
-| HIGH     | Score 4-5, category weight >= 12% | Fix in current sprint |
-| MEDIUM   | Score 4-5, category weight < 12% | Fix next sprint |
-| LOW      | Score 7-8 | Backlog |
+| HIGH     | Score 4-5 | Fix in current sprint |
+| MEDIUM   | Score 6-7 | Fix next sprint |
+| LOW      | Score 8 | Backlog |
 
 ## Scorecard Output Format
 

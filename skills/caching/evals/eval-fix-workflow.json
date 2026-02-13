@@ -60,7 +60,7 @@
       "id": "re-score-shows-improvement",
       "name": "Re-Score Shows Improvement",
       "prompt": "Run caching-fix through full cycle and compare before/after scores",
-      "setup": "Initial score 55/100 (grade C). Apply fixes for 1 CRITICAL + 3 HIGH issues.",
+      "setup": "Initial score 55/100 (grade F). Apply fixes for 1 CRITICAL + 3 HIGH issues.",
       "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
       "expectations": [
         "Run caching-fix through full cycle",
