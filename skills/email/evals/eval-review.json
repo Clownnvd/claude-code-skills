@@ -1,0 +1,17 @@
+{
+  "skill": "email",
+  "eval_name": "review-mode",
+  "description": "Verify review mode identifies email issues in specific files",
+  "tests": [
+    {
+      "id": "email-rev-1",
+      "name": "Review email service with synchronous sending",
+      "prompt": "review src/lib/email.ts",
+      "setup": "Email service file calling Resend.emails.send() synchronously in API route handlers with no queue, no error handling, no retry logic",
+      "input_files": ["src/lib/email.ts"],
+      "expectations": ["Identifies synchronous sending as HIGH", "Identifies missing error handling as CRITICAL", "Identifies no retry logic as HIGH", "Suggests QStash queue pattern"],
+      "pass_criteria": "Queue, Provider, and Transactional issues identified with fixes",
+      "fail_indicators": ["Misses synchronous sending issue", "No QStash in suggestions"]
+    }
+  ]
+}

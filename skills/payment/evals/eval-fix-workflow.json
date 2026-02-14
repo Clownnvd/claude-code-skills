@@ -1,0 +1,73 @@
+{
+  "skill": "payment",
+  "eval_name": "eval-fix-workflow",
+  "description": "Verify the payment-fix skill correctly parses scoring output, prioritizes, fixes, and re-scores.",
+  "tests": [
+    {
+      "id": "accept-scoring-input",
+      "name": "Accept Scoring Input",
+      "prompt": "Run payment-fix with the scorecard as input",
+      "setup": "Provide a payment-scoring scorecard with 8 issues across Checkout, Webhooks, Security, Subscriptions.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run payment-fix with the scorecard as input",
+        "Verify skill parses all 8 issues with correct severity and category",
+        "Verify skill identifies the weighted score and grade"
+      ],
+      "pass_criteria": "All issues extracted. No issue lost or duplicated.",
+      "fail_indicators": []
+    },
+    {
+      "id": "fix-in-severity-order",
+      "name": "Fix in Severity Order",
+      "prompt": "Run payment-fix and observe fix application order",
+      "setup": "Scorecard contains CRITICAL (missing webhook signature verification), HIGH (no error handling on checkout), MEDIUM (no customer portal config).",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run payment-fix",
+        "Observe fix application order"
+      ],
+      "pass_criteria": "Webhook signature verification fixed first (CRITICAL), then checkout error handling (HIGH, Checkout 15% weight), then portal config (MEDIUM). No MEDIUM fix applied before all HIGH items resolved.",
+      "fail_indicators": []
+    },
+    {
+      "id": "fix-references-correct-pattern",
+      "name": "Fix References Correct Pattern",
+      "prompt": "Run payment-fix and check which reference file the skill loads",
+      "setup": "Issue in \"Webhook Integration\" category scored 2/10.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run payment-fix",
+        "Check which reference file the skill loads"
+      ],
+      "pass_criteria": "Skill loads `references/fix-patterns/webhook-integration.md` and applies the \"Webhook Signature Verification\" pattern. Fix adds `stripe.webhooks.constructEvent()` call with raw body parsing.",
+      "fail_indicators": []
+    },
+    {
+      "id": "verification-step-confirms-fix",
+      "name": "Verification Step Confirms Fix",
+      "prompt": "Run payment-fix to apply the Checkout Session Creation fix and verify results",
+      "setup": "Apply the \"Checkout Session Creation\" fix from `checkout-billing.md`.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run payment-fix to apply the fix",
+        "Check that skill verifies: TypeScript compiles, webhook test passes, checkout flow works"
+      ],
+      "pass_criteria": "Skill confirms checkout session created with success_url, cancel_url, metadata, and line_items. Reports verification result before moving to next fix.",
+      "fail_indicators": []
+    },
+    {
+      "id": "re-score-shows-improvement",
+      "name": "Re-Score Shows Improvement",
+      "prompt": "Run payment-fix through full cycle and compare before/after scores",
+      "setup": "Initial score 58/100 (grade F). Apply fixes for 2 CRITICAL + 4 HIGH issues.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run payment-fix through full cycle",
+        "Compare before/after scores per category"
+      ],
+      "pass_criteria": "Re-score produces a higher weighted score. Each fixed category shows improvement. Final grade is at least B. Report uses `assets/templates/fix-report.md.template` format.",
+      "fail_indicators": []
+    }
+  ]
+}

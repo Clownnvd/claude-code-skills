@@ -1,0 +1,17 @@
+{
+  "skill": "email",
+  "eval_name": "generate-mode",
+  "description": "Verify generate mode produces email code meeting all 10 categories",
+  "tests": [
+    {
+      "id": "email-gen-1",
+      "name": "Generate transactional email system",
+      "prompt": "generate transactional email system with welcome, password reset, and order confirmation",
+      "setup": "Next.js 16 with Resend SDK, React Email, Upstash QStash",
+      "input_files": ["src/lib/email.ts", "src/emails/welcome.tsx"],
+      "expectations": ["React Email templates for each type", "QStash queue integration", "Resend client with domain verification", "Typed props for each template", "Webhook endpoint for delivery events", "Rate limiting on triggers"],
+      "pass_criteria": "All 10 email categories addressed",
+      "fail_indicators": ["No queue", "Raw HTML instead of components", "No webhook handler", "Missing rate limiting"]
+    }
+  ]
+}

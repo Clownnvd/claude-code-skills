@@ -1,0 +1,41 @@
+# Email Scoring — Scorecard
+
+**Project**: {{PROJECT_NAME}}
+**Date**: {{DATE}}
+**Score**: {{TOTAL_SCORE}}/100
+**Grade**: {{GRADE}}
+
+## Category Scores
+
+| # | Category | Weight | Raw (0-10) | Weighted | Notes |
+|---|----------|--------|------------|----------|-------|
+| 1 | Transactional Email | 15% | {{TRANSACTIONAL_RAW}} | {{TRANSACTIONAL_WEIGHTED}} | {{TRANSACTIONAL_NOTES}} |
+| 2 | Email Templates & Rendering | 12% | {{TEMPLATE_RAW}} | {{TEMPLATE_WEIGHTED}} | {{TEMPLATE_NOTES}} |
+| 3 | Notification Queue & Delivery | 12% | {{QUEUE_RAW}} | {{QUEUE_WEIGHTED}} | {{QUEUE_NOTES}} |
+| 4 | Email Provider Integration | 12% | {{PROVIDER_RAW}} | {{PROVIDER_WEIGHTED}} | {{PROVIDER_NOTES}} |
+| 5 | Deliverability & Reputation | 10% | {{DELIVER_RAW}} | {{DELIVER_WEIGHTED}} | {{DELIVER_NOTES}} |
+| 6 | Bounce & Complaint Handling | 10% | {{BOUNCE_RAW}} | {{BOUNCE_WEIGHTED}} | {{BOUNCE_NOTES}} |
+| 7 | Email Auth (SPF/DKIM/DMARC) | 8% | {{AUTH_RAW}} | {{AUTH_WEIGHTED}} | {{AUTH_NOTES}} |
+| 8 | Rate Limiting & Throttling | 8% | {{RATE_RAW}} | {{RATE_WEIGHTED}} | {{RATE_NOTES}} |
+| 9 | Analytics & Tracking | 7% | {{ANALYTICS_RAW}} | {{ANALYTICS_WEIGHTED}} | {{ANALYTICS_NOTES}} |
+| 10 | Testing & Preview | 6% | {{TEST_RAW}} | {{TEST_WEIGHTED}} | {{TEST_NOTES}} |
+| | **TOTAL** | **100%** | | **{{TOTAL_SCORE}}** | |
+
+## Grade Scale
+A+ (97-100) | A (93-96) | A- (90-92) | B+ (87-89) | B (83-86) | B- (80-82) | C+ (77-79) | C (73-76) | D (60-72) | F (<60)
+
+## Prioritized Issues
+| # | Severity | Category | Issue | Affected Files | Fix |
+|---|----------|----------|-------|----------------|-----|
+{{ISSUES_LIST}}
+
+## Provider Notes
+| Config | Status |
+|--------|--------|
+| Resend SDK Version | {{RESEND_VERSION}} |
+| Domain Verification | {{DOMAIN_STATUS}} |
+| Queue Provider | {{QUEUE_STATUS}} |
+| Webhook Endpoint | {{WEBHOOK_STATUS}} |
+
+## Quick Wins
+{{QUICK_WINS_LIST}}

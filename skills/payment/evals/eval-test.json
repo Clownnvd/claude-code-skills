@@ -1,0 +1,17 @@
+{
+  "skill": "payment",
+  "eval_name": "test-mode",
+  "description": "Verify test mode generates payment tests covering all 10 categories",
+  "tests": [
+    {
+      "id": "pay-test-1",
+      "name": "Generate payment integration tests",
+      "prompt": "generate tests for Stripe checkout, webhooks, and subscription management",
+      "setup": "Next.js 16 with Stripe, Better Auth, Prisma",
+      "input_files": ["src/app/api/stripe/checkout/route.ts", "src/app/api/stripe/webhook/route.ts"],
+      "expectations": ["Webhook signature verification tests", "Checkout session creation tests", "Subscription lifecycle tests", "Stripe error handling tests", "Coverage matrix"],
+      "pass_criteria": "All 10 categories have test cases",
+      "fail_indicators": ["Missing webhook tests", "No error handling tests", "No coverage matrix"]
+    }
+  ]
+}

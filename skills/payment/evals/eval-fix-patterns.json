@@ -1,0 +1,75 @@
+{
+  "skill": "payment",
+  "eval_name": "eval-fix-patterns",
+  "description": "Verify specific fix patterns from references/fix-patterns/ produce correct code changes for payment issues.",
+  "tests": [
+    {
+      "id": "webhook-signature-verification-fix",
+      "name": "Webhook Signature Verification Fix (webhook-integration.md)",
+      "prompt": "Apply Webhook Signature Verification pattern to add constructEvent call",
+      "setup": "Webhook route parses `request.json()` directly without signature verification. No raw body access configured.",
+      "input_files": ["references/fix/fix-patterns/webhook-integration.md", "references/fix/fix-patterns/checkout-billing.md", "references/fix/fix-patterns/subscription-lifecycle.md", "references/fix/fix-patterns/security-compliance.md"],
+      "expectations": [
+        "Apply Webhook Signature Verification pattern",
+        "Verify `stripe.webhooks.constructEvent(body, sig, webhookSecret)` added",
+        "Verify raw body is read with `request.text()` not `request.json()`",
+        "Verify `stripe-signature` header is extracted from request"
+      ],
+      "pass_criteria": "`pnpm typecheck` passes. Webhook handler uses `constructEvent` with raw body. 400 response returned on verification failure. STRIPE_WEBHOOK_SECRET loaded from env.",
+      "fail_indicators": [
+        "Still using request.json(), or missing signature header, or no error response on verification failure"
+      ]
+    },
+    {
+      "id": "checkout-session-creation-fix",
+      "name": "Checkout Session Creation Fix (checkout-billing.md)",
+      "prompt": "Apply Checkout Session Creation pattern to add proper session configuration",
+      "setup": "Checkout route creates session with minimal config: no success_url, no cancel_url, no metadata, no customer reference.",
+      "input_files": ["references/fix/fix-patterns/webhook-integration.md", "references/fix/fix-patterns/checkout-billing.md", "references/fix/fix-patterns/subscription-lifecycle.md", "references/fix/fix-patterns/security-compliance.md"],
+      "expectations": [
+        "Apply Checkout Session Creation pattern",
+        "Verify `success_url` and `cancel_url` configured with proper redirects",
+        "Verify `metadata` includes userId and any business context",
+        "Verify `line_items` properly configured with price ID"
+      ],
+      "pass_criteria": "Session includes success_url, cancel_url, metadata with userId, line_items with price_id. Customer email or customer ID attached. Mode set to 'subscription' or 'payment'.",
+      "fail_indicators": [
+        "Missing success_url or cancel_url, no metadata, or no line_items"
+      ]
+    },
+    {
+      "id": "subscription-cancel-handling-fix",
+      "name": "Subscription Cancel Handling Fix (subscription-lifecycle.md)",
+      "prompt": "Apply Subscription Cancel Handling pattern to support both immediate and end-of-period cancellation",
+      "setup": "Cancel endpoint calls `stripe.subscriptions.del(subId)` which immediately cancels. No option for end-of-period. No grace period handling.",
+      "input_files": ["references/fix/fix-patterns/webhook-integration.md", "references/fix/fix-patterns/checkout-billing.md", "references/fix/fix-patterns/subscription-lifecycle.md", "references/fix/fix-patterns/security-compliance.md"],
+      "expectations": [
+        "Apply Subscription Cancel Handling pattern",
+        "Verify `cancel_at_period_end: true` option available for graceful cancellation",
+        "Verify immediate cancel uses `stripe.subscriptions.cancel()` with proper cleanup",
+        "Verify database subscription status updated after cancellation"
+      ],
+      "pass_criteria": "Both immediate and end-of-period cancel supported. Database synced via webhook. User retains access until period end when using graceful cancel. Cancellation reason tracked.",
+      "fail_indicators": [
+        "Only immediate cancel available, or database not synced, or no period-end access"
+      ]
+    },
+    {
+      "id": "stripe-key-env-validation-fix",
+      "name": "Stripe Key Env Validation Fix (security-compliance.md)",
+      "prompt": "Apply Stripe Key Env Validation pattern to validate all Stripe env vars at startup",
+      "setup": "Stripe keys accessed via `process.env.STRIPE_SECRET_KEY` without validation. No `.env.example`. No Zod schema for Stripe vars.",
+      "input_files": ["references/fix/fix-patterns/webhook-integration.md", "references/fix/fix-patterns/checkout-billing.md", "references/fix/fix-patterns/subscription-lifecycle.md", "references/fix/fix-patterns/security-compliance.md"],
+      "expectations": [
+        "Apply Stripe Key Env Validation pattern",
+        "Verify Zod schema validates STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY, STRIPE_WEBHOOK_SECRET",
+        "Verify `.env.example` updated with all Stripe env var placeholders",
+        "Verify validation runs at startup with clear error messages"
+      ],
+      "pass_criteria": "All Stripe env vars validated with Zod. Startup fails fast with descriptive error if missing. `.env.example` documents all required vars. No `process.env.STRIPE_*` without validation.",
+      "fail_indicators": [
+        "Env vars still accessed without validation, or .env.example missing Stripe vars"
+      ]
+    }
+  ]
+}

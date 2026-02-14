@@ -1,0 +1,71 @@
+# Payment Fix Report
+
+## Scoring Input
+
+- **Overall Grade**: {{GRADE_BEFORE}}
+- **Weighted Score**: {{SCORE_BEFORE}}/100
+- **Total Issues**: {{ISSUE_COUNT}}
+
+### Issues by Severity
+
+| Severity | Count | Categories |
+|----------|-------|------------|
+| CRITICAL | {{CRITICAL_COUNT}} | {{CRITICAL_CATEGORIES}} |
+| HIGH     | {{HIGH_COUNT}} | {{HIGH_CATEGORIES}} |
+| MEDIUM   | {{MEDIUM_COUNT}} | {{MEDIUM_CATEGORIES}} |
+| LOW      | {{LOW_COUNT}} | {{LOW_CATEGORIES}} |
+
+## Fixes Applied
+
+<!-- Repeat this block for each fix. Increment {{FIX_NUMBER}} sequentially. -->
+### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
+
+- **Severity**: {{SEVERITY}}
+- **Category**: {{CATEGORY}} (weight: {{WEIGHT}}%)
+- **Pattern**: `references/fix-patterns/{{PATTERN_FILE}}`
+- **Files Changed**:
+  - `{{FILE_PATH}}` -- {{CHANGE_DESCRIPTION}}
+
+#### Before
+
+```typescript
+{{CODE_BEFORE}}
+```
+
+#### After
+
+```typescript
+{{CODE_AFTER}}
+```
+
+#### Verification
+
+- [ ] `pnpm typecheck` passes
+- [ ] Webhook test with Stripe CLI passes
+- [ ] No payment flow regression
+
+## Re-Score Results
+
+| Category | Before | After | Delta |
+|----------|--------|-------|-------|
+| Checkout & Billing (15%) | {{CHECKOUT_BEFORE}} | {{CHECKOUT_AFTER}} | {{CHECKOUT_DELTA}} |
+| Subscription Lifecycle (15%) | {{SUB_BEFORE}} | {{SUB_AFTER}} | {{SUB_DELTA}} |
+| Webhook Integration (12%) | {{WEBHOOK_BEFORE}} | {{WEBHOOK_AFTER}} | {{WEBHOOK_DELTA}} |
+| Payment Security (12%) | {{SEC_BEFORE}} | {{SEC_AFTER}} | {{SEC_DELTA}} |
+| Pricing & Plans (10%) | {{PRICING_BEFORE}} | {{PRICING_AFTER}} | {{PRICING_DELTA}} |
+| Customer Portal (8%) | {{PORTAL_BEFORE}} | {{PORTAL_AFTER}} | {{PORTAL_DELTA}} |
+| Error Handling (8%) | {{ERROR_BEFORE}} | {{ERROR_AFTER}} | {{ERROR_DELTA}} |
+| Metered Billing (8%) | {{METERED_BEFORE}} | {{METERED_AFTER}} | {{METERED_DELTA}} |
+| Testing (6%) | {{TEST_BEFORE}} | {{TEST_AFTER}} | {{TEST_DELTA}} |
+| Monitoring (6%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
+
+- **Final Grade**: {{GRADE_AFTER}}
+- **Final Score**: {{SCORE_AFTER}}/100
+- **Improvement**: +{{SCORE_DELTA}} points
+
+## Fix Pattern References Used
+
+- `checkout-billing.md` -- Session Creation, Portal Config, Pricing Setup, Invoice Handling
+- `subscription-lifecycle.md` -- Cancel Handling, Proration, Status Checks, Usage Reporting
+- `webhook-integration.md` -- Signature Verification, Idempotency, Event Routing, Error Recovery
+- `security-compliance.md` -- Key Management, Amount Validation, Test Mode, Monitoring Setup

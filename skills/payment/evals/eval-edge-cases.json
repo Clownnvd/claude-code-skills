@@ -1,0 +1,126 @@
+{
+  "skill": "payment",
+  "eval_name": "eval-edge-cases",
+  "description": "Verify correct behavior for payment-specific edge cases.",
+  "tests": [
+    {
+      "id": "no-stripe-config-found",
+      "name": "No Stripe Config Found",
+      "prompt": "Run payment-scoring against a codebase with no Stripe configuration",
+      "setup": "Provide a codebase with no Stripe SDK, no STRIPE_SECRET_KEY env var, no stripe import",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Scoring does not crash",
+        "Output notes missing Stripe config and scores Checkout & Billing at 0",
+        "Categories not dependent on Stripe SDK (Monitoring) can still score"
+      ],
+      "pass_criteria": "No crash, Checkout scores 0, independent categories can score above 0",
+      "fail_indicators": [
+        "Crash or unhandled error",
+        "Independent categories forced to 0"
+      ]
+    },
+    {
+      "id": "missing-webhook-signature-verification",
+      "name": "Missing Webhook Signature Verification",
+      "prompt": "Provide webhook route without stripe.webhooks.constructEvent and run payment-scoring",
+      "setup": "Provide webhook route that parses JSON body directly without signature verification",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Webhook Integration scores <= 2 (CRITICAL)",
+        "Issue identifies missing signature verification as security vulnerability",
+        "Payment Security also penalized for accepting unverified webhook payloads"
+      ],
+      "pass_criteria": "Webhook score <= 2 (CRITICAL), signature verification missing identified, Security penalized",
+      "fail_indicators": [
+        "Webhook score above 2",
+        "Missing signature verification not flagged"
+      ]
+    },
+    {
+      "id": "no-error-handling-on-checkout",
+      "name": "No Error Handling on Checkout",
+      "prompt": "Provide checkout route with no try/catch and no error response handling and run payment-scoring",
+      "setup": "Provide checkout session creation without error handling or loading states",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Error Handling & Recovery scores <= 3",
+        "Checkout & Billing also penalized for poor UX",
+        "Fix recommends try/catch with specific Stripe error types"
+      ],
+      "pass_criteria": "Error Handling score <= 3, Checkout penalized, Stripe error type handling recommended",
+      "fail_indicators": [
+        "Error Handling score above 3",
+        "Stripe error types not mentioned in fix"
+      ]
+    },
+    {
+      "id": "hardcoded-stripe-keys",
+      "name": "Hardcoded Stripe Keys",
+      "prompt": "Provide code with hardcoded Stripe secret key (sk_test_xxx or sk_live_xxx) and run payment-scoring",
+      "setup": "Provide code with Stripe secret key directly in source code",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Payment Security scores <= 1 (CRITICAL)",
+        "Issue identifies hardcoded API key as critical security vulnerability",
+        "Fix recommends env vars and key rotation"
+      ],
+      "pass_criteria": "Security score <= 1 (CRITICAL), hardcoded key identified, env vars recommended",
+      "fail_indicators": [
+        "Security score above 1",
+        "Hardcoded key not flagged as CRITICAL"
+      ]
+    },
+    {
+      "id": "no-subscription-status-checks",
+      "name": "No Subscription Status Checks",
+      "prompt": "Provide subscription code that never checks subscription.status and run payment-scoring",
+      "setup": "Provide code that grants access without verifying subscription is active/trialing",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Subscription Lifecycle scores <= 4",
+        "Issue flags access control bypass risk",
+        "Fix recommends checking status against active/trialing before granting access"
+      ],
+      "pass_criteria": "Subscription score <= 4, access control risk flagged, status check recommended",
+      "fail_indicators": [
+        "Subscription score above 4",
+        "Access control bypass not flagged"
+      ]
+    },
+    {
+      "id": "missing-idempotency-keys",
+      "name": "Missing Idempotency Keys",
+      "prompt": "Provide webhook handler that processes events without deduplication and run payment-scoring",
+      "setup": "Provide webhook handler that processes every event without checking if already processed",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Webhook Integration penalized for missing idempotency",
+        "Issue identifies duplicate processing risk",
+        "Fix recommends storing processed event IDs in database"
+      ],
+      "pass_criteria": "Webhook penalized, duplicate processing risk identified, event ID dedup recommended",
+      "fail_indicators": [
+        "Idempotency issue not identified",
+        "No deduplication strategy recommended"
+      ]
+    },
+    {
+      "id": "no-test-mode-handling",
+      "name": "No Test Mode Handling",
+      "prompt": "Provide Stripe integration with no test/live mode separation and run payment-scoring",
+      "setup": "Provide code that uses same Stripe key for all environments with no test mode awareness",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Testing & Simulation scores <= 3",
+        "Issue flags risk of accidental live charges in development",
+        "Fix recommends environment-based key selection and test clock usage"
+      ],
+      "pass_criteria": "Testing score <= 3, accidental charge risk flagged, env-based keys recommended",
+      "fail_indicators": [
+        "Testing score above 3",
+        "Live/test mode separation not flagged"
+      ]
+    }
+  ]
+}

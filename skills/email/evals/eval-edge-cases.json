@@ -1,0 +1,126 @@
+{
+  "skill": "email",
+  "eval_name": "eval-edge-cases",
+  "description": "Verify correct behavior for email-specific edge cases.",
+  "tests": [
+    {
+      "id": "no-resend-sdk-found",
+      "name": "No Resend SDK Found",
+      "prompt": "Run email-scoring against a codebase with no Resend SDK installed",
+      "setup": "Provide a codebase with no Resend SDK or email provider configuration",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Scoring does not crash",
+        "Output notes missing email provider and scores Provider Integration at 0",
+        "Categories not dependent on provider (Templates, Testing) can still score"
+      ],
+      "pass_criteria": "No crash, Provider Integration scores 0, independent categories can score above 0",
+      "fail_indicators": [
+        "Crash or unhandled error",
+        "Independent categories forced to 0"
+      ]
+    },
+    {
+      "id": "no-email-templates-directory",
+      "name": "No Email Templates Directory",
+      "prompt": "Run email-scoring against a codebase with Resend but no React Email templates",
+      "setup": "Provide a codebase using Resend with raw HTML strings instead of React Email components",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Email Templates & Rendering scores <= 3",
+        "Issue identifies lack of component-based template system",
+        "Transactional Email can still score based on trigger logic"
+      ],
+      "pass_criteria": "Templates score <= 3, raw HTML flagged, Transactional category scored independently",
+      "fail_indicators": [
+        "Templates score above 3",
+        "Raw HTML usage not flagged"
+      ]
+    },
+    {
+      "id": "no-queue-provider-configured",
+      "name": "No Queue Provider Configured",
+      "prompt": "Run email-scoring against a codebase sending emails synchronously without a queue",
+      "setup": "Provide a codebase calling Resend.emails.send() directly in API routes with no QStash or queue",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Notification Queue & Delivery scores <= 2",
+        "Issue flags synchronous email sending as blocking request",
+        "Rate Limiting also penalized for no queue-based throttling"
+      ],
+      "pass_criteria": "Queue score <= 2, synchronous sending flagged, Rate Limiting penalized",
+      "fail_indicators": [
+        "Queue score above 2",
+        "Synchronous sending not flagged"
+      ]
+    },
+    {
+      "id": "missing-spf-dkim-dmarc",
+      "name": "Missing SPF/DKIM/DMARC Configuration",
+      "prompt": "Run email-scoring against a codebase with no email authentication DNS records documented",
+      "setup": "Provide a codebase with Resend configured but no SPF/DKIM/DMARC verification or documentation",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Email Auth (SPF/DKIM/DMARC) scores <= 2 (CRITICAL)",
+        "Deliverability & Reputation also penalized",
+        "Fix recommends domain verification via Resend dashboard"
+      ],
+      "pass_criteria": "Auth score <= 2 (CRITICAL), Deliverability penalized, domain verification recommended",
+      "fail_indicators": [
+        "Auth score above 2",
+        "Missing domain verification not flagged as CRITICAL"
+      ]
+    },
+    {
+      "id": "no-bounce-webhook-handler",
+      "name": "No Bounce/Complaint Webhook Handler",
+      "prompt": "Run email-scoring against a codebase with no webhook endpoint for email events",
+      "setup": "Provide a codebase sending emails via Resend but with no webhook endpoint for bounce or complaint events",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Bounce & Complaint Handling scores <= 2",
+        "Issue flags inability to process bounces or complaints",
+        "Analytics & Tracking also penalized for no delivery event tracking"
+      ],
+      "pass_criteria": "Bounce score <= 2, missing webhook flagged, Analytics penalized",
+      "fail_indicators": [
+        "Bounce score above 2",
+        "Missing webhook not flagged"
+      ]
+    },
+    {
+      "id": "hardcoded-from-address",
+      "name": "Hardcoded From Address with Unverified Domain",
+      "prompt": "Run email-scoring against a codebase using a hardcoded from address on an unverified domain",
+      "setup": "Provide a codebase with from: 'noreply@example.com' hardcoded in send calls, domain not verified in Resend",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Deliverability & Reputation scores <= 3",
+        "Provider Integration penalized for unverified domain",
+        "Fix recommends env-based from address and domain verification"
+      ],
+      "pass_criteria": "Deliverability score <= 3, unverified domain flagged, env-based address recommended",
+      "fail_indicators": [
+        "Deliverability score above 3",
+        "Unverified domain not flagged"
+      ]
+    },
+    {
+      "id": "no-rate-limiting-on-email-endpoints",
+      "name": "No Rate Limiting on Email-Triggering Endpoints",
+      "prompt": "Run email-scoring against a codebase with API routes triggering emails but no rate limiting",
+      "setup": "Provide API routes that trigger emails (password reset, verification) with no rate limiting middleware",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Rate Limiting & Throttling scores <= 3",
+        "Issue flags email abuse potential on password reset endpoint",
+        "Fix recommends Upstash Ratelimit or similar middleware"
+      ],
+      "pass_criteria": "Rate Limiting score <= 3, email abuse flagged, rate limit middleware recommended",
+      "fail_indicators": [
+        "Rate Limiting score above 3",
+        "Email abuse potential not flagged"
+      ]
+    }
+  ]
+}

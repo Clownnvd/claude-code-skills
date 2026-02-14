@@ -1,0 +1,74 @@
+{
+  "skill": "email",
+  "eval_name": "eval-verification-loop",
+  "description": "Verify the compile-test-rescore cycle, regression detection, and fix idempotency for email-fix.",
+  "tests": [
+    {
+      "id": "compile-test-verification",
+      "name": "Compile + Test Verification",
+      "prompt": "Apply the QStash queue fix and verify TypeScript compilation and tests pass",
+      "setup": "Scorecard with HIGH issue: no queue for email delivery (Queue 3/10). Apply the queue setup fix from `transactional-delivery.md` which adds QStash client, worker endpoint, and retry logic.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Add QStash client in `src/lib/queue.ts` with publishJSON to worker endpoint",
+        "Add worker route at `src/app/api/queue/email/route.ts`",
+        "Run `npx tsc --noEmit` to confirm zero type errors",
+        "Run `pnpm test` to verify email sending tests still pass"
+      ],
+      "pass_criteria": "`tsc --noEmit` exits 0. All tests pass. Worker endpoint returns 200 on valid payload. QStash token loaded from env var.",
+      "fail_indicators": [
+        "TypeScript errors from QStash types, worker route returns errors, or env var not validated"
+      ]
+    },
+    {
+      "id": "re-score-improvement-verification",
+      "name": "Re-Score Improvement Verification",
+      "prompt": "Apply fixes for Queue and Provider categories and verify re-score improvement",
+      "setup": "Initial email-scoring scorecard: Queue 3/10, Provider 4/10, Auth 2/10. Total 42/100 (F). Apply fixes for QStash queue setup (Queue) and Resend domain verification (Provider).",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Run email-fix for both issues",
+        "Invoke email-scoring to produce a new scorecard",
+        "Compare per-category scores: Queue, Provider must increase",
+        "Verify Auth, Bounce, Rate Limiting, and all other categories remain at or above pre-fix scores"
+      ],
+      "pass_criteria": "Queue >= 7/10 (was 3). Provider >= 7/10 (was 4). No category dropped below its pre-fix score. Total weighted score increased.",
+      "fail_indicators": [
+        "Any unfixed category score decreased, or fixed categories did not improve"
+      ]
+    },
+    {
+      "id": "regression-detection",
+      "name": "Regression Detection",
+      "prompt": "Apply a template fix that introduces a Transactional Email regression and verify pipeline detects it",
+      "setup": "Initial scorecard: Templates 7/10, Transactional 8/10, Queue 7/10. Apply a template refactor that moves email triggers to a new module but breaks the import paths, causing transactional emails to stop firing.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Apply template refactor that moves `sendWelcomeEmail` to new path without updating callers",
+        "Run email-scoring re-score",
+        "Verify pipeline detects Transactional Email dropped from 8 to 3 (delta -5)",
+        "Verify pipeline halts and recommends fixing import paths"
+      ],
+      "pass_criteria": "Pipeline detects the Transactional Email regression. Output flags: broken email trigger imports, before/after delta shown, recommendation to update import paths. Pipeline does not continue.",
+      "fail_indicators": [
+        "Pipeline ignores the broken imports and continues, or fails to detect the score drop"
+      ]
+    },
+    {
+      "id": "fix-idempotency",
+      "name": "Fix Idempotency",
+      "prompt": "Run email-fix with an already-fixed bounce webhook issue and verify no changes are made",
+      "setup": "Scorecard with HIGH issue: no bounce webhook. The `src/app/api/webhooks/resend/route.ts` already has a complete bounce handler from a previous fix run.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Run email-fix with the same bounce webhook issue",
+        "Check `git diff` after the fix attempt",
+        "Verify no duplicate webhook routes or handlers created"
+      ],
+      "pass_criteria": "No files modified (`git diff` is empty). Skill reports \"already applied\" or \"no changes needed.\" No duplicate route handlers or event listeners.",
+      "fail_indicators": [
+        "Duplicate webhook route created, duplicate event handlers added, or TypeScript errors from conflicting exports"
+      ]
+    }
+  ]
+}

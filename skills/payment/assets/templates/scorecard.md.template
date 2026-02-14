@@ -1,0 +1,45 @@
+# Payment Scoring — Scorecard
+
+**Project**: {{PROJECT_NAME}}
+**Date**: {{DATE}}
+**Score**: {{TOTAL_SCORE}}/100
+**Grade**: {{GRADE}}
+
+## Category Scores
+
+| # | Category | Weight | Raw (0-10) | Weighted | Notes |
+|---|----------|--------|------------|----------|-------|
+| 1 | Checkout & Billing Flow | 15% | {{CHECKOUT_RAW}} | {{CHECKOUT_WEIGHTED}} | {{CHECKOUT_NOTES}} |
+| 2 | Subscription Lifecycle | 15% | {{SUB_RAW}} | {{SUB_WEIGHTED}} | {{SUB_NOTES}} |
+| 3 | Webhook Integration | 12% | {{WEBHOOK_RAW}} | {{WEBHOOK_WEIGHTED}} | {{WEBHOOK_NOTES}} |
+| 4 | Payment Security & PCI | 12% | {{SECURITY_RAW}} | {{SECURITY_WEIGHTED}} | {{SECURITY_NOTES}} |
+| 5 | Pricing & Plan Management | 10% | {{PRICING_RAW}} | {{PRICING_WEIGHTED}} | {{PRICING_NOTES}} |
+| 6 | Customer Portal | 8% | {{PORTAL_RAW}} | {{PORTAL_WEIGHTED}} | {{PORTAL_NOTES}} |
+| 7 | Error Handling & Recovery | 8% | {{ERROR_RAW}} | {{ERROR_WEIGHTED}} | {{ERROR_NOTES}} |
+| 8 | Metered/Usage Billing | 8% | {{METERED_RAW}} | {{METERED_WEIGHTED}} | {{METERED_NOTES}} |
+| 9 | Testing & Simulation | 6% | {{TESTING_RAW}} | {{TESTING_WEIGHTED}} | {{TESTING_NOTES}} |
+| 10 | Monitoring & Analytics | 6% | {{MONITOR_RAW}} | {{MONITOR_WEIGHTED}} | {{MONITOR_NOTES}} |
+| | **TOTAL** | **100%** | | **{{TOTAL_SCORE}}** | |
+
+## Grade Scale
+
+A+ (97-100) | A (93-96) | A- (90-92) | B+ (87-89) | B (83-86) | B- (80-82) | C+ (77-79) | C (73-76) | D (60-72) | F (<60)
+
+## Prioritized Issues
+
+| # | Severity | Category | Issue | Affected Files | Fix |
+|---|----------|----------|-------|----------------|-----|
+{{ISSUES_LIST}}
+
+## Stripe Config Notes
+
+| Config | Status |
+|--------|--------|
+| Stripe SDK Version | {{STRIPE_VERSION}} |
+| Webhook Endpoint | {{WEBHOOK_STATUS}} |
+| Test Mode | {{TEST_MODE_STATUS}} |
+| Customer Portal | {{PORTAL_STATUS}} |
+
+## Quick Wins
+
+{{QUICK_WINS_LIST}}

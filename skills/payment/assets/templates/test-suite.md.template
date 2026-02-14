@@ -1,0 +1,21 @@
+# Test Suite: {{DOMAIN_SKILL}}
+
+**Generated**: {{DATE}} | **Coverage Target**: {{COVERAGE_TARGET}}
+
+## Coverage Matrix
+
+| # | Category (Weight) | Test Count | Coverage |
+|---|-------------------|-----------|----------|
+{{COVERAGE_ROWS}}
+
+## Test Files
+
+{{TEST_FILES_LIST}}
+
+## Generated Tests
+
+### {{TEST_FILE_PATH}}
+
+```{{LANGUAGE}}
+{{TEST_CODE}}
+```

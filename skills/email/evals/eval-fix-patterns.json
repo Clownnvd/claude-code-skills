@@ -1,0 +1,75 @@
+{
+  "skill": "email",
+  "eval_name": "eval-fix-patterns",
+  "description": "Verify specific fix patterns from references/fix/fix-patterns/ produce correct code changes for email issues.",
+  "tests": [
+    {
+      "id": "missing-queue-retry-logic",
+      "name": "Missing Queue Retry Logic (transactional-delivery.md)",
+      "prompt": "Apply queue retry pattern to add QStash-based email delivery with retries",
+      "setup": "Email sending is synchronous via `resend.emails.send()` in an API route. No queue, no retry, no dead letter queue.",
+      "input_files": ["references/fix/fix-patterns/transactional-delivery.md", "references/fix/fix-patterns/templates-rendering.md", "references/fix/fix-patterns/provider-integration.md", "references/fix/fix-patterns/security-compliance.md"],
+      "expectations": [
+        "Apply queue retry pattern",
+        "Verify QStash client initialized with `QSTASH_TOKEN`",
+        "Verify email sending routed through QStash publishJSON",
+        "Verify retry configuration with maxRetries and backoff"
+      ],
+      "pass_criteria": "QStash publishes to email worker endpoint. Worker processes message and calls Resend. Retry config has 3 retries with exponential backoff. Dead letter queue configured. TypeScript compiles.",
+      "fail_indicators": [
+        "Still sending synchronously, or QStash not configured, or no retry logic"
+      ]
+    },
+    {
+      "id": "no-react-email-components",
+      "name": "No React Email Components (templates-rendering.md)",
+      "prompt": "Apply component system pattern to replace raw HTML with React Email templates",
+      "setup": "Emails sent with raw HTML strings: `html: '<h1>Welcome</h1><p>...'`. No React Email components, no responsive design.",
+      "input_files": ["references/fix/fix-patterns/transactional-delivery.md", "references/fix/fix-patterns/templates-rendering.md", "references/fix/fix-patterns/provider-integration.md", "references/fix/fix-patterns/security-compliance.md"],
+      "expectations": [
+        "Apply component system pattern",
+        "Verify React Email components created with proper imports",
+        "Verify `render()` used to convert components to HTML",
+        "Verify responsive design with Tailwind or inline styles"
+      ],
+      "pass_criteria": "React Email template created with `Html`, `Head`, `Body`, `Container` components. `render()` called before passing to Resend. Template accepts typed props. Email renders correctly in preview.",
+      "fail_indicators": [
+        "Still using raw HTML strings, or missing render() call, or no typed props"
+      ]
+    },
+    {
+      "id": "missing-resend-domain-verification",
+      "name": "Missing Resend Domain Verification (provider-integration.md)",
+      "prompt": "Apply domain verification pattern to configure Resend with verified sending domain",
+      "setup": "Resend initialized but sending from unverified domain. No domain verification check. Using default `onboarding@resend.dev` address.",
+      "input_files": ["references/fix/fix-patterns/transactional-delivery.md", "references/fix/fix-patterns/templates-rendering.md", "references/fix/fix-patterns/provider-integration.md", "references/fix/fix-patterns/security-compliance.md"],
+      "expectations": [
+        "Apply domain verification pattern",
+        "Verify from address uses environment variable",
+        "Verify domain verification status check exists",
+        "Verify fallback handling for unverified domain"
+      ],
+      "pass_criteria": "From address loaded from `EMAIL_FROM` env var. Domain verification documented. DNS records (MX, SPF, DKIM) listed in setup guide. Fallback to verified domain if primary unverified.",
+      "fail_indicators": [
+        "Hardcoded from address, or no verification check, or missing DNS documentation"
+      ]
+    },
+    {
+      "id": "no-bounce-webhook-handler",
+      "name": "No Bounce Webhook Handler (security-compliance.md)",
+      "prompt": "Apply bounce handling pattern to add webhook endpoint for email events",
+      "setup": "No webhook endpoint. Bounced emails not tracked. Complaints not processed. No suppression list.",
+      "input_files": ["references/fix/fix-patterns/transactional-delivery.md", "references/fix/fix-patterns/templates-rendering.md", "references/fix/fix-patterns/provider-integration.md", "references/fix/fix-patterns/security-compliance.md"],
+      "expectations": [
+        "Apply bounce handling pattern",
+        "Verify webhook route created at `/api/webhooks/resend`",
+        "Verify signature verification with `svix` library",
+        "Verify bounce and complaint events update suppression list"
+      ],
+      "pass_criteria": "Webhook route validates Resend signature via Svix. Bounce events add address to suppression list. Complaint events trigger unsubscribe. Suppression checked before sending. TypeScript compiles.",
+      "fail_indicators": [
+        "No webhook route, or missing signature verification, or no suppression list"
+      ]
+    }
+  ]
+}
