@@ -23,17 +23,21 @@ This adds 4 models to `prisma/schema.prisma`:
 
 ## Generated Schema (excerpt)
 
+> **Critical**: Models MUST include `@@map("lowercase")` annotations. Better Auth expects lowercase table names. Without `@@map`, Prisma creates PascalCase tables which causes auth failures.
+
 ```prisma
 model User {
   id            String    @id
   name          String
-  email         String
+  email         String    @unique
   emailVerified Boolean
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+
+  @@map("user")
 }
 
 model Session {
@@ -44,6 +48,8 @@ model Session {
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
 }
 
 model Account {
@@ -61,6 +67,8 @@ model Account {
   password              String?
   createdAt             DateTime
   updatedAt             DateTime
+
+  @@map("account")
 }
 
 model Verification {
@@ -70,8 +78,18 @@ model Verification {
   expiresAt  DateTime
   createdAt  DateTime?
   updatedAt  DateTime?
+
+  @@map("verification")
 }
 ```
+
+## Key Annotations
+
+| Annotation | On | Purpose |
+|------------|-----|---------|
+| `@@map("user")` | All models | Lowercase table name for Better Auth |
+| `@unique` | `email`, `token` | Unique constraints |
+| `onDelete: Cascade` | Session, Account | Clean up on user delete |
 
 ## Next Step
 

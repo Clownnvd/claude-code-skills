@@ -42,6 +42,24 @@ export const auth = betterAuth({
 });
 ```
 
+## trustedOrigins (Non-Standard Ports)
+
+If your app runs on a port other than `3000`, add `trustedOrigins` to prevent CORS errors:
+
+```typescript
+export const auth = betterAuth({
+  database: prismaAdapter(prisma, {
+    provider: "postgresql",
+  }),
+  emailAndPassword: {
+    enabled: true,
+  },
+  trustedOrigins: ["http://localhost:3001"], // add your dev/prod origins
+});
+```
+
+> **Common issue**: CORS errors during sign-in/sign-up usually mean `trustedOrigins` is missing. Add all origins where your app is accessed (dev, staging, production).
+
 ## Configuration Summary
 
 | Setting | Value |
@@ -50,6 +68,8 @@ export const auth = betterAuth({
 | Auth method | Email + Password |
 | Secret | Auto-generated via CLI |
 | Base URL | `BETTER_AUTH_URL` env var |
+| trustedOrigins | Required if port != 3000 |
+| Password min length | 8 characters (Better Auth default) |
 
 ## Next Step
 

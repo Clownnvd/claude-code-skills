@@ -1,6 +1,6 @@
 ---
 name: prisma-better-auth-nextjs
-description: "Step-by-step setup: Prisma 7 + Better Auth + Next.js App Router. Email/password auth with PostgreSQL. Triggers on auth setup, Prisma+BetterAuth integration."
+description: "Prisma 7 + Better Auth + Next.js App Router setup. Triggers: add auth, better auth, prisma auth, nextjs login, sign-up/sign-in, email/password auth, session management, auth scaffold."
 license: Complete terms in LICENSE.txt
 ---
 
@@ -12,7 +12,9 @@ license: Complete terms in LICENSE.txt
 
 - Node.js 20+
 - Next.js App Router + TypeScript
-- PostgreSQL database (e.g., Neon, Supabase, local)
+- **PostgreSQL** database (Neon, Supabase, local) — this guide uses `@prisma/adapter-pg`
+
+> **Database**: This skill covers PostgreSQL only. For MySQL use `@prisma/adapter-mysql`, for SQLite use `@prisma/adapter-libsql`. Swap the adapter in `src/lib/prisma.ts` and set `provider` accordingly in `auth.ts`.
 
 ## Steps Overview
 
@@ -78,3 +80,13 @@ BETTER_AUTH_URL=http://localhost:3000
 - **Catch-all route**: `[...all]/route.ts` handles all Better Auth endpoints
 - **Auth client**: `createAuthClient()` exports `signIn`, `signUp`, `signOut`, `useSession`
 - **Auth guard**: `useEffect` + `useSession` to redirect unauthenticated users
+- **trustedOrigins**: Required in `auth.ts` if app runs on non-3000 port
+- **@@map**: All models use `@@map("lowercase")` for Better Auth table name matching
+
+## Scaffold Script
+
+To auto-generate all files at once:
+
+```bash
+python .claude/skills/prisma-better-auth-nextjs/scripts/scaffold.py [target-dir]
+```
