@@ -42,7 +42,8 @@ class TestScaffold(unittest.TestCase):
     def test_creates_nested_directories(self):
         scaffold(self.tmpdir)
         expected_dirs = [
-            "src/lib",
+            "src/lib/db",
+            "src/lib/auth",
             "src/app/api/auth/[...all]",
             "src/app/sign-up",
             "src/app/sign-in",
@@ -57,22 +58,46 @@ class TestScaffold(unittest.TestCase):
         with open(os.path.join(self.tmpdir, "prisma.config.ts"), "r") as f:
             content = f.read()
         self.assertIn("defineConfig", content)
-        self.assertIn('env("DATABASE_URL")', content)
+        self.assertIn("DIRECT_URL", content)
+        self.assertIn("DATABASE_URL", content)
 
-    def test_auth_has_prisma_adapter(self):
+    def test_db_client_uses_neon_adapter(self):
+        scaffold(self.tmpdir)
+        with open(os.path.join(self.tmpdir, "src/lib/db/index.ts"), "r") as f:
+            content = f.read()
+        self.assertIn("PrismaNeon", content)
+        self.assertIn("statement_timeout", content)
+        self.assertIn("SLOW_QUERY_THRESHOLD_MS", content)
+        self.assertIn("globalForPrisma", content)
+
+    def test_auth_has_advanced_config(self):
         scaffold(self.tmpdir)
         with open(os.path.join(self.tmpdir, "src/lib/auth.ts"), "r") as f:
             content = f.read()
         self.assertIn("prismaAdapter", content)
         self.assertIn("emailAndPassword", content)
         self.assertIn("trustedOrigins", content)
+        self.assertIn("twoFactor", content)
+        self.assertIn("cookiePrefix", content)
+        self.assertIn("Session", content)
 
     def test_auth_client_exports(self):
         scaffold(self.tmpdir)
         with open(os.path.join(self.tmpdir, "src/lib/auth-client.ts"), "r") as f:
             content = f.read()
-        for export in ["signIn", "signUp", "signOut", "useSession"]:
+        for export in ["signIn", "signUp", "signOut", "useSession", "twoFactor"]:
             self.assertIn(export, content, f"Missing export: {export}")
+        self.assertIn("twoFactorClient", content)
+
+    def test_audit_log_exists(self):
+        scaffold(self.tmpdir)
+        path = os.path.join(self.tmpdir, "src/lib/auth/audit-log.ts")
+        self.assertTrue(os.path.exists(path), "Missing audit-log.ts")
+        with open(path, "r") as f:
+            content = f.read()
+        self.assertIn("logAuthEvent", content)
+        self.assertIn("AuditEvent", content)
+        self.assertIn("JSON.stringify", content)
 
     def test_route_handler_pattern(self):
         scaffold(self.tmpdir)

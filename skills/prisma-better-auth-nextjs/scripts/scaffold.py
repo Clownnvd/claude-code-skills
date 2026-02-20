@@ -2,11 +2,12 @@
 """
 Scaffold Prisma + Better Auth + Next.js auth files.
 
-Creates all required files for email/password authentication:
-- prisma.config.ts
-- src/lib/prisma.ts
-- src/lib/auth.ts
-- src/lib/auth-client.ts
+Creates all required files for production-grade authentication:
+- prisma.config.ts (with DIRECT_URL fallback)
+- src/lib/db/index.ts (Neon adapter + slow query logging)
+- src/lib/auth.ts (trustedOrigins, session/cookie config)
+- src/lib/auth-client.ts (with 2FA client plugin)
+- src/lib/auth/audit-log.ts (structured event logging)
 - src/app/api/auth/[...all]/route.ts
 - src/app/sign-up/page.tsx
 - src/app/sign-in/page.tsx
@@ -24,7 +25,7 @@ import sys
 FILES = {
     "prisma.config.ts": '''\
 import "dotenv/config";
-import { defineConfig, env } from "prisma/config";
+import { defineConfig } from "prisma/config";
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
@@ -32,27 +33,54 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: env("DATABASE_URL"),
+    // Migrations use DIRECT_URL (bypasses pgbouncer) — falls back to DATABASE_URL
+    url: process.env["DIRECT_URL"] || process.env["DATABASE_URL"],
   },
 });
 ''',
-    "src/lib/prisma.ts": '''\
-import { PrismaClient } from "@/generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
+    "src/lib/db/index.ts": '''\
+import { PrismaClient } from "@prisma/client";
+import { PrismaNeon } from "@prisma/adapter-neon";
 
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
-});
+// Append statement_timeout (10s) to prevent long-running queries
+const dbUrl = new URL(process.env.DATABASE_URL!);
+if (!dbUrl.searchParams.has("options")) {
+  dbUrl.searchParams.set("options", "-c statement_timeout=10000");
+}
+const adapter = new PrismaNeon({ connectionString: dbUrl.toString() });
 
 const globalForPrisma = global as unknown as {
   prisma: PrismaClient;
 };
 
+const SLOW_QUERY_THRESHOLD_MS = 1000;
+
 const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
     adapter,
+    log: [
+      { emit: "event", level: "query" },
+      { emit: "stdout", level: "warn" },
+      { emit: "stdout", level: "error" },
+    ],
   });
+
+// @ts-expect-error -- Prisma event typing varies by adapter
+prisma.$on("query", (e: { duration: number; query: string }) => {
+  if (e.duration > SLOW_QUERY_THRESHOLD_MS) {
+    const sanitized = e.query.replace(/\\$\\d+/g, "?");
+    if (process.env.NODE_ENV === "production") {
+      console.warn(JSON.stringify({
+        level: "warn", event: "slow_query",
+        durationMs: e.duration, threshold: SLOW_QUERY_THRESHOLD_MS,
+        timestamp: new Date().toISOString(),
+      }));
+    } else {
+      console.warn(`[SLOW QUERY] ${e.duration}ms: ${sanitized.slice(0, 200)}`);
+    }
+  }
+});
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
@@ -61,23 +89,93 @@ export default prisma;
     "src/lib/auth.ts": '''\
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import prisma from "@/lib/prisma";
+import { twoFactor } from "better-auth/plugins";
+import prisma from "@/lib/db";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+
+  trustedOrigins: process.env.BETTER_AUTH_URL
+    ? [process.env.BETTER_AUTH_URL]
+    : ["http://localhost:3000"],
+
+  session: {
+    expiresIn: 60 * 60 * 24 * 7,  // 7 days
+    updateAge: 60 * 60 * 24,       // Refresh daily
+    cookieCache: { enabled: true, maxAge: 5 * 60 },
+  },
+
+  advanced: {
+    cookiePrefix: "app",
+    useSecureCookies: process.env.NODE_ENV === "production",
+    defaultCookieSameSite: "lax" as const,
+  },
+
   emailAndPassword: {
     enabled: true,
+    minPasswordLength: 8,
+    maxPasswordLength: 128,
   },
-  // Uncomment if running on a port other than 3000:
-  // trustedOrigins: ["http://localhost:3001"],
+
+  plugins: [
+    twoFactor({ issuer: "My App" }),
+  ],
 });
+
+export type Session = typeof auth.$Infer.Session;
 ''',
     "src/lib/auth-client.ts": '''\
 import { createAuthClient } from "better-auth/react";
+import { twoFactorClient } from "better-auth/client/plugins";
 
-export const { signIn, signUp, signOut, useSession } = createAuthClient();
+export const authClient = createAuthClient({
+  plugins: [twoFactorClient()],
+});
+
+export const { signIn, signUp, signOut, useSession, twoFactor } = authClient;
+''',
+    "src/lib/auth/audit-log.ts": '''\
+type AuditEvent =
+  | "sign_in" | "sign_up" | "sign_out" | "login_failed"
+  | "password_changed" | "password_reset_request"
+  | "email_verified" | "oauth_link" | "oauth_unlink"
+  | "session_revoked" | "2fa_enabled" | "2fa_disabled";
+
+interface AuditEntry {
+  level: "info" | "warn";
+  event: AuditEvent;
+  userId: string;
+  provider?: string;
+  ip?: string;
+  timestamp: string;
+}
+
+const WARN_EVENTS: AuditEvent[] = ["password_reset_request", "login_failed", "session_revoked"];
+
+export function logAuthEvent(
+  event: AuditEvent,
+  userId: string,
+  extra?: { provider?: string; ip?: string }
+): void {
+  const entry: AuditEntry = {
+    level: WARN_EVENTS.includes(event) ? "warn" : "info",
+    event, userId,
+    provider: extra?.provider,
+    ip: extra?.ip,
+    timestamp: new Date().toISOString(),
+  };
+
+  if (process.env.NODE_ENV === "production") {
+    console.info(JSON.stringify(entry));
+  } else {
+    console.info(
+      `[AUTH] ${entry.event} user=${entry.userId}` +
+      `${entry.provider ? ` provider=${entry.provider}` : ""}`
+    );
+  }
+}
 ''',
     "src/app/api/auth/[...all]/route.ts": '''\
 import { auth } from "@/lib/auth";
@@ -285,8 +383,8 @@ def main() -> int:
 
     print(f"\n{len(created)} files created, {len(FILES) - len(created)} skipped (already exist).")
     print("\nNext steps:")
-    print("  1. npm install prisma tsx @types/pg --save-dev")
-    print("  2. npm install @prisma/client @prisma/adapter-pg dotenv pg better-auth")
+    print("  1. npm install prisma tsx --save-dev")
+    print("  2. npm install @prisma/client @prisma/adapter-neon better-auth")
     print("  3. npx prisma init --db --output ../src/generated/prisma")
     print("  4. npx @better-auth/cli@latest secret")
     print("  5. npx @better-auth/cli generate  (adds auth models to schema)")
