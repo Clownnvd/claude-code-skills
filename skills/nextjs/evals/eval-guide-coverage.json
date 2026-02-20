@@ -1,0 +1,70 @@
+{
+  "skill": "nextjs",
+  "eval_name": "eval-guide-coverage",
+  "description": "Verify guide reference files cover key topics accurately for Next.js 16.",
+  "tests": [
+    {
+      "id": "auth-guide-patterns",
+      "name": "Authentication guide covers server/client patterns",
+      "prompt": "How do I implement authentication in Next.js?",
+      "input_files": ["references/guides/authentication.md"],
+      "expectations": [
+        "Covers server-side session checks",
+        "Covers client-side auth state",
+        "Mentions proxy.ts for optimistic auth checks",
+        "Mentions DAL (Data Access Layer) pattern"
+      ],
+      "pass_criteria": "Covers both server and client auth patterns with proxy.ts"
+    },
+    {
+      "id": "isr-guide-patterns",
+      "name": "ISR guide uses Next.js 16 patterns",
+      "prompt": "How does ISR work in Next.js 16?",
+      "input_files": ["references/guides/incremental-static-regeneration.md"],
+      "expectations": [
+        "Uses 'use cache' with cacheLife for time-based revalidation",
+        "Uses cacheTag for on-demand revalidation",
+        "Shows revalidateTag() or revalidatePath()"
+      ],
+      "pass_criteria": "Uses Next.js 16 cache directives, not legacy revalidate prop"
+    },
+    {
+      "id": "testing-guide-patterns",
+      "name": "Testing guide covers Vitest and Playwright",
+      "prompt": "How do I set up testing in Next.js?",
+      "input_files": ["references/guides/testing.md"],
+      "expectations": [
+        "Mentions Vitest or Jest for unit testing",
+        "Mentions Playwright or Cypress for E2E testing",
+        "Shows next.config setup for testing"
+      ],
+      "pass_criteria": "Covers both unit and E2E testing frameworks"
+    },
+    {
+      "id": "self-hosting-guide",
+      "name": "Self-hosting covers Node.js and Docker",
+      "prompt": "How do I self-host a Next.js app?",
+      "input_files": ["references/guides/self-hosting.md"],
+      "expectations": [
+        "Covers Node.js server deployment",
+        "Covers Docker deployment",
+        "Mentions image optimization config",
+        "Mentions caching configuration"
+      ],
+      "pass_criteria": "Covers Node.js and Docker with production config"
+    },
+    {
+      "id": "environment-variables-guide",
+      "name": "Environment variables guide covers NEXT_PUBLIC prefix",
+      "prompt": "How do environment variables work in Next.js?",
+      "input_files": ["references/guides/environment-variables.md"],
+      "expectations": [
+        "NEXT_PUBLIC_ prefix for client-side access",
+        "Server-only by default",
+        ".env.local for local overrides",
+        "Load order: .env, .env.local, .env.development, .env.production"
+      ],
+      "pass_criteria": "Correctly explains NEXT_PUBLIC_ and load order"
+    }
+  ]
+}

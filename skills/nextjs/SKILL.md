@@ -1,7 +1,7 @@
 ---
 name: nextjs
 description: "Next.js 16 App Router patterns: use cache, proxy.ts, cacheComponents, React 19 hooks, RSC, streaming, PPR, Prisma 7, Better Auth, next-intl"
-user_invocable: true
+license: Complete terms in LICENSE.txt
 ---
 
 # Next.js 16 Skill Index
@@ -27,23 +27,47 @@ user_invocable: true
 | **Getting Started** | [route-handlers](references/getting-started/route-handlers.md) | route.ts, HTTP methods, caching, cache components, params, NextRequest/NextResponse |
 | **Getting Started** | [proxy](references/getting-started/proxy.md) | proxy.ts (replaces middleware.ts), matcher, redirects, rewrites, headers, auth checks |
 | **Getting Started** | [deploying](references/getting-started/deploying.md) | Node.js server, Docker, static export, adapters (Vercel, Cloudflare, etc.) |
-| **App Router** | [file-conventions](references/app-router/file-conventions.md) | layout, page, loading, error, not-found, template, route |
-| **App Router** | [routing](references/app-router/routing.md) | dynamic routes, route groups, parallel, intercepting, navigation |
-| **App Router** | [middleware](references/app-router/middleware.md) | proxy.ts (Next.js 16), middleware.ts (legacy), matcher, auth |
-| **Data** | [use-cache](references/data/use-cache.md) | "use cache", cacheLife, cacheTag, updateTag, refresh |
-| **Data** | [server-actions](references/data/server-actions.md) | inline/module, revalidation, redirect, security, validation |
-| **Data** | [fetching](references/data/fetching.md) | RSC fetching, parallel/sequential, React.cache, Prisma, streaming |
-| **Data** | [forms](references/data/forms.md) | useActionState, useFormStatus, useOptimistic, use() |
-| **Rendering** | [server-components](references/rendering/server-components.md) | RSC vs Client, composition, 'use client' boundary |
-| **Rendering** | [static-dynamic](references/rendering/static-dynamic.md) | SSG, SSR, ISR, cacheComponents migration table |
-| **Rendering** | [streaming-ppr](references/rendering/streaming-ppr.md) | Suspense, PPR, loading.tsx, generateStaticParams, Activity |
-| **API** | [route-handlers](references/api/route-handlers.md) | GET/POST/PUT/DELETE, params, request/response, CORS, webhooks |
-| **API** | [metadata](references/api/metadata.md) | static/dynamic metadata, OG images, robots.txt, sitemap.xml |
-| **Optimization** | [images-fonts](references/optimization/images-fonts.md) | next/image, next/font (Google, local, Tailwind CSS 4) |
-| **Optimization** | [performance](references/optimization/performance.md) | Turbopack, dynamic imports, tree shaking, bundle analysis |
-| **Patterns** | [auth](references/patterns/auth.md) | Better Auth setup, API route, client/server, middleware |
-| **Patterns** | [database](references/patterns/database.md) | Prisma 7 config, singleton, queries, transactions, Neon |
-| **Patterns** | [i18n](references/patterns/i18n.md) | next-intl setup, URL prefix vs static, translations |
+| **Guide** | [analytics](references/guides/analytics.md) | useReportWebVitals, Web Vitals metrics, Google Analytics |
+| **Guide** | [authentication](references/guides/authentication.md) | sign-up, sessions (JWT/DB), DAL pattern, auth checks |
+| **Guide** | [backend-for-frontend](references/guides/backend-for-frontend.md) | Route Handlers as API, webhooks, proxy, security |
+| **Guide** | [caching](references/guides/caching.md) | 4 mechanisms, static/dynamic, Data Cache, Router Cache |
+| **Guide** | [ci-build-caching](references/guides/ci-build-caching.md) | .next/cache for 11 CI providers |
+| **Guide** | [content-security-policy](references/guides/content-security-policy.md) | nonce-based CSP, proxy setup, SRI |
+| **Guide** | [css-in-js](references/guides/css-in-js.md) | styled-jsx, styled-components, registry pattern |
+| **Guide** | [custom-server](references/guides/custom-server.md) | next() setup, caveats, static optimization |
+| **Guide** | [data-security](references/guides/data-security.md) | DAL, server-only, taintUniqueValue, Server Actions |
+| **Guide** | [debugging](references/guides/debugging.md) | VS Code launch.json, browser DevTools, WebStorm |
+| **Guide** | [draft-mode](references/guides/draft-mode.md) | route handler setup, CMS integration, isEnabled |
+| **Guide** | [environment-variables](references/guides/environment-variables.md) | .env load order, NEXT_PUBLIC_, runtime vs build-time |
+| **Guide** | [forms](references/guides/forms.md) | Server Actions, Zod, useActionState, useOptimistic |
+| **Guide** | [incremental-static-regeneration](references/guides/incremental-static-regeneration.md) | time-based, on-demand, revalidatePath/Tag |
+| **Guide** | [instrumentation](references/guides/instrumentation.md) | instrumentation.ts, register(), onRequestError |
+| **Guide** | [internationalization](references/guides/internationalization.md) | locale routing, dictionaries, server/client i18n |
+| **Guide** | [json-ld](references/guides/json-ld.md) | structured data, schema.org, script injection |
+| **Guide** | [lazy-loading](references/guides/lazy-loading.md) | next/dynamic, React.lazy, named exports, SSR skip |
+| **Guide** | [local-development](references/guides/local-development.md) | HTTPS, Turbopack, Docker, memory, absolute imports |
+| **Guide** | [mcp](references/guides/mcp.md) | Next.js MCP server, IDE integration, tools |
+| **Guide** | [mdx](references/guides/mdx.md) | @next/mdx, remote MDX, custom components, plugins |
+| **Guide** | [memory-usage](references/guides/memory-usage.md) | webpack workers, heap profiling, cache/sourcemaps |
+| **Guide** | [migrating](references/guides/migrating.md) | Pages→App Router, CRA→Next, Vite→Next |
+| **Guide** | [multi-tenant](references/guides/multi-tenant.md) | subdomain, path-based, custom domains |
+| **Guide** | [multi-zones](references/guides/multi-zones.md) | micro-frontends, assetPrefix, rewrites, cross-zone |
+| **Guide** | [open-telemetry](references/guides/open-telemetry.md) | @vercel/otel, NodeSDK, spans, custom attributes |
+| **Guide** | [package-bundling](references/guides/package-bundling.md) | bundle analyzer, optimizePackageImports, externals |
+| **Guide** | [prefetching](references/guides/prefetching.md) | auto, manual, hover, extended, PPR integration |
+| **Guide** | [production-checklist](references/guides/production-checklist.md) | optimizations, best practices, pre-launch checks |
+| **Guide** | [progressive-web-apps](references/guides/progressive-web-apps.md) | manifest, push notifications, service worker |
+| **Guide** | [redirecting](references/guides/redirecting.md) | redirect(), permanentRedirect(), config, proxy |
+| **Guide** | [sass](references/guides/sass.md) | .scss/.sass, sassOptions, sass-embedded, variables |
+| **Guide** | [scripts](references/guides/scripts.md) | next/script, loading strategies, event handlers |
+| **Guide** | [self-hosting](references/guides/self-hosting.md) | reverse proxy, image optimization, caching, CDN |
+| **Guide** | [single-page-applications](references/guides/single-page-applications.md) | SPA patterns, use(), SWR, shallow routing, static export |
+| **Guide** | [static-exports](references/guides/static-exports.md) | output: 'export', supported/unsupported features |
+| **Guide** | [tailwind-v3-css](references/guides/tailwind-v3-css.md) | Tailwind v3 setup, config, directives |
+| **Guide** | [testing](references/guides/testing.md) | Vitest, Jest, Playwright, Cypress, test types |
+| **Guide** | [third-party-libraries](references/guides/third-party-libraries.md) | @next/third-parties, GTM, GA, Maps, YouTube |
+| **Guide** | [upgrading](references/guides/upgrading.md) | v14→v15→v16, codemods, upgrade workflow |
+| **Guide** | [videos](references/guides/videos.md) | video/iframe embed, Suspense, Vercel Blob, Mux |
 
 ## Next.js 16 Breaking Changes (from 15)
 
