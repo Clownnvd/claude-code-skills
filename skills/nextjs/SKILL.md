@@ -65,6 +65,10 @@ license: Complete terms in LICENSE.txt
 | **Guide** | [static-exports](references/guides/static-exports.md) | output: 'export', supported/unsupported features |
 | **Guide** | [tailwind-v3-css](references/guides/tailwind-v3-css.md) | Tailwind v3 setup, config, directives |
 | **Guide** | [testing](references/guides/testing.md) | Vitest, Jest, Playwright, Cypress, test types |
+| **Guide** | [cypress](references/guides/cypress.md) | E2E + component testing, cypress.config.ts, CI scripts |
+| **Guide** | [jest](references/guides/jest.md) | next/jest, jest-dom, snapshot testing, module aliases |
+| **Guide** | [playwright](references/guides/playwright.md) | E2E, multi-browser, webServer, playwright.config.ts |
+| **Guide** | [vitest](references/guides/vitest.md) | unit testing, @vitejs/plugin-react, vite-tsconfig-paths |
 | **Guide** | [third-party-libraries](references/guides/third-party-libraries.md) | @next/third-parties, GTM, GA, Maps, YouTube |
 | **Guide** | [upgrading](references/guides/upgrading.md) | v14→v15→v16, codemods, upgrade workflow |
 | **Guide** | [videos](references/guides/videos.md) | video/iframe embed, Suspense, Vercel Blob, Mux |
