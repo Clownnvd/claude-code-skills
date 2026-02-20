@@ -97,12 +97,52 @@ Quick selection guidance without forcing user to read all references:
 | Stripe | Enterprise, Connect platforms |
 ```
 
+## verification-before-completion (Simple Skill)
+
+**Why it's a good simple exemplar:** ~40-line SKILL.md, no scripts/assets, single-purpose.
+
+### Structure
+```
+verification-before-completion/
+├── SKILL.md                    # ~40 lines — workflow + checklist
+└── references/
+    └── verification-steps.md   # Detailed verification process
+```
+
+### Key Pattern: Minimal Viable Skill
+Not every skill needs scripts, assets, or complex reference trees. A skill can be just SKILL.md + 1 reference if that's all the domain needs.
+
+## api-scoring + api-fix (Scoring/Fix Pair)
+
+**Why it's a good paired exemplar:**
+- Two skills that work as audit → remediate pipeline
+- Scoring produces scorecard, Fix consumes it
+- Mirrored `references/criteria/` ↔ `references/fix-patterns/` structure
+
+### Structure
+```
+api-scoring/                    api-fix/
+├── SKILL.md                    ├── SKILL.md
+├── references/                 ├── references/
+│   ├── overview.md             │   ├── overview.md
+│   ├── scoring-workflow.md     │   ├── implementation-workflow.md
+│   └── criteria/               │   └── fix-patterns/
+│       ├── authentication.md   │       ├── authentication.md
+│       └── error-handling.md   │       └── error-handling.md
+└── evals/                      └── evals/
+```
+
+### Key Pattern: Paired Skills
+- Scoring defines criteria; Fix mirrors them as fix patterns
+- Fix SKILL.md references the scoring skill by name
+- Both share domain vocabulary and severity definitions
+
 ## Anti-Patterns to Avoid
 
-| Anti-Pattern | Example | Fix |
-|-------------|---------|-----|
-| SKILL.md as documentation | 300-line SKILL.md with full API docs | Move to references, keep SKILL.md as index |
-| Flat references | 15 .md files in references/ root | Group into subdirectories by topic |
-| Repeated info | Same rules in SKILL.md + 3 reference files | Single source of truth |
-| No implementation workflow | User must guess which refs to load | Add `implementation-workflows.md` |
-| Scripts without tests | `main.py` but no `test_main.py` | Always include test file + runner |
+| Anti-Pattern | Fix |
+|-------------|-----|
+| SKILL.md as documentation (300+ lines) | Move to references, keep SKILL.md as index |
+| Flat references (15+ files in root) | Group into subdirectories by topic |
+| Repeated info across files | Single source of truth |
+| No implementation workflow | Add `implementation-workflows.md` |
+| Scripts without tests | Always include test file + runner |

@@ -1,0 +1,113 @@
+{
+  "skill": "skill-creator",
+  "eval_name": "eval-skill-types",
+  "description": "Validate --type flag produces correct skill structures for each type.",
+  "tests": [
+    {
+      "id": "init-scoring-type",
+      "name": "Initialize Scoring Type Skill",
+      "prompt": "python scripts/init_skill.py test-scoring --path /tmp --type scoring",
+      "expectations": [
+        "SKILL.md contains 'Scoring' in title",
+        "SKILL.md contains criteria table or criteria reference",
+        "SKILL.md contains grade scale section",
+        "SKILL.md has valid frontmatter with name and description"
+      ],
+      "pass_criteria": "Scoring template applied with criteria and grading sections.",
+      "fail_indicators": [
+        "SKILL.md uses general template instead of scoring",
+        "Missing criteria or grade scale sections"
+      ]
+    },
+    {
+      "id": "init-generate-type",
+      "name": "Initialize Generate Type Skill",
+      "prompt": "python scripts/init_skill.py test-gen --path /tmp --type generate",
+      "expectations": [
+        "SKILL.md contains 'Generate' in title",
+        "SKILL.md contains output specifications section",
+        "SKILL.md references conventions.md"
+      ],
+      "pass_criteria": "Generate template applied with output specs and convention references.",
+      "fail_indicators": [
+        "SKILL.md uses general template",
+        "Missing output specifications"
+      ]
+    },
+    {
+      "id": "init-migrate-type",
+      "name": "Initialize Migrate Type Skill",
+      "prompt": "python scripts/init_skill.py test-migrate --path /tmp --type migrate",
+      "expectations": [
+        "SKILL.md contains 'Migration' in title",
+        "SKILL.md contains breaking changes section",
+        "SKILL.md references migration-steps.md"
+      ],
+      "pass_criteria": "Migrate template applied with breaking changes and migration steps.",
+      "fail_indicators": [
+        "SKILL.md uses general template",
+        "Missing breaking changes section"
+      ]
+    },
+    {
+      "id": "init-review-type",
+      "name": "Initialize Review Type Skill",
+      "prompt": "python scripts/init_skill.py test-review --path /tmp --type review",
+      "expectations": [
+        "SKILL.md contains 'Review' in title",
+        "SKILL.md contains review criteria section",
+        "SKILL.md contains severity levels"
+      ],
+      "pass_criteria": "Review template applied with criteria and severity sections.",
+      "fail_indicators": [
+        "SKILL.md uses general template",
+        "Missing review criteria or severity levels"
+      ]
+    },
+    {
+      "id": "init-test-type",
+      "name": "Initialize Test Type Skill",
+      "prompt": "python scripts/init_skill.py test-testing --path /tmp --type test",
+      "expectations": [
+        "SKILL.md contains 'Test' in title",
+        "SKILL.md contains test strategy section",
+        "SKILL.md contains naming conventions"
+      ],
+      "pass_criteria": "Test template applied with strategy and naming conventions.",
+      "fail_indicators": [
+        "SKILL.md uses general template",
+        "Missing test strategy section"
+      ]
+    },
+    {
+      "id": "list-types",
+      "name": "List Available Types",
+      "prompt": "python scripts/init_skill.py --list-types",
+      "expectations": [
+        "Lists all 7 types: general, scoring, fix, generate, migrate, review, test",
+        "Each type shows template filename and description",
+        "Exit code 0"
+      ],
+      "pass_criteria": "All 7 types displayed with descriptions.",
+      "fail_indicators": [
+        "Missing types",
+        "Non-zero exit code"
+      ]
+    },
+    {
+      "id": "minimal-flag",
+      "name": "Minimal Flag Creates Empty Structure",
+      "prompt": "python scripts/init_skill.py test-min --path /tmp --minimal",
+      "expectations": [
+        "SKILL.md created",
+        "LICENSE.txt created",
+        "Empty scripts/, references/, assets/ directories created",
+        "No example.py, no api_reference.md, no example_asset.txt"
+      ],
+      "pass_criteria": "Minimal structure with no example files.",
+      "fail_indicators": [
+        "Example files present in minimal mode"
+      ]
+    }
+  ]
+}

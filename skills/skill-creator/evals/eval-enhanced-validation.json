@@ -1,0 +1,89 @@
+{
+  "skill": "skill-creator",
+  "eval_name": "eval-enhanced-validation",
+  "description": "Validate enhanced quality gate checks added to quick_validate.py.",
+  "tests": [
+    {
+      "id": "description-over-200-fails",
+      "name": "Description Over 200 Characters Fails",
+      "prompt": "Validate a skill with description of 201 characters",
+      "setup": "SKILL.md with description field containing 201 characters.",
+      "expectations": [
+        "Validation returns invalid (False)",
+        "Error message mentions 'too long'"
+      ],
+      "pass_criteria": "Validation fails for descriptions >= 200 chars.",
+      "fail_indicators": [
+        "Validation passes for 201-char description",
+        "No length check on description"
+      ]
+    },
+    {
+      "id": "description-at-199-passes",
+      "name": "Description At 199 Characters Passes",
+      "prompt": "Validate a skill with description of exactly 199 characters",
+      "setup": "SKILL.md with description field containing exactly 199 characters.",
+      "expectations": [
+        "Validation returns valid (True)",
+        "No errors about description length"
+      ],
+      "pass_criteria": "Validation passes for descriptions < 200 chars."
+    },
+    {
+      "id": "skill-md-over-150-lines-warns",
+      "name": "SKILL.md Over 150 Lines Warns",
+      "prompt": "Validate a skill with SKILL.md containing 160 lines",
+      "setup": "SKILL.md with valid frontmatter but 160 total lines.",
+      "expectations": [
+        "Validation returns valid (True) — this is a warning, not failure",
+        "Warnings list includes SKILL.md line count"
+      ],
+      "pass_criteria": "Warning generated for SKILL.md > 150 lines."
+    },
+    {
+      "id": "reference-over-150-lines-warns",
+      "name": "Reference File Over 150 Lines Warns",
+      "prompt": "Validate a skill with a reference file of 160 lines",
+      "setup": "Valid SKILL.md + references/large-ref.md with 160 lines.",
+      "expectations": [
+        "Validation returns valid (True)",
+        "Warnings list includes reference file line count"
+      ],
+      "pass_criteria": "Warning generated for reference > 150 lines."
+    },
+    {
+      "id": "script-without-test-warns",
+      "name": "Script Without Test File Warns",
+      "prompt": "Validate a skill with scripts/main.py but no tests/test_main.py",
+      "setup": "Valid SKILL.md + scripts/main.py, no tests/ directory.",
+      "expectations": [
+        "Validation returns valid (True)",
+        "Warnings list mentions missing test file for main.py"
+      ],
+      "pass_criteria": "Warning generated for script without test."
+    },
+    {
+      "id": "name-mismatch-warns",
+      "name": "Name Doesn't Match Directory Name Warns",
+      "prompt": "Validate a skill where frontmatter name differs from directory name",
+      "setup": "Directory 'my-skill/' with SKILL.md containing name: other-name.",
+      "expectations": [
+        "Validation returns valid (True)",
+        "Warnings list mentions name mismatch"
+      ],
+      "pass_criteria": "Warning for name/directory mismatch."
+    },
+    {
+      "id": "clean-skill-no-warnings",
+      "name": "Clean Skill Has No Warnings",
+      "prompt": "Validate a perfectly structured skill",
+      "setup": "Skill with valid SKILL.md (< 150 lines, < 200 char desc, name matches dir), all scripts have tests, all references < 150 lines.",
+      "expectations": [
+        "Validation returns valid (True)",
+        "Warnings list is empty",
+        "Message says 'Skill is valid!'"
+      ],
+      "pass_criteria": "No warnings for a clean skill."
+    }
+  ]
+}

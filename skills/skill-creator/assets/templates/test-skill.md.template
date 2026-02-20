@@ -1,0 +1,45 @@
+---
+name: {{DOMAIN}}-test
+description: Create and run tests for {{DOMAIN_FULL}}. {{TEST_TYPES}}. {{FRAMEWORK}} patterns. Target {{COVERAGE_TARGET}} coverage.
+---
+
+# {{DOMAIN_TITLE}} Test
+
+Create comprehensive tests for {{DOMAIN_FULL}}.
+
+## When to Use
+
+- Writing tests for new {{DOMAIN}} features
+- Increasing test coverage
+- Setting up test infrastructure
+
+## Test Strategy
+
+| Layer | What to Test | Tool | Target |
+|-------|-------------|------|--------|
+{{TEST_STRATEGY_TABLE}}
+
+## Test Process
+
+1. Read `references/test-setup.md` for environment configuration
+2. Identify untested areas from coverage report
+3. For each area, use patterns from `references/test-patterns/`
+4. Run tests with `scripts/run-tests.py`
+5. Verify coverage meets targets
+
+## Naming Conventions
+
+| Test Type | Pattern | Example |
+|-----------|---------|---------|
+| Unit | `test_<function>_<scenario>` | `test_create_user_valid_email` |
+| Integration | `test_<flow>_<outcome>` | `test_checkout_payment_success` |
+| E2E | `test_<user_story>` | `test_user_signup_flow` |
+
+## Quick Reference
+
+### References
+- `references/test-setup.md` — Environment, fixtures, mocks
+- `references/test-patterns/` — Patterns per test type
+
+### Scripts
+- `scripts/run-tests.py` — Test runner with coverage

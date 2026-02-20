@@ -1,0 +1,43 @@
+---
+name: {{DOMAIN}}-generate
+description: Generate {{OUTPUT_TYPE}} from specifications. {{TECH_STACK}} patterns. Use for scaffolding, boilerplate, code generation.
+---
+
+# {{DOMAIN_TITLE}} Generate
+
+Generate {{OUTPUT_TYPE}} from specifications and templates.
+
+## When to Use
+
+- Creating new {{OUTPUT_TYPE}} from scratch
+- Scaffolding {{DOMAIN}} boilerplate
+- Generating code from specs, schemas, or designs
+
+## Generate Process
+
+1. Read specifications/requirements from user
+2. Read `references/conventions.md` for naming and structure rules
+3. Read matching template from `references/templates/`
+4. Generate output following conventions
+5. Validate output against specs
+
+## Output Specifications
+
+| Output | Convention | Template |
+|--------|-----------|----------|
+{{OUTPUT_TABLE}}
+
+## Decision Table
+
+| User Wants | Action | Template |
+|------------|--------|----------|
+{{DECISION_TABLE}}
+
+## Quick Reference
+
+### References
+- `references/conventions.md` — Naming, structure, style rules
+- `references/templates/` — Output templates per type
+
+### Scripts
+- `scripts/scaffold.py` — Generate boilerplate structure

@@ -3,11 +3,11 @@
 Skill Packager - Creates a distributable zip file of a skill folder
 
 Usage:
-    python utils/package_skill.py <path/to/skill-folder> [output-directory]
+    python package_skill.py <path/to/skill-folder> [output-directory]
 
 Example:
-    python utils/package_skill.py skills/public/my-skill
-    python utils/package_skill.py skills/public/my-skill ./dist
+    python package_skill.py skills/public/my-skill
+    python package_skill.py skills/public/my-skill ./dist
 """
 
 import sys
@@ -19,6 +19,21 @@ from quick_validate import validate_skill
 
 # Fix Windows console encoding for Unicode output (emojis, arrows)
 configure_utf8_console()
+
+# Directories and patterns to exclude from packages
+EXCLUDE_DIRS = {'evals', '__pycache__', '.git', 'node_modules'}
+EXCLUDE_EXTENSIONS = {'.pyc', '.pyo'}
+
+
+def should_exclude(file_path, skill_path):
+    """Check if a file should be excluded from the package."""
+    rel_parts = file_path.relative_to(skill_path).parts
+    for part in rel_parts:
+        if part in EXCLUDE_DIRS:
+            return True
+    if file_path.suffix in EXCLUDE_EXTENSIONS:
+        return True
+    return False
 
 
 def package_skill(skill_path, output_dir=None):
@@ -51,12 +66,16 @@ def package_skill(skill_path, output_dir=None):
 
     # Run validation before packaging
     print("🔍 Validating skill...")
-    valid, message = validate_skill(skill_path)
+    valid, message, warnings = validate_skill(skill_path)
     if not valid:
         print(f"❌ Validation failed: {message}")
         print("   Please fix the validation errors before packaging.")
         return None
-    print(f"✅ {message}\n")
+    print(f"✅ {message}")
+    if warnings:
+        for w in warnings:
+            print(f"  ⚠ {w}")
+    print()
 
     # Determine output location
     skill_name = skill_path.name
@@ -71,10 +90,8 @@ def package_skill(skill_path, output_dir=None):
     # Create the zip file
     try:
         with zipfile.ZipFile(zip_filename, 'w', zipfile.ZIP_DEFLATED) as zipf:
-            # Walk through the skill directory
             for file_path in skill_path.rglob('*'):
-                if file_path.is_file():
-                    # Calculate the relative path within the zip
+                if file_path.is_file() and not should_exclude(file_path, skill_path):
                     arcname = file_path.relative_to(skill_path.parent)
                     zipf.write(file_path, arcname)
                     print(f"  Added: {arcname}")
@@ -89,10 +106,10 @@ def package_skill(skill_path, output_dir=None):
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory]")
+        print("Usage: python package_skill.py <path/to/skill-folder> [output-directory]")
         print("\nExample:")
-        print("  python utils/package_skill.py skills/public/my-skill")
-        print("  python utils/package_skill.py skills/public/my-skill ./dist")
+        print("  python package_skill.py skills/public/my-skill")
+        print("  python package_skill.py skills/public/my-skill ./dist")
         sys.exit(1)
 
     skill_path = sys.argv[1]

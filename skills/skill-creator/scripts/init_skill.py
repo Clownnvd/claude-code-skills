@@ -3,21 +3,33 @@
 Skill Initializer - Creates a new skill from template
 
 Usage:
-    init_skill.py <skill-name> --path <path>
+    init_skill.py <skill-name> --path <path> [--type TYPE] [--minimal]
+    init_skill.py --list-types
 
 Examples:
     init_skill.py my-new-skill --path skills/public
-    init_skill.py my-api-helper --path skills/private
-    init_skill.py custom-skill --path /custom/location
+    init_skill.py my-scorer --path skills/public --type scoring
+    init_skill.py quick-skill --path skills/public --minimal
 """
 
+import argparse
 import sys
 from pathlib import Path
 
-from encoding_utils import configure_utf8_console, write_text_utf8
+from encoding_utils import configure_utf8_console, write_text_utf8, read_text_utf8
 
 # Fix Windows console encoding for Unicode output (emojis, arrows)
 configure_utf8_console()
+
+SKILL_TYPES = {
+    'general': {'template': 'SKILL.md.template', 'desc': 'Custom workflows, guidelines'},
+    'scoring': {'template': 'scoring-skill.md.template', 'desc': 'Audit/grade against criteria'},
+    'fix': {'template': 'fix-skill.md.template', 'desc': 'Implement fixes from scoring'},
+    'generate': {'template': 'generate-skill.md.template', 'desc': 'Create new code/content'},
+    'migrate': {'template': 'migrate-skill.md.template', 'desc': 'Version upgrades'},
+    'review': {'template': 'review-skill.md.template', 'desc': 'Code review/audit'},
+    'test': {'template': 'test-skill.md.template', 'desc': 'Testing workflows'},
+}
 
 
 SKILL_TEMPLATE = """---
@@ -370,233 +382,37 @@ APACHE_LICENSE = """\
 
 BEST_PRACTICES = """# Best Practices for {skill_title}
 
-## Architecture & Design
-
-### Do
-- Follow single responsibility principle — one module, one job
-- Use dependency injection over hard-coded imports for testability
-- Design for immutability — create new objects, never mutate existing ones
+## Architecture
+- Single responsibility — one module, one job
 - Separate business logic from I/O (database, network, file system)
-- Use strong typing (TypeScript strict mode, Python type hints, Zod schemas)
-- Keep functions small (< 50 lines), files focused (< 400 lines)
-
-### Don't
-- Don't mix concerns (UI logic in API routes, business logic in components)
-- Don't use `any` type — it defeats the purpose of TypeScript
-- Don't create abstractions for one-time operations — 3 similar lines > premature abstraction
-- Don't design for hypothetical future requirements — solve today's problem
+- Keep functions < 50 lines, files < 400 lines
 
 ## Code Quality
-
-### Naming
-- Variables: descriptive, intention-revealing (`userEmail` not `e`, `isAuthenticated` not `flag`)
-- Functions: verb + noun (`createUser`, `validatePayment`, `sendInvite`)
-- Booleans: `is`/`has`/`can`/`should` prefix (`isActive`, `hasPermission`)
-- Constants: UPPER_SNAKE_CASE for true constants (`MAX_RETRY_COUNT`)
-- Files: kebab-case (`payment-service.ts`, `user-schema.ts`)
-
-### Patterns
-- Early returns over deeply nested if/else (guard clauses)
-- Const by default, let only when reassignment is needed, never var
-- Destructure at the point of use, not at function top
-- Use optional chaining (`?.`) and nullish coalescing (`??`) over manual checks
-- Template literals over string concatenation
-- `async`/`await` over `.then()` chains
-
-### Code Smells to Avoid
-| Smell | Why It's Bad | Fix |
-|-------|-------------|-----|
-| Magic numbers/strings | Hard to understand and change | Extract to named constants |
-| Deep nesting (> 3 levels) | Hard to read and test | Guard clauses, extract functions |
-| God functions (> 100 lines) | Too many responsibilities | Split by concern |
-| Boolean parameters | Unclear at call site | Use options object or separate functions |
-| Comments explaining "what" | Code should be self-documenting | Rename variables/functions instead |
-| Catch-all error handling | Hides real problems | Catch specific errors, log others |
+- Descriptive names: `userEmail` not `e`, `createUser` not `doStuff`
+- Early returns over deep nesting (guard clauses)
+- Strong typing (TypeScript strict, Python type hints)
 
 ## Security
-
-### Input Validation
-- Validate ALL external input at system boundaries (API routes, webhooks, form submissions)
-- Use schema validation (Zod, Joi) — never trust `typeof` alone
-- Sanitize HTML output to prevent XSS
-- Parameterize all database queries — never interpolate user input into SQL
-- Validate URLs: block `//` and `/\\` patterns (open redirect prevention)
-
-### Authentication & Authorization
-- Rate limit all auth endpoints (strict for POST, standard for GET)
+- Validate all external input at system boundaries
 - Never store secrets in code — use environment variables
-- Validate JWT/session on every protected route, not just the first
-- Use CSRF protection on all state-changing operations
-- Hash passwords with bcrypt/argon2 — never SHA256/MD5
-- Set secure cookie flags: `httpOnly`, `secure`, `sameSite`
-
-### API Security
-- Never leak internal errors to clients — return generic messages
-- Validate payment amounts server-side before granting access
-- Use HTTPS everywhere — redirect HTTP to HTTPS
-- Set security headers: `X-Content-Type-Options`, `X-Frame-Options`, `CSP`
-- Log security events (failed logins, permission denials) without PII
-
-### Secrets Management
-```
-# .env.example — commit this (no real values)
-DATABASE_URL=postgresql://user:pass@host:5432/db
-STRIPE_SECRET_KEY=sk_test_xxx
-
-# .env — NEVER commit this
-DATABASE_URL=postgresql://real:credentials@prod:5432/db
-STRIPE_SECRET_KEY=sk_live_real_key
-```
+- Parameterize database queries — never interpolate user input
 
 ## Error Handling
-
-### Strategy
-- Fail fast: throw on invalid state, don't return `null` silently
-- Use typed errors: custom error classes with error codes
-- Critical path vs non-fatal: payment processing = throw, email notification = log + continue
-- Always clean up resources in `finally` blocks
-
-### Patterns
-```typescript
-// GOOD: Specific error handling with context
-try {{
-  const result = await paymentService.charge(amount);
-  return result;
-}} catch (error) {{
-  if (error instanceof InsufficientFundsError) {{
-    return {{ error: 'Payment declined', code: 'INSUFFICIENT_FUNDS' }};
-  }}
-  // Re-throw unknown errors
-  throw new PaymentError('Charge failed', {{ cause: error }});
-}}
-
-// BAD: Silent catch
-try {{
-  await sendEmail(user.email);
-}} catch (e) {{
-  // Silent failure — no one knows it broke
-}}
-```
-
-### Error Table
-| Error Category | Strategy | Example |
-|---------------|----------|---------|
-| Validation errors | Return 400 with field-level details | Missing required field, invalid email format |
-| Authentication | Return 401, log attempt | Invalid token, expired session |
-| Authorization | Return 403, log attempt | User accessing admin route |
-| Not found | Return 404 | Resource doesn't exist |
-| Rate limit | Return 429 with Retry-After header | Too many requests |
-| External service | Retry with backoff, fallback | Stripe timeout, GitHub API 503 |
-| Database | Retry transient, throw permanent | Connection lost vs constraint violation |
-| Unexpected | Return 500 generic message, log full error | Unhandled exception |
-
-## Performance
-
-### General
-- Measure before optimizing — don't guess bottlenecks
-- Use database indexes for frequently queried columns
-- Implement connection pooling for database connections
-- Cache expensive computations (but invalidate correctly)
-- Use pagination for list endpoints — never return unbounded results
-
-### Frontend
-- Lazy load routes and heavy components
-- Optimize images (next/image, WebP, proper sizing)
-- Minimize bundle size — check with `npx bundlecost` or build analyzer
-- Use `useMemo`/`useCallback` only when profiler shows re-render problems
-- Prefer CSS animations over JavaScript animations (GPU acceleration)
-
-### Backend
-- Use database transactions for multi-step writes
-- Implement idempotent operations (webhooks, retries)
-- Set appropriate timeouts on external API calls
-- Use streaming for large responses
-- Avoid N+1 queries — use includes/joins
+- Fail fast on invalid state
+- Use typed/specific errors, not catch-all
+- Critical path = throw, non-fatal = log + continue
 
 ## Testing
-
-### Strategy
-| Layer | What to Test | Tool |
-|-------|-------------|------|
-| Unit | Pure functions, utilities, validators | Vitest/Jest |
-| Integration | API routes, database queries, service interactions | Vitest + test DB |
-| E2E | Critical user flows (signup, purchase, dashboard) | Playwright/Cypress |
-
-### Principles
-- Test behavior, not implementation — "when X happens, Y should result"
-- One assertion per test (or one logical assertion group)
-- Use factories/fixtures over hardcoded test data
-- Mock external services (Stripe, GitHub API), not internal modules
-- Keep tests fast — under 10 seconds for unit suite
-
-### Coverage Targets
-| Area | Minimum | Target |
-|------|---------|--------|
-| Business logic | 80% | 95% |
-| API routes | 70% | 90% |
-| UI components | 50% | 70% |
-| Utilities | 90% | 100% |
-
-## Database
-
-### Schema Design
-- Use UUIDs or CUIDs for primary keys (not auto-increment integers)
-- Add `createdAt` and `updatedAt` timestamps to all tables
-- Use enums for fixed value sets (status, role, type)
-- Add unique constraints for business identifiers (email, stripePaymentId)
-- Index foreign keys and frequently filtered/sorted columns
-
-### Migrations
-- Never edit existing migrations — create new ones
-- Test migrations on a copy of production data before deploying
-- Always provide rollback scripts for destructive changes
-- Use `migrate dev` locally, `migrate deploy` in CI/CD
-
-### Queries
-- Use transactions for multi-step operations
-- Implement check-before-create for idempotent operations
-- Use `select` to fetch only needed columns
-- Use `include` carefully — avoid fetching entire relation trees
-
-## Deployment
-
-### Pre-Deploy Checklist
-- [ ] All tests pass (`pnpm test`)
-- [ ] Type check passes (`pnpm typecheck`)
-- [ ] Lint passes (`pnpm lint`)
-- [ ] No `console.log` in production code
-- [ ] No hardcoded secrets or URLs
-- [ ] Environment variables documented in `.env.example`
-- [ ] Database migrations reviewed and tested
-- [ ] Security headers configured
-- [ ] Rate limiting enabled on all public endpoints
-- [ ] Error monitoring configured (Sentry, LogRocket, etc.)
-
-### Environment Variables
-- Sync across 4 files: `env.d.ts` + `env.ts` + `.env.example` + test config
-- Use `z.string().min(1)` for required env vars — catches empty strings
-- Validate all env vars at startup — fail fast if missing
-- Use separate values per environment (dev/staging/production)
-
-## Documentation
-
-### When to Document
-- Public API endpoints (request/response examples)
-- Non-obvious business logic ("why" not "what")
-- Architecture decisions (ADRs for significant choices)
-- Setup and deployment procedures
-
-### When NOT to Document
-- Self-explanatory code — rename instead of commenting
-- Obvious function behavior — `getUserById` doesn't need a docstring
-- TODOs without tickets — create an issue instead
+- Test behavior, not implementation
+- Unit > Integration > E2E (testing pyramid)
+- Mock external services, not internal modules
 
 ## Resources
+- [TODO: Add domain-specific best practices]
+- [TODO: Add official documentation links]
 
-- [TODO: Official documentation URL]
-- [TODO: API reference URL]
-- [TODO: Community forum/Discord/GitHub discussions]
-- [TODO: Related skills or tools]
+Keep under 150 lines. Split into multiple files if needed.
+See skill-creator/references/writing-guide.md for style guidance.
 """
 
 EXAMPLE_ASSET = """# Example Asset File
@@ -631,26 +447,47 @@ def title_case_skill_name(skill_name):
     return ' '.join(word.capitalize() for word in skill_name.split('-'))
 
 
-def init_skill(skill_name, path):
+def _load_type_template(skill_type, skill_name, skill_title):
+    """Load SKILL.md content from type template or fall back to embedded template."""
+    if skill_type == 'general':
+        return SKILL_TEMPLATE.format(skill_name=skill_name, skill_title=skill_title)
+
+    # Try to load from assets/templates/
+    template_name = SKILL_TYPES[skill_type]['template']
+    script_dir = Path(__file__).parent.parent
+    template_path = script_dir / 'assets' / 'templates' / template_name
+    if template_path.exists():
+        content = read_text_utf8(template_path)
+        # Replace common placeholders with actual values
+        content = content.replace('{{DOMAIN}}', skill_name.replace(f'-{skill_type}', ''))
+        content = content.replace('{{DOMAIN_TITLE}}', skill_title.replace(f' {skill_type.capitalize()}', ''))
+        content = content.replace('{{DOMAIN_FULL}}', skill_title)
+        content = content.replace('{{SKILL_NAME}}', skill_name)
+        return content
+
+    # Fall back to general template
+    return SKILL_TEMPLATE.format(skill_name=skill_name, skill_title=skill_title)
+
+
+def init_skill(skill_name, path, skill_type='general', minimal=False):
     """
     Initialize a new skill directory with template SKILL.md.
 
     Args:
         skill_name: Name of the skill
         path: Path where the skill directory should be created
+        skill_type: Type of skill (general, scoring, fix, generate, migrate, review, test)
+        minimal: If True, create only SKILL.md + LICENSE.txt + empty dirs
 
     Returns:
         Path to created skill directory, or None if error
     """
-    # Determine skill directory path
     skill_dir = Path(path).resolve() / skill_name
 
-    # Check if directory already exists
     if skill_dir.exists():
         print(f"❌ Error: Skill directory already exists: {skill_dir}")
         return None
 
-    # Create skill directory
     try:
         skill_dir.mkdir(parents=True, exist_ok=False)
         print(f"✅ Created skill directory: {skill_dir}")
@@ -658,17 +495,14 @@ def init_skill(skill_name, path):
         print(f"❌ Error creating directory: {e}")
         return None
 
-    # Create SKILL.md from template
+    # Create SKILL.md from type template
     skill_title = title_case_skill_name(skill_name)
-    skill_content = SKILL_TEMPLATE.format(
-        skill_name=skill_name,
-        skill_title=skill_title
-    )
+    skill_content = _load_type_template(skill_type, skill_name, skill_title)
 
     skill_md_path = skill_dir / 'SKILL.md'
     try:
         write_text_utf8(skill_md_path, skill_content)
-        print("✅ Created SKILL.md")
+        print(f"✅ Created SKILL.md (type: {skill_type})")
     except Exception as e:
         print(f"❌ Error creating SKILL.md: {e}")
         return None
@@ -682,70 +516,85 @@ def init_skill(skill_name, path):
         print(f"❌ Error creating LICENSE.txt: {e}")
         return None
 
-    # Create resource directories with example files
+    # Create resource directories
     try:
-        # Create scripts/ directory with example script
-        scripts_dir = skill_dir / 'scripts'
-        scripts_dir.mkdir(exist_ok=True)
-        example_script = scripts_dir / 'example.py'
-        write_text_utf8(example_script, EXAMPLE_SCRIPT.format(skill_name=skill_name))
-        example_script.chmod(0o755)
-        print("✅ Created scripts/example.py")
+        (skill_dir / 'scripts').mkdir(exist_ok=True)
+        (skill_dir / 'references').mkdir(exist_ok=True)
+        (skill_dir / 'assets').mkdir(exist_ok=True)
 
-        # Create references/ directory with example reference doc
-        references_dir = skill_dir / 'references'
-        references_dir.mkdir(exist_ok=True)
-        example_reference = references_dir / 'api_reference.md'
-        write_text_utf8(example_reference, EXAMPLE_REFERENCE.format(skill_title=skill_title))
-        print("✅ Created references/api_reference.md")
+        if not minimal:
+            # Create example files
+            scripts_dir = skill_dir / 'scripts'
+            example_script = scripts_dir / 'example.py'
+            write_text_utf8(example_script, EXAMPLE_SCRIPT.format(skill_name=skill_name))
+            example_script.chmod(0o755)
+            print("✅ Created scripts/example.py")
 
-        # Create references/best-practices.md
-        best_practices = references_dir / 'best-practices.md'
-        write_text_utf8(best_practices, BEST_PRACTICES.format(skill_title=skill_title))
-        print("✅ Created references/best-practices.md")
+            references_dir = skill_dir / 'references'
+            write_text_utf8(references_dir / 'api_reference.md',
+                            EXAMPLE_REFERENCE.format(skill_title=skill_title))
+            print("✅ Created references/api_reference.md")
 
-        # Create assets/ directory with example asset placeholder
-        assets_dir = skill_dir / 'assets'
-        assets_dir.mkdir(exist_ok=True)
-        example_asset = assets_dir / 'example_asset.txt'
-        write_text_utf8(example_asset, EXAMPLE_ASSET)
-        print("✅ Created assets/example_asset.txt")
+            write_text_utf8(references_dir / 'best-practices.md',
+                            BEST_PRACTICES.format(skill_title=skill_title))
+            print("✅ Created references/best-practices.md")
+
+            write_text_utf8(skill_dir / 'assets' / 'example_asset.txt', EXAMPLE_ASSET)
+            print("✅ Created assets/example_asset.txt")
+        else:
+            print("✅ Created empty directories: scripts/, references/, assets/")
     except Exception as e:
         print(f"❌ Error creating resource directories: {e}")
         return None
 
-    # Print next steps
     print(f"\n✅ Skill '{skill_name}' initialized successfully at {skill_dir}")
     print("\nNext steps:")
-    print("1. Edit SKILL.md to complete the TODO items and update the description")
-    print("2. Customize or delete the example files in scripts/, references/, and assets/")
-    print("3. Run the validator when ready to check the skill structure")
+    print("1. Edit SKILL.md — fill in {{PLACEHOLDERS}} and TODO items")
+    print("2. Add references, scripts, and assets as needed")
+    print("3. Run quick_validate.py to check the skill structure")
 
     return skill_dir
 
 
 def main():
-    if len(sys.argv) < 4 or sys.argv[2] != '--path':
-        print("Usage: init_skill.py <skill-name> --path <path>")
-        print("\nSkill name requirements:")
-        print("  - Hyphen-case identifier (e.g., 'data-analyzer')")
-        print("  - Lowercase letters, digits, and hyphens only")
-        print("  - Max 40 characters")
-        print("  - Must match directory name exactly")
-        print("\nExamples:")
-        print("  init_skill.py my-new-skill --path skills/public")
-        print("  init_skill.py my-api-helper --path skills/private")
-        print("  init_skill.py custom-skill --path /custom/location")
+    parser = argparse.ArgumentParser(
+        description='Initialize a new skill from template',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog='Examples:\n'
+               '  init_skill.py my-skill --path skills/public\n'
+               '  init_skill.py my-scorer --path skills/public --type scoring\n'
+               '  init_skill.py quick-skill --path skills/public --minimal\n'
+               '  init_skill.py --list-types'
+    )
+    parser.add_argument('skill_name', nargs='?', help='Skill name (hyphen-case)')
+    parser.add_argument('--path', required=False, help='Output directory')
+    parser.add_argument('--type', choices=list(SKILL_TYPES.keys()), default='general',
+                        help='Skill type template (default: general)')
+    parser.add_argument('--minimal', action='store_true',
+                        help='Create minimal structure (SKILL.md + LICENSE + empty dirs)')
+    parser.add_argument('--list-types', action='store_true',
+                        help='List available skill types and exit')
+
+    args = parser.parse_args()
+
+    if args.list_types:
+        print("Available skill types:\n")
+        for name, info in SKILL_TYPES.items():
+            print(f"  {name:10s}  {info['desc']:40s}  ({info['template']})")
+        sys.exit(0)
+
+    if not args.skill_name or not args.path:
+        parser.print_help()
         sys.exit(1)
 
-    skill_name = sys.argv[1]
-    path = sys.argv[3]
-
-    print(f"🚀 Initializing skill: {skill_name}")
-    print(f"   Location: {path}")
+    print(f"🚀 Initializing skill: {args.skill_name}")
+    print(f"   Location: {args.path}")
+    print(f"   Type: {args.type}")
+    if args.minimal:
+        print("   Mode: minimal")
     print()
 
-    result = init_skill(skill_name, path)
+    result = init_skill(args.skill_name, args.path, args.type, args.minimal)
 
     if result:
         sys.exit(0)
