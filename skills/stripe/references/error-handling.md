@@ -122,9 +122,34 @@ async function handlePaymentFailed(invoice: Stripe.Invoice) {
 | `processing_error` | Processing issue | Processing error. Please try again. |
 | `lost_card` | Reported lost | Card cannot be used. Try another card. |
 
+## Error Boundaries
+
+Add `error.tsx` next to Stripe-related pages (`app/success/`, `app/pricing/`, etc.):
+
+```typescript
+// app/success/error.tsx (or app/pricing/error.tsx)
+"use client";
+
+export default function StripePageError({ reset }: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  return (
+    <div className="max-w-md mx-auto py-16 text-center">
+      <h2 className="text-xl font-bold">Something went wrong</h2>
+      <p className="text-gray-500 mt-2">Please try again in a moment.</p>
+      <button onClick={reset} className="mt-4 px-4 py-2 bg-black text-white rounded">
+        Try again
+      </button>
+    </div>
+  );
+}
+```
+
 ## Key Points
 - Never expose raw Stripe errors to users — map to friendly messages
 - Retry only `StripeRateLimitError` and `StripeAPIError`
 - `StripeCardError` is user-recoverable (different card)
 - `StripeAuthenticationError` means wrong API key — alert ops
 - Log all errors server-side for debugging
+- Add `error.tsx` files next to Stripe-related pages for graceful fallback

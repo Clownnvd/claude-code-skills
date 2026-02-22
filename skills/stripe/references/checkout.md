@@ -120,3 +120,4 @@ const session = await stripe.checkout.sessions.create({
 - Use `allow_promotion_codes: true` for coupon support
 - Session expires after 24 hours (configurable: 30 min — 24 hours)
 - Fulfill orders via `checkout.session.completed` webhook, NOT success URL
+- Add `app/success/error.tsx` error boundary — see `references/error-handling.md`
