@@ -1,0 +1,23 @@
+# =============================================================
+# Stripe Environment Variables
+# =============================================================
+# Copy to .env.local and fill in your values
+# Get keys from: https://dashboard.stripe.com/apikeys
+
+# Server-side secret key (NEVER expose to client)
+STRIPE_SECRET_KEY=sk_test_...
+
+# Client-side publishable key (safe for browser)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+
+# Webhook endpoint secret (from Stripe Dashboard or CLI)
+# Dashboard: https://dashboard.stripe.com/webhooks
+# CLI: stripe listen --print-secret
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# App URL (used for Checkout success/cancel URLs)
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# =============================================================
+# Note: API version is pinned in lib/stripe.ts (not env var)
+# Current: 2026-01-28.clover
