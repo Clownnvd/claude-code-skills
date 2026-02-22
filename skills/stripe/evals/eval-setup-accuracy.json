@@ -1,0 +1,59 @@
+{
+  "skill": "stripe",
+  "eval_name": "eval-setup-accuracy",
+  "description": "Verify SDK initialization, env vars, and API version are correct and current.",
+  "tests": [
+    {
+      "id": "correct-api-version",
+      "name": "Uses valid Stripe API version string",
+      "prompt": "Initialize the Stripe SDK for my Next.js server",
+      "input_files": ["templates/stripe-server.ts", "references/setup.md"],
+      "expectations": [
+        "Uses apiVersion: '2026-01-28.clover'",
+        "Does NOT use fabricated or outdated version strings",
+        "Does NOT use typescript: true (removed in stripe-node v10+)"
+      ],
+      "pass_criteria": "API version is '2026-01-28.clover', no typescript option",
+      "fail_indicators": ["2025-12-18.acacia", "typescript: true", "2024-"]
+    },
+    {
+      "id": "env-var-validation",
+      "name": "Validates env vars before use",
+      "prompt": "Set up the Stripe server client in lib/stripe.ts",
+      "input_files": ["templates/stripe-server.ts"],
+      "expectations": [
+        "Checks process.env.STRIPE_SECRET_KEY exists",
+        "Throws descriptive error if missing",
+        "Does NOT use non-null assertion on env var"
+      ],
+      "pass_criteria": "STRIPE_SECRET_KEY validated with descriptive error",
+      "fail_indicators": ["process.env.STRIPE_SECRET_KEY!"]
+    },
+    {
+      "id": "client-server-separation",
+      "name": "Server and client Stripe are in separate files",
+      "prompt": "Set up Stripe for both server-side API calls and client-side Elements",
+      "input_files": ["templates/stripe-server.ts", "templates/stripe-client.ts"],
+      "expectations": [
+        "Server instance in lib/stripe.ts (imports 'stripe')",
+        "Client instance in lib/stripe-client.ts (imports '@stripe/stripe-js')",
+        "Client uses lazy loading via loadStripe",
+        "Client has 'use client' or is imported only in client components"
+      ],
+      "pass_criteria": "Two separate files for server and client Stripe instances"
+    },
+    {
+      "id": "secret-key-never-public",
+      "name": "Secret key never uses NEXT_PUBLIC_ prefix",
+      "prompt": "What environment variables do I need for Stripe?",
+      "input_files": ["references/setup.md", "references/security.md"],
+      "expectations": [
+        "STRIPE_SECRET_KEY has no NEXT_PUBLIC_ prefix",
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is the only Stripe key exposed",
+        "STRIPE_WEBHOOK_SECRET has no NEXT_PUBLIC_ prefix"
+      ],
+      "pass_criteria": "Only publishable key has NEXT_PUBLIC_ prefix",
+      "fail_indicators": ["NEXT_PUBLIC_STRIPE_SECRET_KEY", "NEXT_PUBLIC_STRIPE_WEBHOOK"]
+    }
+  ]
+}

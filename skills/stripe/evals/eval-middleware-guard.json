@@ -1,0 +1,47 @@
+{
+  "skill": "stripe",
+  "eval_name": "eval-middleware-guard",
+  "description": "Verify paid route protection patterns via middleware and Server Component guards.",
+  "tests": [
+    {
+      "id": "server-component-guard",
+      "name": "Server Component guard checks subscription with DB access",
+      "prompt": "Protect my dashboard page so only paid users can access it",
+      "input_files": ["references/middleware-guard.md"],
+      "expectations": [
+        "Uses a server-side auth check (e.g., requireSubscription)",
+        "Redirects to /pricing if no active subscription",
+        "Checks subscription status from database",
+        "Does NOT rely solely on client-side checks"
+      ],
+      "pass_criteria": "Server-side subscription check with redirect to pricing"
+    },
+    {
+      "id": "layout-level-guard",
+      "name": "Layout guard protects entire route group",
+      "prompt": "Gate all pages under /app/ to require a paid subscription",
+      "input_files": ["references/middleware-guard.md"],
+      "expectations": [
+        "Uses a layout component (e.g., app/(paid)/layout.tsx)",
+        "Calls requireSubscription or equivalent in layout",
+        "All child pages are automatically gated",
+        "Uses route group for organization"
+      ],
+      "pass_criteria": "Layout-level guard protects all child routes"
+    },
+    {
+      "id": "middleware-edge-limitation",
+      "name": "Acknowledges middleware cannot access DB directly",
+      "prompt": "Add Stripe subscription check in Next.js middleware",
+      "input_files": ["references/middleware-guard.md"],
+      "expectations": [
+        "Notes middleware runs at Edge with no direct DB access",
+        "Suggests reading plan from JWT claims or cookie",
+        "Provides alternative: Server Component guards for accurate checks",
+        "Does NOT import Prisma or DB client in middleware"
+      ],
+      "pass_criteria": "Acknowledges Edge limitations and offers alternatives",
+      "fail_indicators": ["import { db }", "import prisma", "PrismaClient in middleware"]
+    }
+  ]
+}

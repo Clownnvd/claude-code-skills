@@ -1,0 +1,59 @@
+{
+  "skill": "stripe",
+  "eval_name": "eval-checkout-flow",
+  "description": "Verify Checkout Session creation follows auth, redirect, and metadata patterns.",
+  "tests": [
+    {
+      "id": "auth-before-checkout",
+      "name": "Authenticates user before creating checkout session",
+      "prompt": "Create a Server Action that starts a Stripe Checkout for a subscription",
+      "input_files": ["templates/checkout-action.ts", "references/checkout.md"],
+      "expectations": [
+        "Calls getCurrentUser() or equivalent auth check",
+        "Throws or redirects if not authenticated",
+        "Uses 'use server' directive",
+        "Sets metadata with userId"
+      ],
+      "pass_criteria": "Auth check happens before stripe.checkout.sessions.create()",
+      "fail_indicators": ["no auth check", "accepts userId from client parameter"]
+    },
+    {
+      "id": "session-url-null-check",
+      "name": "Checks session.url before redirecting",
+      "prompt": "Create a checkout session and redirect the user to Stripe",
+      "input_files": ["templates/checkout-action.ts"],
+      "expectations": [
+        "Checks if session.url is null/undefined before redirect",
+        "Does NOT use session.url! non-null assertion directly in redirect()",
+        "Calls redirect() outside of try/catch"
+      ],
+      "pass_criteria": "Null check on session.url before redirect()",
+      "fail_indicators": ["redirect(session.url!)", "redirect inside try/catch"]
+    },
+    {
+      "id": "metadata-for-tracking",
+      "name": "Includes metadata for webhook fulfillment",
+      "prompt": "Create a Stripe checkout for a one-time payment with user tracking",
+      "input_files": ["references/checkout.md"],
+      "expectations": [
+        "Sets metadata.userId on the session",
+        "Sets metadata.priceId or relevant order info",
+        "Notes that fulfillment happens via webhook, not success URL"
+      ],
+      "pass_criteria": "Session metadata includes userId for webhook handler"
+    },
+    {
+      "id": "embedded-checkout-client-secret",
+      "name": "Embedded checkout returns clientSecret, not redirect",
+      "prompt": "Implement embedded Stripe checkout that stays on my page",
+      "input_files": ["references/checkout.md"],
+      "expectations": [
+        "Uses ui_mode: 'embedded'",
+        "Uses return_url instead of success_url",
+        "Returns session.client_secret to client",
+        "Client uses EmbeddedCheckoutProvider with getStripe()"
+      ],
+      "pass_criteria": "Embedded mode returns client_secret, uses EmbeddedCheckoutProvider"
+    }
+  ]
+}

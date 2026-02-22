@@ -1,0 +1,59 @@
+{
+  "skill": "stripe",
+  "eval_name": "eval-database-sync",
+  "description": "Verify Stripe-to-database sync patterns via webhooks and helper functions.",
+  "tests": [
+    {
+      "id": "webhook-to-db-sync",
+      "name": "Webhook handlers update database correctly",
+      "prompt": "Sync Stripe subscription data to my database when a checkout completes",
+      "input_files": ["references/database-sync.md", "references/webhooks.md"],
+      "expectations": [
+        "Handles checkout.session.completed event",
+        "Extracts userId from session.metadata",
+        "Stores stripeCustomerId, stripeSubscriptionId, stripePriceId in DB",
+        "Stores stripeCurrentPeriodEnd for access checks"
+      ],
+      "pass_criteria": "Webhook handler syncs subscription data to user record"
+    },
+    {
+      "id": "subscription-deleted-downgrade",
+      "name": "Handles subscription deletion by downgrading to free",
+      "prompt": "Handle when a user's Stripe subscription is cancelled",
+      "input_files": ["references/database-sync.md"],
+      "expectations": [
+        "Handles customer.subscription.deleted event",
+        "Nullifies stripeSubscriptionId and stripePriceId",
+        "Sets plan to 'free'",
+        "Uses updateMany with stripeSubscriptionId (not userId)"
+      ],
+      "pass_criteria": "Subscription deletion resets user to free plan",
+      "fail_indicators": ["leaves old plan active", "only logs, no DB update"]
+    },
+    {
+      "id": "get-or-create-customer",
+      "name": "Creates Stripe customer if none exists",
+      "prompt": "Get or create a Stripe customer for the current user",
+      "input_files": ["references/database-sync.md"],
+      "expectations": [
+        "Checks DB for existing stripeCustomerId",
+        "Returns existing ID if found",
+        "Creates new Stripe customer with email and metadata",
+        "Saves new customer ID to database"
+      ],
+      "pass_criteria": "Returns existing customer or creates + saves new one"
+    },
+    {
+      "id": "price-to-plan-mapping",
+      "name": "Maps Stripe price IDs to plan names server-side",
+      "prompt": "Determine user's plan based on their Stripe subscription",
+      "input_files": ["references/database-sync.md"],
+      "expectations": [
+        "Maps Stripe price IDs to plan names (e.g., 'pro', 'enterprise')",
+        "Falls back to 'free' if no mapping found",
+        "Mapping is defined server-side, not from client"
+      ],
+      "pass_criteria": "Server-side price-to-plan mapping with free fallback"
+    }
+  ]
+}

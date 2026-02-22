@@ -1,0 +1,59 @@
+{
+  "skill": "stripe",
+  "eval_name": "eval-subscription-lifecycle",
+  "description": "Verify subscription create, cancel, update, and reactivate patterns.",
+  "tests": [
+    {
+      "id": "cancel-at-period-end",
+      "name": "Cancels at period end by default, not immediately",
+      "prompt": "Implement a cancel subscription Server Action",
+      "input_files": ["templates/subscription-action.ts", "references/subscriptions.md"],
+      "expectations": [
+        "Uses cancel_at_period_end: true (grace period)",
+        "Does NOT call stripe.subscriptions.cancel() for default cancel",
+        "Authenticates user before cancellation",
+        "Looks up subscriptionId from DB, not from client parameter"
+      ],
+      "pass_criteria": "Uses update with cancel_at_period_end: true, not immediate cancel",
+      "fail_indicators": ["stripe.subscriptions.cancel(", "subscriptionId from function parameter"]
+    },
+    {
+      "id": "plan-switch-proration",
+      "name": "Plan change uses proration",
+      "prompt": "Let users switch between subscription plans",
+      "input_files": ["templates/subscription-action.ts", "references/subscriptions.md"],
+      "expectations": [
+        "Retrieves current subscription to get item ID",
+        "Updates subscription items with new price",
+        "Sets proration_behavior to 'create_prorations'",
+        "Validates newPriceId against allowed list"
+      ],
+      "pass_criteria": "Plan switch uses items update with proration"
+    },
+    {
+      "id": "invoice-preview-createpreview",
+      "name": "Uses createPreview not retrieveUpcoming",
+      "prompt": "Show the user their upcoming invoice amount",
+      "input_files": ["templates/subscription-action.ts", "references/billing-meter.md"],
+      "expectations": [
+        "Uses stripe.invoices.createPreview()",
+        "Does NOT use stripe.invoices.retrieveUpcoming()",
+        "Passes customer and subscription parameters"
+      ],
+      "pass_criteria": "Uses createPreview (not deprecated retrieveUpcoming)",
+      "fail_indicators": ["retrieveUpcoming", "invoices.upcoming"]
+    },
+    {
+      "id": "reactivate-subscription",
+      "name": "Reactivates by setting cancel_at_period_end to false",
+      "prompt": "Allow users to undo subscription cancellation",
+      "input_files": ["templates/subscription-action.ts"],
+      "expectations": [
+        "Sets cancel_at_period_end: false",
+        "Authenticates user first",
+        "Checks subscription exists before updating"
+      ],
+      "pass_criteria": "Reactivation uses cancel_at_period_end: false"
+    }
+  ]
+}

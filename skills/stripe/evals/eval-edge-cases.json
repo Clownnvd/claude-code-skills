@@ -1,0 +1,86 @@
+{
+  "skill": "stripe",
+  "eval_name": "eval-edge-cases",
+  "description": "Verify skill handles security edge cases, deprecated APIs, and common pitfalls.",
+  "tests": [
+    {
+      "id": "server-action-auth-guard",
+      "name": "Server Actions always authenticate before Stripe calls",
+      "prompt": "Create a Server Action to cancel the user's subscription",
+      "input_files": ["templates/subscription-action.ts", "references/security.md"],
+      "expectations": [
+        "Authenticates user before any Stripe API call",
+        "Looks up Stripe IDs from database using authenticated user ID",
+        "Does NOT accept customerId or subscriptionId as function parameters",
+        "Uses 'use server' directive"
+      ],
+      "pass_criteria": "Auth check first, Stripe IDs from DB, not from client",
+      "fail_indicators": ["function cancel(subscriptionId: string)", "function cancel(customerId: string)"]
+    },
+    {
+      "id": "redirect-outside-try-catch",
+      "name": "redirect() is never called inside try/catch",
+      "prompt": "Create a checkout session and redirect to Stripe",
+      "input_files": ["templates/checkout-action.ts"],
+      "expectations": [
+        "redirect() is called after try/catch or outside of it",
+        "redirect() throws NEXT_REDIRECT internally",
+        "Catching redirect() would swallow the navigation"
+      ],
+      "pass_criteria": "redirect() is not inside a try/catch block",
+      "fail_indicators": ["try { redirect(", "try {\\n.*redirect("]
+    },
+    {
+      "id": "idempotency-keys",
+      "name": "Uses idempotency keys for mutating operations",
+      "prompt": "How do I prevent duplicate charges from network failures?",
+      "input_files": ["references/security.md"],
+      "expectations": [
+        "Uses idempotencyKey option on mutating Stripe calls",
+        "Generates unique keys (UUID or deterministic composite)",
+        "Notes keys auto-expire after 24 hours",
+        "Differentiates retry scenarios (same key vs new key)"
+      ],
+      "pass_criteria": "Idempotency keys used with mutating operations"
+    },
+    {
+      "id": "amount-validation-server-side",
+      "name": "Never accepts payment amounts from client",
+      "prompt": "Create a payment with a custom amount",
+      "input_files": ["references/security.md"],
+      "expectations": [
+        "Fetches price from Stripe API (source of truth)",
+        "Does NOT accept amount as a client parameter",
+        "Uses Stripe Price ID, not raw dollar amounts",
+        "Validates price is active before creating session"
+      ],
+      "pass_criteria": "Amount comes from Stripe API, never from client input",
+      "fail_indicators": ["amount: req.body.amount", "amount from client"]
+    },
+    {
+      "id": "error-boundary-on-stripe-pages",
+      "name": "Stripe-related pages have error boundaries",
+      "prompt": "Create a checkout success page that retrieves the session",
+      "input_files": ["references/checkout.md", "references/error-handling.md"],
+      "expectations": [
+        "Success page retrieves session from searchParams",
+        "Mentions or includes error.tsx for graceful failure",
+        "Handles missing session_id parameter"
+      ],
+      "pass_criteria": "Success page handles errors gracefully with boundary or validation"
+    },
+    {
+      "id": "customer-portal-flow-data-typing",
+      "name": "Portal flow_data uses correct Stripe types",
+      "prompt": "Create a customer portal session with deep link to cancel subscription",
+      "input_files": ["templates/customer-portal-action.ts", "references/customer-portal.md"],
+      "expectations": [
+        "Uses Stripe.BillingPortal.SessionCreateParams type for flow_data",
+        "Sets flow type to 'subscription_cancel'",
+        "Passes subscription ID in flow_data",
+        "Authenticates user before creating portal session"
+      ],
+      "pass_criteria": "Properly typed flow_data with correct flow type and auth"
+    }
+  ]
+}
