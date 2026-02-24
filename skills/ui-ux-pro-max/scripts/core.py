@@ -94,6 +94,41 @@ CSV_CONFIG = {
         "file": "accessibility.csv",
         "search_cols": ["Category", "Criterion", "Keywords", "Description"],
         "output_cols": ["Category", "Criterion", "WCAG Level", "Keywords", "Description", "Do", "Don't", "Code Example Good", "Code Example Bad", "Testing", "Severity"]
+    },
+    "page-standards": {
+        "file": "page-standards.csv",
+        "search_cols": ["Page Type", "Keywords", "Required Sections"],
+        "output_cols": ["Page Type", "Keywords", "Required Sections", "Recommended Sections", "Nav Requirements", "Footer Requirements", "SEO Requirements", "Internal Links", "Common Violations", "Severity"]
+    },
+    "navigation": {
+        "file": "navigation-ia.csv",
+        "search_cols": ["Category", "Pattern", "Keywords", "Description"],
+        "output_cols": ["Category", "Pattern", "Keywords", "Description", "Do", "Don't", "Code Example Good", "Code Example Bad", "Severity"]
+    },
+    "seo": {
+        "file": "seo-per-page.csv",
+        "search_cols": ["Page Type", "Keywords", "Title Format", "Schema Type"],
+        "output_cols": ["Page Type", "Keywords", "Title Format", "Meta Description", "Schema Type", "Indexing", "Canonical", "Open Graph", "Heading Structure", "Internal Link Strategy", "Severity"]
+    },
+    "layout": {
+        "file": "global-layout.csv",
+        "search_cols": ["Category", "Pattern", "Keywords", "Description"],
+        "output_cols": ["Category", "Pattern", "Keywords", "Description", "Do", "Don't", "Code Example Good", "Code Example Bad", "Severity"]
+    },
+    "auth": {
+        "file": "auth-pages.csv",
+        "search_cols": ["Category", "Pattern", "Keywords", "Description"],
+        "output_cols": ["Category", "Pattern", "Keywords", "Description", "Do", "Don't", "Code Example Good", "Code Example Bad", "Severity"]
+    },
+    "empty-states": {
+        "file": "empty-states.csv",
+        "search_cols": ["Category", "Pattern", "Keywords", "Description"],
+        "output_cols": ["Category", "Pattern", "Keywords", "Description", "Do", "Don't", "Code Example Good", "Code Example Bad", "Severity"]
+    },
+    "audit-rules": {
+        "file": "page-audit-rules.csv",
+        "search_cols": ["Rule ID", "Page Type", "Check Type", "Rule Description"],
+        "output_cols": ["Rule ID", "Page Type", "Check Type", "Rule Description", "Violation Example", "Fix Suggestion", "Severity"]
     }
 }
 
@@ -237,7 +272,14 @@ def detect_domain(query):
         "responsive": ["responsive", "breakpoint", "mobile-first", "container query", "fluid", "clamp", "srcset", "viewport", "media query", "adaptive"],
         "darkmode": ["dark mode", "dark theme", "light mode", "theme toggle", "prefers-color-scheme", "oled", "surface color", "dark background"],
         "tokens": ["token", "spacing", "shadow", "elevation", "border-radius", "z-index", "design system", "scale", "css variable", "custom property"],
-        "a11y": ["accessibility", "wcag", "aria", "screen reader", "contrast", "focus", "keyboard", "a11y", "inclusive", "assistive"]
+        "a11y": ["accessibility", "wcag", "aria", "screen reader", "contrast", "focus", "keyboard", "a11y", "inclusive", "assistive"],
+        "page-standards": ["page type", "required sections", "mandatory", "page structure", "what sections", "must have"],
+        "navigation": ["navbar", "nav", "breadcrumb", "sidebar", "footer", "menu", "mega menu", "bottom nav", "hamburger", "skip to content"],
+        "seo": ["seo", "meta", "title tag", "schema", "open graph", "canonical", "indexing", "noindex", "sitemap", "structured data"],
+        "layout": ["max-width", "container", "z-index", "spacing", "grid", "full-bleed", "sticky footer", "padding", "section spacing"],
+        "auth": ["auth", "login", "sign in", "sign up", "register", "forgot password", "oauth", "2fa", "verification", "authentication"],
+        "empty-states": ["empty state", "loading", "skeleton", "spinner", "error page", "404", "500", "offline", "no results", "onboarding"],
+        "audit-rules": ["audit", "check", "violation", "compliance", "missing section", "validate"]
     }
 
     scores = {domain: sum(1 for kw in keywords if kw in query_lower) for domain, keywords in domain_keywords.items()}
@@ -287,3 +329,66 @@ def search_stack(query, stack, max_results=MAX_RESULTS):
         "count": len(results),
         "results": results
     }
+
+
+# ============ AUDIT FUNCTIONS ============
+def audit_page(page_type):
+    """Load audit rules and standards for a specific page type, return checklist."""
+    rules_file = DATA_DIR / "page-audit-rules.csv"
+    standards_file = DATA_DIR / "page-standards.csv"
+    seo_file = DATA_DIR / "seo-per-page.csv"
+
+    result = {"page_type": page_type, "standard": None, "seo": None, "rules": [], "total_checks": 0}
+
+    # Map common page type aliases (covers short forms, long forms, and CSV variations)
+    type_aliases = {
+        "landing": ["landing", "landing page"],
+        "sign up": ["sign up"],
+        "sign in": ["sign in"],
+        "dashboard": ["dashboard", "dashboard user", "dashboard admin"],
+        "pricing": ["pricing"],
+        "blog post": ["blog post"],
+        "blog list": ["blog list"],
+        "checkout": ["checkout"],
+        "pdp": ["pdp", "product detail pdp"],
+        "settings": ["settings", "settings/profile"],
+        "search": ["search results"],
+        "404": ["404", "404 error"],
+        "contact": ["contact"],
+        "about": ["about"],
+    }
+
+    # Resolve all matching type names for this page_type
+    page_type_lower = page_type.lower()
+    match_types = [page_type_lower]
+    for key, aliases in type_aliases.items():
+        if page_type_lower in aliases or page_type_lower == key:
+            match_types = list(set(aliases + [key]))
+            break
+
+    # Load page standard
+    if standards_file.exists():
+        standards = _load_csv(standards_file)
+        for s in standards:
+            if s.get("Page Type", "").lower() in match_types:
+                result["standard"] = s
+                break
+
+    # Load SEO requirements
+    if seo_file.exists():
+        seo_data = _load_csv(seo_file)
+        for s in seo_data:
+            if s.get("Page Type", "").lower() in match_types:
+                result["seo"] = s
+                break
+
+    # Load audit rules (page-specific + Global + Any)
+    if rules_file.exists():
+        all_rules = _load_csv(rules_file)
+        for rule in all_rules:
+            rule_type = rule.get("Page Type", "").lower()
+            if rule_type in match_types or rule_type in ["global", "any"]:
+                result["rules"].append(rule)
+
+    result["total_checks"] = len(result["rules"])
+    return result

@@ -1,11 +1,11 @@
 ---
 name: ui-ux-pro-max
-description: "UI/UX design intelligence. 85 styles, 115 palettes, 72 font pairings, 35 charts, 61 components, 50 animations, 57 WCAG criteria, 40 responsive patterns, 40 dark mode rules, 51 design tokens, 13 stacks. Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, check. Styles: glassmorphism, brutalism, neumorphism, bento, dark mode, view transitions, scroll-driven, container queries, AI-native, liquid glass. Topics: color, accessibility, animation, layout, typography, spacing, shadow, gradient, responsive, dark mode, WCAG 2.2, design tokens, components."
+description: "UI/UX design intelligence with page standards & audit mode. 85 styles, 115 palettes, 72 font pairings, 35 charts, 61 components, 50 animations, 57 WCAG criteria, 42 responsive patterns, 40 dark mode rules, 51 design tokens, 13 stacks, 15 page types with mandatory sections, 44 audit rules, SEO per page type. Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, check, audit. Styles: glassmorphism, brutalism, neumorphism, bento, dark mode, view transitions, scroll-driven, container queries, AI-native, liquid glass. Topics: color, accessibility, animation, layout, typography, spacing, shadow, gradient, responsive, dark mode, WCAG 2.2, design tokens, components, page standards, navigation, SEO, auth, empty states."
 ---
 
 # UI/UX Pro Max - Design Intelligence
 
-Comprehensive design guide for web and mobile applications. Contains 85 styles, 115 color palettes, 72 font pairings, 120 UX guidelines, 35 chart types, 61 component patterns, 50 animations, 57 WCAG 2.2 criteria, 40 responsive patterns, 40 dark mode rules, and 51 design tokens across 13 technology stacks. Searchable database with BM25 ranking and priority-based recommendations.
+Comprehensive design guide with page standards and audit mode. Contains 85 styles, 115 color palettes, 72 font pairings, 120 UX guidelines, 35 chart types, 61 component patterns, 50 animations, 57 WCAG 2.2 criteria, 42 responsive patterns, 40 dark mode rules, 51 design tokens across 13 stacks, 15 page types with mandatory/recommended sections, 44 audit rules, SEO requirements per page type, navigation/IA patterns, auth flow patterns, and empty state patterns. Includes audit mode to check existing pages against standards.
 
 ## When to Apply
 
@@ -120,7 +120,25 @@ winget install Python.Python.3.12
 
 ## How to Use This Skill
 
-When user requests UI/UX work (design, build, create, implement, review, fix, improve), follow this workflow:
+When user requests UI/UX work (design, build, create, implement, review, fix, improve, audit), follow this workflow:
+
+### Step 0: Page Audit (when reviewing/improving existing pages)
+
+When creating or reviewing UI, **always audit first** to identify missing sections and violations:
+
+```bash
+python3 skills/ui-ux-pro-max/scripts/search.py "landing" --audit landing
+```
+
+**Audit workflow:**
+1. Scan existing files in `app/` or `pages/` to identify current pages
+2. For each page, run `--audit <page_type>` to get the standards checklist
+3. Compare existing code against required sections, nav requirements, SEO
+4. Report violations to user with fix suggestions
+5. Ask: "Do you want to fix these to match the standard template?"
+6. If yes: auto-fix the UI to match page standards
+
+**Available page types for audit:** Landing, Sign Up, Sign In, Dashboard, Dashboard Admin, Settings, Pricing, Blog List, Blog Post, PDP, Search Results, Checkout, 404, Contact, About
 
 ### Step 1: Analyze User Requirements
 
@@ -129,6 +147,20 @@ Extract key information from user request:
 - **Style keywords**: minimal, playful, professional, elegant, dark mode, etc.
 - **Industry**: healthcare, fintech, gaming, education, etc.
 - **Stack**: React, Vue, Next.js, or default to `html-tailwind`
+
+### Step 1.5: Check Page Standards (for specific page types)
+
+Before generating a design system, check what sections are required for the page type:
+
+```bash
+python3 skills/ui-ux-pro-max/scripts/search.py "landing" --domain page-standards
+```
+
+This confirms:
+- Required sections (Hero, Value Prop, Features, CTA, Footer)
+- Navigation requirements (Logo, CTA button, mobile hamburger)
+- SEO requirements (title format, schema type, indexing)
+- Internal linking requirements (links to pricing, sign-up, etc.)
 
 ### Step 2: Generate Design System (REQUIRED)
 
@@ -206,6 +238,12 @@ python3 skills/ui-ux-pro-max/scripts/search.py "<keyword>" --domain <domain> [-n
 | Dark mode rules | `darkmode` | `--domain darkmode "background contrast OLED"` |
 | Design tokens | `tokens` | `--domain tokens "spacing shadow elevation"` |
 | WCAG accessibility | `a11y` | `--domain a11y "focus keyboard contrast"` |
+| Page type standards | `page-standards` | `--domain page-standards "landing dashboard"` |
+| Navigation patterns | `navigation` | `--domain navigation "navbar breadcrumb footer"` |
+| SEO per page type | `seo` | `--domain seo "landing blog schema"` |
+| Global layout rules | `layout` | `--domain layout "z-index container spacing"` |
+| Auth page patterns | `auth` | `--domain auth "sign up oauth forgot"` |
+| Empty/error states | `empty-states` | `--domain empty-states "skeleton 404 spinner"` |
 
 ### Step 4: Stack Guidelines (Default: html-tailwind)
 
@@ -241,6 +279,13 @@ Available stacks: `html-tailwind`, `react`, `nextjs`, `vue`, `svelte`, `swiftui`
 | `tokens` | Design tokens, spacing, shadows | spacing, shadow, elevation, z-index, border-radius, scale |
 | `a11y` | WCAG 2.2 accessibility | wcag, contrast, screen reader, focus, keyboard, aria |
 | `prompt` | AI prompts, CSS keywords | (style name) |
+| `page-standards` | Required sections per page type | landing, dashboard, pricing, blog, checkout, settings |
+| `navigation` | Navigation & IA patterns | navbar, sidebar, footer, breadcrumb, mega menu, bottom nav |
+| `seo` | SEO requirements per page type | meta title, schema, noindex, open graph, canonical |
+| `layout` | Global layout standards | max-width, z-index, spacing, grid, sticky footer |
+| `auth` | Authentication page patterns | sign in, sign up, oauth, forgot password, 2FA |
+| `empty-states` | Empty/loading/error states | skeleton, 404, 500, spinner, no results, onboarding |
+| `audit-rules` | Audit rules and violations | check, violation, compliance, missing section |
 
 ### Available Stacks
 
@@ -396,3 +441,26 @@ Before delivering UI code, verify these items:
 - [ ] Form inputs have labels
 - [ ] Color is not the only indicator
 - [ ] `prefers-reduced-motion` respected
+
+## Learn and Adapt When Things Fail
+
+When you hit an error:
+- Read the full error message and trace
+- Fix the script and retest (if it uses paid API calls or credits, check with me before running again)
+- Document what you learned in the workflow (rate limits, timing quirks, unexpected behavior)
+- Example: You get rate-limited on an API, so you dig into the docs, discover a batch endpoint, refactor the tool to use it, verify it works, then update the workflow so this never happens again
+
+### Keep Workflows Current
+
+Workflows should evolve as you learn. When you find better methods, discover constraints, or encounter recurring issues, update the workflow. That said, don't create or overwrite workflows without asking unless I explicitly tell you to. These are your instructions and need to be preserved and refined, not tossed after one use.
+
+### The Self-Improvement Loop
+
+Every failure is a chance to make the system stronger:
+1. Identify what broke
+2. Fix the tool
+3. Verify the fix works
+4. Update the workflow with the new approach
+5. Move on with a more robust system
+
+This loop is how the framework improves over time.

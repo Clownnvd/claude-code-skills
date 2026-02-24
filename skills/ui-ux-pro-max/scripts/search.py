@@ -17,7 +17,7 @@ Persistence (Master + Overrides pattern):
 import argparse
 import sys
 import io
-from core import CSV_CONFIG, AVAILABLE_STACKS, MAX_RESULTS, search, search_stack
+from core import CSV_CONFIG, AVAILABLE_STACKS, MAX_RESULTS, search, search_stack, audit_page
 from design_system import generate_design_system, persist_design_system
 
 # Force UTF-8 for stdout/stderr to handle emojis on Windows (cp1252 default)
@@ -53,6 +53,92 @@ def format_output(result):
     return "\n".join(output)
 
 
+def format_audit_output(result):
+    """Format audit results as a comprehensive checklist"""
+    output = []
+    page_type = result["page_type"]
+    standard = result["standard"]
+    seo = result["seo"]
+    rules = result["rules"]
+
+    output.append("=" * 60)
+    output.append(f"  PAGE AUDIT: {page_type.title()}")
+    output.append("=" * 60)
+
+    if standard:
+        output.append("")
+        output.append("REQUIRED SECTIONS:")
+        for section in standard.get("Required Sections", "").split(", "):
+            if section.strip():
+                output.append(f"  [ ] {section.strip()}")
+
+        output.append("")
+        output.append("RECOMMENDED SECTIONS:")
+        for section in standard.get("Recommended Sections", "").split(", "):
+            if section.strip():
+                output.append(f"  [ ] {section.strip()}")
+
+        output.append("")
+        output.append("NAV REQUIREMENTS:")
+        for req in standard.get("Nav Requirements", "").split(", "):
+            if req.strip():
+                output.append(f"  [ ] {req.strip()}")
+
+        output.append("")
+        output.append("FOOTER REQUIREMENTS:")
+        for req in standard.get("Footer Requirements", "").split(", "):
+            if req.strip():
+                output.append(f"  [ ] {req.strip()}")
+
+        output.append("")
+        output.append("INTERNAL LINKS:")
+        for link in standard.get("Internal Links", "").split(", "):
+            if link.strip():
+                output.append(f"  [ ] {link.strip()}")
+
+        output.append("")
+        output.append("COMMON VIOLATIONS TO CHECK:")
+        for violation in standard.get("Common Violations", "").split(", "):
+            if violation.strip():
+                output.append(f"  [!] {violation.strip()}")
+    else:
+        output.append(f"\n  No standard found for page type: {page_type}")
+        output.append("  Available types: Landing, Sign Up, Sign In, Dashboard, Pricing, Blog List, Blog Post, PDP, Search Results, Checkout, 404, Contact, About, Settings")
+
+    if seo:
+        output.append("")
+        output.append("-" * 40)
+        output.append("SEO REQUIREMENTS:")
+        output.append(f"  Title Format:  {seo.get('Title Format', 'N/A')}")
+        output.append(f"  Meta Desc:     {seo.get('Meta Description', 'N/A')[:80]}...")
+        output.append(f"  Schema:        {seo.get('Schema Type', 'N/A')}")
+        output.append(f"  Indexing:      {seo.get('Indexing', 'N/A')}")
+        output.append(f"  Canonical:     {seo.get('Canonical', 'N/A')}")
+        output.append(f"  Open Graph:    {seo.get('Open Graph', 'N/A')[:80]}...")
+        output.append(f"  Headings:      {seo.get('Heading Structure', 'N/A')[:80]}...")
+
+    if rules:
+        output.append("")
+        output.append("-" * 40)
+        output.append(f"AUDIT RULES ({len(rules)} checks):")
+        for rule in rules:
+            severity = rule.get("Severity", "MEDIUM")
+            severity_tag = {"CRITICAL": "[!!]", "HIGH": "[! ]", "MEDIUM": "[  ]", "LOW": "[  ]"}.get(severity, "[  ]")
+            output.append(f"  {severity_tag} {rule.get('Rule ID', '?')}: {rule.get('Rule Description', '')}")
+            output.append(f"       Fix: {rule.get('Fix Suggestion', '')[:100]}")
+
+    output.append("")
+    output.append("=" * 60)
+    output.append(f"Total checks: {result['total_checks']} rules")
+    critical_count = sum(1 for r in rules if r.get("Severity") == "CRITICAL")
+    high_count = sum(1 for r in rules if r.get("Severity") == "HIGH")
+    if critical_count or high_count:
+        output.append(f"  CRITICAL: {critical_count} | HIGH: {high_count}")
+    output.append("=" * 60)
+
+    return "\n".join(output)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="UI Pro Max Search")
     parser.add_argument("query", help="Search query")
@@ -68,11 +154,21 @@ if __name__ == "__main__":
     parser.add_argument("--persist", action="store_true", help="Save design system to design-system/MASTER.md (creates hierarchical structure)")
     parser.add_argument("--page", type=str, default=None, help="Create page-specific override file in design-system/pages/")
     parser.add_argument("--output-dir", "-o", type=str, default=None, help="Output directory for persisted files (default: current directory)")
+    # Page audit
+    parser.add_argument("--audit", "-a", type=str, default=None, help="Audit a page type against standards. E.g., --audit landing")
 
     args = parser.parse_args()
 
+    # Audit takes highest priority
+    if args.audit:
+        result = audit_page(args.audit)
+        if args.json:
+            import json
+            print(json.dumps(result, indent=2, ensure_ascii=False, default=str))
+        else:
+            print(format_audit_output(result))
     # Design system takes priority
-    if args.design_system:
+    elif args.design_system:
         result = generate_design_system(
             args.query, 
             args.project_name, 
