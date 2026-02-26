@@ -1,0 +1,17 @@
+{
+  "skill": "security",
+  "eval_name": "review-mode",
+  "description": "Verify review mode identifies security vulnerabilities in specific files",
+  "tests": [
+    {
+      "id": "sec-rev-1",
+      "name": "Review code with XSS vulnerability",
+      "prompt": "review src/components/problems/problem-detail.tsx",
+      "setup": "Component using dangerouslySetInnerHTML without sanitization",
+      "input_files": ["src/components/problems/problem-detail.tsx"],
+      "expectations": ["Identifies XSS as CRITICAL", "Suggests DOMPurify", "Checks for other injection vectors"],
+      "pass_criteria": "XSS vulnerability identified with concrete fix",
+      "fail_indicators": ["Misses XSS", "No sanitization suggestion", "Wrong severity"]
+    }
+  ]
+}

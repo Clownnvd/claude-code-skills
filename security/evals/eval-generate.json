@@ -1,0 +1,17 @@
+{
+  "skill": "security",
+  "eval_name": "generate-mode",
+  "description": "Verify generate mode produces security-hardened code meeting all 10 categories",
+  "tests": [
+    {
+      "id": "sec-gen-1",
+      "name": "Generate security middleware",
+      "prompt": "generate security middleware with headers, CORS, CSP",
+      "setup": "Next.js 16 project needing security hardening",
+      "input_files": ["proxy.ts", "src/lib/security/headers.ts"],
+      "expectations": ["CSP with nonces", "CORS with explicit origins", "All security headers", "No unsafe-inline", "Secrets from env"],
+      "pass_criteria": "All 10 security categories addressed",
+      "fail_indicators": ["Missing CSP", "CORS wildcard", "Hardcoded secrets", "No HSTS"]
+    }
+  ]
+}

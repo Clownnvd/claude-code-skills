@@ -1,0 +1,45 @@
+---
+name: {{DOMAIN}}-scoring
+description: Audit {{DOMAIN_FULL}} against 10 enterprise criteria ({{CRITERIA_LIST}}). {{FRAMEWORK}} patterns.
+---
+
+# {{DOMAIN_TITLE}} Scoring
+
+Audit {{DOMAIN_FULL}} quality with a weighted 0-100 scorecard across 10 criteria.
+
+## When to Use
+
+- Auditing existing {{DOMAIN}} implementation quality
+- Pre-launch quality gate for {{DOMAIN}}
+- Identifying {{DOMAIN}} improvement priorities
+
+## Scoring Process
+
+1. Read `references/overview.md` for criteria weights and grading scale
+2. Read `references/scoring-workflow.md` for step-by-step process
+3. For each criterion, load the matching `references/criteria/*.md` file
+4. Score each criterion 0-10, multiply by weight, sum for total
+5. Output scorecard table + prioritized issues list
+
+## Criteria (10 total, weights sum to 100)
+
+| # | Criterion | Weight | Reference |
+|---|-----------|--------|-----------|
+{{CRITERIA_TABLE}}
+
+## Output Format
+
+### Scorecard
+| Criterion | Score (0-10) | Weight | Weighted |
+|-----------|:---:|:---:|:---:|
+| ... | ... | ... | ... |
+| **TOTAL** | | | **X/100** |
+
+### Grade Scale
+| Grade | Range | Meaning |
+|:---:|:---:|---|
+| A | 90-100 | Production-ready |
+| B | 75-89 | Minor improvements |
+| C | 60-74 | Significant gaps |
+| D | 40-59 | Major rework |
+| F | 0-39 | Fundamental issues |

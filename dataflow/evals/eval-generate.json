@@ -1,0 +1,17 @@
+{
+  "skill": "dataflow",
+  "eval_name": "generate-mode",
+  "description": "Verify generate mode produces data flow code meeting all 10 categories",
+  "tests": [
+    {
+      "id": "df-gen-1",
+      "name": "Generate server component data pipeline",
+      "prompt": "generate server component data pipeline for problems list page",
+      "setup": "Next.js 16 with Prisma, server components",
+      "input_files": ["src/app/(app)/problems/page.tsx", "src/app/(app)/problems/loading.tsx"],
+      "expectations": ["Server component with Prisma select", "loading.tsx skeleton", "Typed props", "No client-side fetch", "Date serialization"],
+      "pass_criteria": "All 10 dataflow categories addressed",
+      "fail_indicators": ["Client fetch", "No loading state", "No select", "Date objects in props"]
+    }
+  ]
+}

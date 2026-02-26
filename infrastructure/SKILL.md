@@ -1,0 +1,145 @@
+---
+name: infrastructure
+description: Infrastructure quality system. 7 modes: score (10-category audit), fix (auto-fix from scorecard), loop (score->fix until target), generate (create new code), review (quick file check), migrate (framework upgrade), test (generate test cases). CI/CD, Docker, monitoring patterns.
+license: Complete terms in LICENSE.txt
+---
+
+# Infrastructure Quality System
+
+One skill, 7 modes. Score infrastructure and deployment readiness, fix issues, run the full loop, generate compliant configs, review files, migrate versions, or generate tests.
+
+## Modes
+
+| Mode | Trigger | What It Does |
+|------|---------|--------------|
+| **score** | "score my infrastructure", "audit infra" | 10-category audit -> scorecard with grade (A+ to F) |
+| **fix** | "fix infra issues", provide a scorecard | Parse scorecard -> prioritize -> apply fixes -> verify |
+| **loop** | "score and fix infra until B+", "infra loop" | Run score, then fix, then re-score until target grade reached |
+| **generate** | Create new code | Load criteria -> Generate meeting all 10 -> Self-check |
+| **review** | Quick 1-2 file check | Read files -> Score applicable categories -> Annotate + fix |
+| **migrate** | Framework upgrade | Detect versions -> Map breaking changes -> Migrate -> Verify |
+| **test** | Generate test cases | Map categories to assertions -> Generate test files |
+
+## Mode: Score
+
+Audit infrastructure and deployment against 10 weighted categories. Score 0-100 with letter grade and prioritized issues list.
+
+Load `references/scoring/scoring-workflow.md` for the full audit process.
+
+| # | Category | Weight | Criteria Reference |
+|---|----------|--------|--------------------|
+| 1 | CI Pipeline (Lint + Test + Build) | 15% | `scoring/criteria/ci-cd.md` |
+| 2 | CD Pipeline (Deploy to Staging) | 12% | `scoring/criteria/ci-cd.md` |
+| 3 | Production Deploy & Approval | 10% | `scoring/criteria/deploy-container.md` |
+| 4 | Containerization | 12% | `scoring/criteria/deploy-container.md` |
+| 5 | Environment Management | 10% | `scoring/criteria/env-monitoring.md` |
+| 6 | Monitoring & Observability | 15% | `scoring/criteria/env-monitoring.md` |
+| 7 | Backup & Disaster Recovery | 10% | `scoring/criteria/backup-integrations.md` |
+| 8 | Third-Party Integrations | 8% | `scoring/criteria/backup-integrations.md` |
+| 9 | Infrastructure as Code | 4% | `scoring/criteria/iac-security.md` |
+| 10 | Security in Deployment | 4% | `scoring/criteria/iac-security.md` |
+
+### Grades
+
+| Grade | Score | Grade | Score | Grade | Score |
+|-------|-------|-------|-------|-------|-------|
+| A+ | 97-100 | B+ | 87-89 | C+ | 77-79 |
+| A | 93-96 | B | 83-86 | C | 73-76 |
+| A- | 90-92 | B- | 80-82 | D | 60-72 |
+| | | | | F | <60 |
+
+### Issue Severity
+
+| Severity | Criteria | Action |
+|----------|----------|--------|
+| CRITICAL | Score 0-3 or security risk | Fix before deploy |
+| HIGH | Score 4-5 | Fix in current sprint |
+| MEDIUM | Score 6-7 | Fix next sprint |
+| LOW | Score 8 | Backlog |
+
+## Mode: Fix
+
+Take a scorecard and systematically implement all fixes. Prioritize by severity * weight.
+
+Load `references/fix/implementation-workflow.md` for the full 6-step process.
+
+| Priority | Severity | Score Range | Action |
+|----------|----------|-------------|--------|
+| 1 | CRITICAL | 0-3 or security risk | Fix immediately -- blocks deploy |
+| 2 | HIGH + high weight (>=12%) | 4-5 | Fix next -- moves score most |
+| 3 | HIGH + low weight (<12%) | 4-5 | Fix after high-weight items |
+| 4 | MEDIUM | 6-7 | Fix next sprint |
+| 5 | LOW | 8 | Backlog or skip |
+
+### Fix Category -> Reference
+
+| Scorecard Category | Fix Pattern Reference |
+|-------------------|----------------------|
+| CI Pipeline, CD Pipeline | `fix/fix-patterns/ci-cd.md` |
+| Production Deploy, Containerization | `fix/fix-patterns/deploy-container.md` |
+| Environment Management, Monitoring | `fix/fix-patterns/env-monitoring.md` |
+| Backup/DR, Third-Party Integrations | `fix/fix-patterns/backup-integrations.md` |
+| IaC, Deployment Security | `fix/fix-patterns/iac-security.md` |
+
+### Verification
+
+Load `references/fix/verification.md` for post-fix checklist, re-scoring protocol, and comparison template.
+
+## Mode: Loop
+
+Automated score-fix cycle. Runs score -> fix -> re-score until target grade is met.
+
+1. **Score** the infrastructure (Mode: Score)
+2. If grade < target, **fix** all CRITICAL + HIGH issues (Mode: Fix)
+3. **Re-score** and compare
+4. Repeat until target grade reached or no score improvement between iterations
+   - Max 5 iterations
+   - Stop on plateau (no score improvement between iterations)
+
+Default target: **B+ (87+)**. Override with "loop until A-" or similar.
+
+## Mode: Generate
+
+Generate code meeting all 10 categories at 9-10/10. Load `references/generate/workflow.md`.
+Parse request → Load criteria → Generate with all patterns → Self-check → Output (`assets/templates/generated-code.md.template`)
+
+## Mode: Review
+
+Quick 1-2 file review. Load `references/review/workflow.md`.
+Read files → Score applicable categories → Annotate line numbers → Suggest fixes (`assets/templates/review-report.md.template`)
+
+## Mode: Migrate
+
+Upgrade code for framework changes. Load `references/migrate/workflow.md`.
+Detect versions → Map breaking changes → Apply migrations → Verify (`assets/templates/migration-report.md.template`)
+
+## Mode: Test
+
+Generate tests from scoring criteria. Load `references/test/workflow.md`.
+Map categories to assertions → Generate tests → Output suite (`assets/templates/test-suite.md.template`)
+
+## Quick Reference -- All Files
+
+### Scoring
+- `references/scoring/overview.md` -- Scoring system, output format, files to audit
+- `references/scoring/best-practices.md` -- Do/Don't tables for all categories
+- `references/scoring/scoring-workflow.md` -- Step-by-step audit process
+- `references/scoring/criteria/` -- 5 files covering 10 categories (ci-cd, deploy-container, env-monitoring, backup-integrations, iac-security)
+
+### Fix
+- `references/fix/overview.md` -- How fix works, priority order, score targets
+- `references/fix/best-practices.md` -- Fix discipline, safe vs dangerous changes
+- `references/fix/implementation-workflow.md` -- 6-step process, priority matrix
+- `references/fix/verification.md` -- Post-fix checklist, re-scoring protocol
+- `references/fix/fix-patterns/` -- 5 files covering 10 categories (ci-cd, deploy-container, env-monitoring, backup-integrations, iac-security)
+
+## Output Templates
+
+- `assets/templates/scorecard.md.template` -- Scorecard output (Mode: Score)
+- `assets/templates/fix-report.md.template` -- Fix report output (Mode: Fix)
+- Generate: `assets/templates/generated-code.md.template`
+- Review: `assets/templates/review-report.md.template`
+- Migrate: `assets/templates/migration-report.md.template`
+- Test: `assets/templates/test-suite.md.template`
+
+Fill `{{VARIABLE}}` placeholders with actual values.

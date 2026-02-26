@@ -1,0 +1,21 @@
+# generateBuildId
+
+Next.js generates an ID during `next build` to identify which version of your application is being served. The same build should be used and boot up multiple containers.
+
+If you are rebuilding for each stage of your environment, you will need to generate a consistent build ID to use between containers. Use the `generateBuildId` command in `next.config.js`:
+
+```jsx filename="next.config.js"
+module.exports = {
+  generateBuildId: async () => {
+    // This could be anything, using the latest git hash
+    return process.env.GIT_HASH
+  },
+}
+```
+
+
+--------------------------------------------------------------------------------
+title: "generateEtags"
+description: "Next.js will generate etags for every page by default. Learn more about how to disable etag generation here."
+source: "https://nextjs.org/docs/app/api-reference/config/next-config-js/generateEtags"
+--------------------------------------------------------------------------------

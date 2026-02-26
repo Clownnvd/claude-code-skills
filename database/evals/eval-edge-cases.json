@@ -1,0 +1,125 @@
+{
+  "skill": "database",
+  "eval_name": "eval-edge-cases",
+  "description": "Verify correct behavior for database-specific edge cases.",
+  "tests": [
+    {
+      "id": "no-schema-prisma-found",
+      "name": "No schema.prisma Found",
+      "prompt": "Run db-scoring against a codebase with no Prisma schema",
+      "setup": "Provide a codebase with no Prisma schema file",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Scoring does not crash",
+        "Output notes missing schema and scores Schema Design at 0",
+        "Categories not dependent on schema (Monitoring, Backup) can still score"
+      ],
+      "pass_criteria": "No crash, Schema Design scores 0, independent categories can score above 0",
+      "fail_indicators": [
+        "Crash or unhandled error",
+        "Independent categories forced to 0"
+      ]
+    },
+    {
+      "id": "missing-indexes-on-foreign-keys",
+      "name": "Missing Indexes on Foreign Keys",
+      "prompt": "Provide schema with relations but no @@index on foreign key columns and run db-scoring",
+      "setup": "Provide schema with relations but no @@index on foreign key columns",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Indexing Strategy scores <= 4",
+        "Issue lists specific foreign key fields needing indexes",
+        "Query Performance also penalized for full-table scan risk"
+      ],
+      "pass_criteria": "Indexing score <= 4, specific FK fields listed, Query Performance penalized",
+      "fail_indicators": [
+        "Indexing score above 4",
+        "Specific FK fields not listed"
+      ]
+    },
+    {
+      "id": "no-connection-pooling-configured",
+      "name": "No Connection Pooling Configured",
+      "prompt": "Provide database config without connection pooling and run db-scoring",
+      "setup": "Provide database config without connection pooling (no PgBouncer, no Neon pooler)",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Scalability scores <= 3",
+        "Security also checked for direct DB exposure",
+        "Fix recommends pooler URL for production"
+      ],
+      "pass_criteria": "Scalability score <= 3, direct DB exposure checked, pooler URL recommended",
+      "fail_indicators": [
+        "Scalability score above 3",
+        "Direct DB exposure not checked"
+      ]
+    },
+    {
+      "id": "prisma-7-without-prisma-config-ts",
+      "name": "Prisma 7 Without prisma.config.ts",
+      "prompt": "Provide Prisma 7+ project missing prisma.config.ts and run db-scoring",
+      "setup": "Provide Prisma 7+ project missing prisma.config.ts",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "CRITICAL issue flagged per prisma-patterns.md",
+        "Migration & Versioning penalized",
+        "Developer Experience also penalized"
+      ],
+      "pass_criteria": "CRITICAL issue for missing prisma.config.ts, Migration and DX penalized",
+      "fail_indicators": [
+        "Missing prisma.config.ts not flagged as CRITICAL"
+      ]
+    },
+    {
+      "id": "raw-sql-queries-without-parameterization",
+      "name": "Raw SQL Queries Without Parameterization",
+      "prompt": "Provide code using string interpolation in raw SQL queries and run db-scoring",
+      "setup": "Provide code using string interpolation in raw SQL queries",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Security scores <= 1 (CRITICAL)",
+        "Issue identifies SQL injection vulnerability",
+        "Fix recommends $queryRaw with template literals"
+      ],
+      "pass_criteria": "Security score <= 1 (CRITICAL), SQL injection identified, $queryRaw recommended",
+      "fail_indicators": [
+        "Security score above 1",
+        "SQL injection not identified"
+      ]
+    },
+    {
+      "id": "no-migration-history",
+      "name": "No Migration History",
+      "prompt": "Provide project with schema but no migration files and run db-scoring",
+      "setup": "Provide project with schema.prisma but no migration files",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Migration & Versioning scores <= 2",
+        "Issue flags risk of schema drift",
+        "Fix recommends prisma migrate dev workflow"
+      ],
+      "pass_criteria": "Migration score <= 2, schema drift risk flagged, prisma migrate dev recommended",
+      "fail_indicators": [
+        "Migration score above 2",
+        "Schema drift not flagged"
+      ]
+    },
+    {
+      "id": "neon-specific-edge-cases",
+      "name": "Neon-Specific Edge Cases",
+      "prompt": "Provide Neon PostgreSQL config without branching or PITR enabled and run db-scoring",
+      "setup": "Provide Neon PostgreSQL config without branching or PITR enabled",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Backup & Recovery penalized if no PITR",
+        "Neon-specific adjustments from neon-patterns.md apply",
+        "Region selection and edge runtime compatibility checked"
+      ],
+      "pass_criteria": "Backup penalized for missing PITR, Neon patterns applied, region and edge checked",
+      "fail_indicators": [
+        "PITR absence not flagged",
+        "Neon adjustments not applied"
+      ]
+    }
+  ]
+}

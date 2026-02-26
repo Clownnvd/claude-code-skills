@@ -1,0 +1,73 @@
+{
+  "skill": "email",
+  "eval_name": "eval-fix-workflow",
+  "description": "Verify the email-fix skill correctly parses scoring output, prioritizes, fixes, and re-scores.",
+  "tests": [
+    {
+      "id": "accept-scoring-input",
+      "name": "Accept Scoring Input",
+      "prompt": "Run email-fix with the scorecard as input",
+      "setup": "Provide an email-scoring scorecard with score 45/100 grade F, 8 issues across Transactional Email, Provider Integration, Bounce Handling, and Auth.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run email-fix with the scorecard as input",
+        "Verify skill parses all 8 issues with correct severity and category",
+        "Verify skill identifies the weighted score 45/100 and grade F"
+      ],
+      "pass_criteria": "All issues extracted. No issue lost or duplicated.",
+      "fail_indicators": []
+    },
+    {
+      "id": "fix-in-severity-order",
+      "name": "Fix in Severity Order",
+      "prompt": "Run email-fix and observe fix application order",
+      "setup": "Scorecard contains CRITICAL (no SPF/DKIM records), HIGH (no queue retry logic), MEDIUM (no open tracking).",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run email-fix",
+        "Observe fix application order"
+      ],
+      "pass_criteria": "SPF/DKIM setup fixed first (CRITICAL), then queue retry logic (HIGH, Queue 12% weight), then open tracking (MEDIUM). No MEDIUM fix applied before all HIGH items resolved.",
+      "fail_indicators": []
+    },
+    {
+      "id": "fix-references-correct-pattern",
+      "name": "Fix References Correct Pattern",
+      "prompt": "Run email-fix and check which reference file the skill loads",
+      "setup": "Issue in \"Bounce & Complaint Handling\" category scored 2/10.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run email-fix",
+        "Check which reference file the skill loads"
+      ],
+      "pass_criteria": "Skill loads `references/fix/fix-patterns/security-compliance.md` and applies the bounce webhook handler pattern. Fix adds Resend webhook endpoint for bounce/complaint events.",
+      "fail_indicators": []
+    },
+    {
+      "id": "verification-step-confirms-fix",
+      "name": "Verification Step Confirms Fix",
+      "prompt": "Run email-fix to apply the Resend SDK initialization fix and verify results",
+      "setup": "Apply the \"Resend Client Init\" fix from `provider-integration.md`.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run email-fix to apply the fix",
+        "Check that skill verifies: TypeScript compiles, RESEND_API_KEY env var present, send test passes"
+      ],
+      "pass_criteria": "Skill confirms Resend client initialized with validated API key. Reports verification result before moving to next fix.",
+      "fail_indicators": []
+    },
+    {
+      "id": "re-score-shows-improvement",
+      "name": "Re-Score Shows Improvement",
+      "prompt": "Run email-fix through full cycle and compare before/after scores",
+      "setup": "Initial score 45/100 (grade F). Apply fixes for 3 CRITICAL + 3 HIGH issues.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run email-fix through full cycle",
+        "Compare before/after scores per category"
+      ],
+      "pass_criteria": "Re-score produces a higher weighted score. Each fixed category shows improvement. Final grade is at least B-. Report uses `assets/templates/fix-report.md.template` format.",
+      "fail_indicators": []
+    }
+  ]
+}

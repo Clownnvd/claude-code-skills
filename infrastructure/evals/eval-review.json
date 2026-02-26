@@ -1,0 +1,17 @@
+{
+  "skill": "infrastructure",
+  "eval_name": "review-mode",
+  "description": "Verify review mode identifies infrastructure issues in specific files",
+  "tests": [
+    {
+      "id": "infra-rev-1",
+      "name": "Review Dockerfile with security issues",
+      "prompt": "review Dockerfile",
+      "setup": "Dockerfile with root user, no health check, single stage",
+      "input_files": ["Dockerfile"],
+      "expectations": ["Identifies root user as CRITICAL", "Identifies no health check as HIGH", "Suggests multi-stage build"],
+      "pass_criteria": "Infrastructure issues identified with severity and fixes",
+      "fail_indicators": ["Misses root user", "No severity levels", "No fix suggestions"]
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "skill": "prisma-better-auth-nextjs",
+  "eval_name": "eval-setup-accuracy",
+  "description": "Verify setup steps produce correct, working configuration.",
+  "tests": [
+    {
+      "id": "prisma-config-pattern",
+      "name": "Uses Prisma 7 config pattern",
+      "prompt": "How do I configure Prisma with a database URL?",
+      "input_files": ["references/2-setup-prisma/configure-prisma.md"],
+      "expectations": [
+        "Uses prisma.config.ts (not schema.prisma datasource block)",
+        "Uses defineConfig from prisma/config",
+        "Uses env() for DATABASE_URL",
+        "Mentions this is the Prisma 7 pattern"
+      ],
+      "pass_criteria": "Shows prisma.config.ts with defineConfig, not legacy datasource in schema"
+    },
+    {
+      "id": "global-client-singleton",
+      "name": "Global client prevents hot-reload duplicates",
+      "prompt": "How do I create a Prisma client for Next.js?",
+      "input_files": ["references/2-setup-prisma/global-client.md"],
+      "expectations": [
+        "Stores PrismaClient on globalThis",
+        "Only caches in non-production",
+        "Uses PrismaPg adapter",
+        "Exports default prisma instance"
+      ],
+      "pass_criteria": "Shows singleton pattern with globalThis and PrismaPg adapter"
+    },
+    {
+      "id": "better-auth-config",
+      "name": "Better Auth uses prismaAdapter correctly",
+      "prompt": "How do I set up Better Auth with Prisma?",
+      "input_files": ["references/3-setup-better-auth/install-configure.md"],
+      "expectations": [
+        "Uses prismaAdapter from better-auth/adapters/prisma",
+        "Passes prisma client instance",
+        "Sets provider to postgresql",
+        "Enables emailAndPassword"
+      ],
+      "pass_criteria": "Shows correct betterAuth config with prismaAdapter"
+    },
+    {
+      "id": "api-route-catch-all",
+      "name": "Auth API uses catch-all route pattern",
+      "prompt": "How do I create auth API routes?",
+      "input_files": ["references/4-api-routes/setup-routes.md"],
+      "expectations": [
+        "Uses [...all]/route.ts pattern",
+        "Uses toNextJsHandler from better-auth/next-js",
+        "Exports POST and GET",
+        "Shows auth-client.ts with createAuthClient"
+      ],
+      "pass_criteria": "Shows catch-all route with toNextJsHandler"
+    },
+    {
+      "id": "auth-guard-pattern",
+      "name": "Dashboard has proper auth guard",
+      "prompt": "How do I protect a page with authentication?",
+      "input_files": ["references/5-pages/dashboard.md"],
+      "expectations": [
+        "Uses useSession hook",
+        "Checks isPending before redirecting",
+        "Redirects to /sign-in if no session",
+        "Shows loading state while pending"
+      ],
+      "pass_criteria": "Shows useEffect-based auth guard with isPending check"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "skill": "infrastructure",
+  "eval_name": "eval-fix-workflow",
+  "description": "Verify the infra-fix skill correctly parses scoring output, prioritizes, fixes, and re-scores.",
+  "tests": [
+    {
+      "id": "accept-scoring-input",
+      "name": "Accept Scoring Input",
+      "prompt": "Run infra-fix with the scorecard as input",
+      "setup": "Provide an infra-scoring scorecard with 7 issues across CI Pipeline, Environment Management, Monitoring.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run infra-fix with the scorecard as input",
+        "Verify skill parses all 7 issues with correct severity and category",
+        "Verify skill identifies the weighted score and grade"
+      ],
+      "pass_criteria": "All issues extracted. No issue lost or duplicated.",
+      "fail_indicators": []
+    },
+    {
+      "id": "fix-in-severity-order",
+      "name": "Fix in Severity Order",
+      "prompt": "Run infra-fix and observe fix application order",
+      "setup": "Scorecard contains CRITICAL (no CI pipeline), HIGH (no env validation), MEDIUM (no health endpoint).",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run infra-fix",
+        "Observe fix application order"
+      ],
+      "pass_criteria": "CI pipeline fixed first (CRITICAL), then env validation (HIGH, Environment Mgmt 12% weight), then health endpoint (MEDIUM). No MEDIUM fix applied before all HIGH items resolved.",
+      "fail_indicators": []
+    },
+    {
+      "id": "fix-references-correct-pattern",
+      "name": "Fix References Correct Pattern",
+      "prompt": "Run infra-fix and check which reference file the skill loads",
+      "setup": "Issue in \"CI Pipeline\" category scored 2/10.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run infra-fix",
+        "Check which reference file the skill loads"
+      ],
+      "pass_criteria": "Skill loads `references/fix-patterns/ci-cd.md` and applies the \"GitHub Actions CI Workflow\" pattern. Fix creates `.github/workflows/ci.yml` with parallel lint/typecheck/test jobs.",
+      "fail_indicators": []
+    },
+    {
+      "id": "verification-step-confirms-fix",
+      "name": "Verification Step Confirms Fix",
+      "prompt": "Run infra-fix to apply the Env Validation with Zod fix and verify results",
+      "setup": "Apply the \"Env Validation with Zod\" fix from `env-monitoring.md`.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run infra-fix to apply the fix",
+        "Check that skill verifies: env.ts schema matches .env.example keys, app starts without env errors"
+      ],
+      "pass_criteria": "Skill confirms Zod schema covers all required env vars. Reports verification result before moving to next fix.",
+      "fail_indicators": []
+    },
+    {
+      "id": "re-score-shows-improvement",
+      "name": "Re-Score Shows Improvement",
+      "prompt": "Run infra-fix through full cycle and compare before/after scores",
+      "setup": "Initial score 40/100 (grade F). Apply fixes for 3 CRITICAL + 2 HIGH issues.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Run infra-fix through full cycle",
+        "Compare before/after scores per category"
+      ],
+      "pass_criteria": "Re-score produces a higher weighted score. Each fixed category shows improvement. Final grade is at least B. Report uses `assets/templates/fix-report.md.template` format.",
+      "fail_indicators": []
+    }
+  ]
+}

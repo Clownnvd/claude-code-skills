@@ -1,0 +1,17 @@
+{
+  "skill": "auth",
+  "eval_name": "generate-mode",
+  "description": "Verify generate mode produces auth code meeting all 10 categories at 9-10/10",
+  "tests": [
+    {
+      "id": "auth-gen-1",
+      "name": "Generate login flow",
+      "prompt": "generate login flow with email/password",
+      "setup": "Next.js 16 with Better Auth, Prisma session store",
+      "input_files": ["src/lib/auth/config.ts", "src/app/(auth)/login/page.tsx"],
+      "expectations": ["Secure session config", "Password hashing with bcrypt/argon2", "CSRF protection", "Rate limiting on attempts", "Audit logging"],
+      "pass_criteria": "All 10 auth categories addressed",
+      "fail_indicators": ["No CSRF", "No rate limiting", "Weak password policy", "No session rotation"]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+# Generated: {{COMPONENT_NAME}}
+
+**Domain**: {{DOMAIN_SKILL}} | **Type**: {{COMPONENT_TYPE}} | **Target Grade**: {{TARGET_GRADE}}
+
+## Code
+
+### {{FILE_PATH}}
+
+```{{LANGUAGE}}
+{{GENERATED_CODE}}
+```
+
+## Compliance Checklist
+
+| # | Category (Weight) | Score | Implementation |
+|---|-------------------|-------|----------------|
+{{CATEGORY_ROWS}}
+
+**Expected Total**: {{EXPECTED_SCORE}}/100 ({{EXPECTED_GRADE}})
+
+## Integration
+
+**Files**: {{FILE_PLACEMENT}}
+**Imports**: {{REQUIRED_IMPORTS}}
+**Env Vars**: {{ENV_VARS_NEEDED}}
+**Dependencies**: {{DEPENDENCIES_NEEDED}}

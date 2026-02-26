@@ -1,0 +1,74 @@
+{
+  "skill": "infrastructure",
+  "eval_name": "eval-verification-loop",
+  "description": "Verify the compile-test-rescore cycle, regression detection, and fix idempotency for infra-fix.",
+  "tests": [
+    {
+      "id": "compile-test-verification",
+      "name": "Compile + Test Verification",
+      "prompt": "Apply the GitHub Actions CI Workflow fix and verify compilation and tests pass",
+      "setup": "Scorecard with CRITICAL issue: no CI pipeline (CI Pipeline 2/10). Apply the GitHub Actions CI Workflow fix from `ci-cd.md` which creates `.github/workflows/ci.yml` with lint, typecheck, test, and build jobs.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Create `.github/workflows/ci.yml` with parallel jobs for lint, typecheck, test, build",
+        "Run `npx tsc --noEmit`. Verify the project itself still compiles (no broken imports from new env files)",
+        "Run `pnpm test`. Verify all existing tests still pass",
+        "Validate workflow YAML syntax (correct `on:` triggers, valid `runs-on`, proper `actions/checkout` version)"
+      ],
+      "pass_criteria": "`tsc --noEmit` exits 0. All tests pass. CI YAML parses without syntax errors. Workflow defines cache keys for `node_modules`. Docker build step (if added) succeeds with `docker build --dry-run .` or equivalent.",
+      "fail_indicators": [
+        "YAML syntax error, missing required workflow keys, or new env validation module breaks existing imports"
+      ]
+    },
+    {
+      "id": "re-score-improvement-verification",
+      "name": "Re-Score Improvement Verification",
+      "prompt": "Apply fixes for CI Pipeline and Environment Mgmt categories and verify re-score improvement",
+      "setup": "Initial infra-scoring scorecard: CI Pipeline 2/10, Environment Mgmt 4/10, Monitoring 3/10. Total 35/100 (D-). Apply fixes for CI workflow (CI Pipeline) and Zod env validation (Environment Mgmt).",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Run infra-fix for both issues",
+        "Invoke `infra-scoring` to produce a new scorecard",
+        "Compare per-category scores: CI Pipeline, Environment Mgmt must increase",
+        "Verify Monitoring, Docker, Backup, Integrations, and all other categories remain at or above pre-fix scores"
+      ],
+      "pass_criteria": "CI Pipeline >= 6/10 (was 2). Environment Mgmt >= 7/10 (was 4). No category dropped below its pre-fix score. Total weighted score increased. Comparison uses `references/verification.md` format.",
+      "fail_indicators": [
+        "Any unfixed category score decreased, or fixed categories show no improvement"
+      ]
+    },
+    {
+      "id": "regression-detection",
+      "name": "Regression Detection",
+      "prompt": "Apply a Docker fix that introduces a Docker regression and verify pipeline detects it",
+      "setup": "Initial scorecard: CI Pipeline 8/10, Docker 7/10, Environment Mgmt 7/10. Apply a Docker fix that adds a multi-stage build but removes the `.dockerignore`, causing `node_modules` and `.env` to leak into the image. Docker drops from 7/10 to 3/10.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Apply Docker multi-stage build that deletes `.dockerignore`",
+        "Run `infra-scoring` re-score",
+        "Verify pipeline detects Docker dropped from 7 to 3 (delta -4)",
+        "Verify pipeline halts and recommends restoring `.dockerignore`"
+      ],
+      "pass_criteria": "Pipeline detects the Docker regression. Output flags: `.dockerignore` removed, image includes `node_modules` and `.env`, before/after delta shown, recommendation to restore ignore file. Pipeline does not continue.",
+      "fail_indicators": [
+        "Pipeline ignores the Docker security regression and continues, or reports net improvement without flagging the per-category drop"
+      ]
+    },
+    {
+      "id": "fix-idempotency",
+      "name": "Fix Idempotency",
+      "prompt": "Run infra-fix with an already-fixed CI pipeline issue and verify no changes are made",
+      "setup": "Scorecard with CRITICAL issue: no CI pipeline. The `.github/workflows/ci.yml` already exists with lint, typecheck, test, and build jobs from a previous fix run.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Run infra-fix with the same CI pipeline issue",
+        "Check `git diff` after the fix attempt",
+        "Run `infra-scoring` and compare scores to the post-first-fix scorecard"
+      ],
+      "pass_criteria": "No files modified (`git diff` is empty). Score remains identical. Skill reports \"already applied\" or \"no changes needed.\" No duplicate workflow file or duplicate jobs within the existing file.",
+      "fail_indicators": [
+        "Second workflow file created, duplicate jobs appended, existing caching config overwritten, or score changes from the second application"
+      ]
+    }
+  ]
+}

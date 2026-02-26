@@ -1,0 +1,17 @@
+{
+  "skill": "database",
+  "eval_name": "generate-mode",
+  "description": "Verify generate mode produces database code meeting all 10 categories",
+  "tests": [
+    {
+      "id": "db-gen-1",
+      "name": "Generate Prisma schema for orders",
+      "prompt": "generate Prisma schema for user orders system",
+      "setup": "Next.js 16 with Prisma ORM, Neon PostgreSQL",
+      "input_files": ["prisma/schema.prisma"],
+      "expectations": ["Normalized schema", "Indexes on FKs", "Unique constraints", "Soft delete", "Timestamps", "Migration-ready"],
+      "pass_criteria": "All 10 database categories addressed",
+      "fail_indicators": ["No indexes", "Missing constraints", "No timestamps", "Denormalized"]
+    }
+  ]
+}

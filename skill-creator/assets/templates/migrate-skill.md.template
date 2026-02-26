@@ -1,0 +1,38 @@
+---
+name: {{DOMAIN}}-migrate
+description: Migrate {{DOMAIN}} from {{FROM_VERSION}} to {{TO_VERSION}}. Handle breaking changes, deprecated APIs, new patterns. {{FRAMEWORK}}.
+---
+
+# {{DOMAIN_TITLE}} Migration
+
+Migrate from {{FROM_VERSION}} to {{TO_VERSION}} systematically.
+
+## When to Use
+
+- Upgrading {{DOMAIN}} to {{TO_VERSION}}
+- Fixing breaking changes after upgrade
+- Adopting new {{TO_VERSION}} patterns
+
+## Migration Process
+
+1. Read `references/breaking-changes.md` for all changes
+2. Read `references/migration-steps.md` for ordered process
+3. For each breaking change, apply fix from `references/codemods/`
+4. Run `scripts/check-migration.py` to verify completeness
+5. Test all affected features
+
+## Breaking Changes Summary
+
+| Change | Severity | Codemod? | Reference |
+|--------|----------|----------|-----------|
+{{BREAKING_CHANGES_TABLE}}
+
+## Quick Reference
+
+### References
+- `references/breaking-changes.md` — All breaking changes detailed
+- `references/migration-steps.md` — Step-by-step process
+- `references/codemods/` — Automated transformations
+
+### Scripts
+- `scripts/check-migration.py` — Verify migration completeness

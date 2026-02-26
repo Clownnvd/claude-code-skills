@@ -1,0 +1,61 @@
+{
+  "skill": "prisma-better-auth-nextjs",
+  "eval_name": "eval-execution",
+  "description": "Verify skill produces correct output files when scaffolding auth.",
+  "tests": [
+    {
+      "id": "scaffold-creates-all-files",
+      "name": "Scaffold creates all required files",
+      "prompt": "Set up authentication for my Next.js project using Better Auth and Prisma.",
+      "expectations": [
+        "Creates prisma.config.ts with defineConfig and env(DATABASE_URL)",
+        "Creates src/lib/prisma.ts with PrismaPg adapter and globalThis singleton",
+        "Creates src/lib/auth.ts with betterAuth, prismaAdapter, emailAndPassword",
+        "Creates src/lib/auth-client.ts with createAuthClient exports",
+        "Creates src/app/api/auth/[...all]/route.ts with toNextJsHandler",
+        "Creates src/app/sign-up/page.tsx with signUp.email",
+        "Creates src/app/sign-in/page.tsx with signIn.email",
+        "Creates src/app/dashboard/page.tsx with useSession and auth guard"
+      ],
+      "pass_criteria": "All 8+ files created with correct content and imports"
+    },
+    {
+      "id": "schema-has-map-annotations",
+      "name": "Generated schema includes @@map annotations",
+      "prompt": "Add Better Auth models to my Prisma schema.",
+      "input_files": ["references/3-setup-better-auth/add-auth-models.md"],
+      "expectations": [
+        "User model has @@map(\"user\")",
+        "Session model has @@map(\"session\")",
+        "Account model has @@map(\"account\")",
+        "Verification model has @@map(\"verification\")",
+        "Email field has @unique",
+        "Token field has @unique"
+      ],
+      "pass_criteria": "All models have @@map and critical fields have @unique"
+    },
+    {
+      "id": "auth-config-includes-trusted-origins",
+      "name": "Auth config mentions trustedOrigins for non-standard ports",
+      "prompt": "Set up Better Auth on port 3001.",
+      "input_files": ["references/3-setup-better-auth/install-configure.md"],
+      "expectations": [
+        "Includes trustedOrigins array in betterAuth config",
+        "Adds http://localhost:3001 to trustedOrigins",
+        "Updates BETTER_AUTH_URL to match port"
+      ],
+      "pass_criteria": "Config includes trustedOrigins with correct port"
+    },
+    {
+      "id": "env-vars-complete",
+      "name": "All required env vars are set",
+      "prompt": "What environment variables do I need for Better Auth with Prisma?",
+      "expectations": [
+        "DATABASE_URL with PostgreSQL connection string",
+        "BETTER_AUTH_SECRET (generated via CLI)",
+        "BETTER_AUTH_URL matching app origin"
+      ],
+      "pass_criteria": "Lists all 3 required env vars with correct descriptions"
+    }
+  ]
+}

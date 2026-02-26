@@ -1,0 +1,17 @@
+{
+  "skill": "api",
+  "eval_name": "test-mode",
+  "description": "Verify test mode generates tests covering all 10 api categories",
+  "tests": [
+    {
+      "id": "api-test-1",
+      "name": "Generate tests for checkout route",
+      "prompt": "generate tests for src/app/api/checkout/route.ts",
+      "setup": "Next.js 16 API route with full implementation",
+      "input_files": ["src/app/api/checkout/route.ts"],
+      "expectations": ["Auth test (401 without token)", "Validation test (400 with bad input)", "Rate limit test (429)", "Success test (201/200)", "Error test (500 envelope)", "Coverage matrix in output"],
+      "pass_criteria": "All 10 categories have at least one test case, coverage matrix present",
+      "fail_indicators": ["Missing auth test", "Missing validation test", "No coverage matrix"]
+    }
+  ]
+}

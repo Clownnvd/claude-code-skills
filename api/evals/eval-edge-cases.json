@@ -1,0 +1,129 @@
+{
+  "skill": "api",
+  "eval_name": "eval-edge-cases",
+  "description": "Verify correct behavior for API-specific edge cases.",
+  "tests": [
+    {
+      "id": "no-api-routes-found",
+      "name": "No API Routes Found",
+      "prompt": "Run api-scoring against a codebase with zero API route files",
+      "setup": "Provide a codebase containing no API route files",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Scoring does not crash",
+        "Output notes the absence and scores relevant categories at 0",
+        "Non-API categories (Documentation, Testing) can still score above 0"
+      ],
+      "pass_criteria": "No crash, relevant categories score 0, non-API categories can score independently",
+      "fail_indicators": [
+        "Crash or unhandled error",
+        "Non-API categories forced to 0"
+      ]
+    },
+    {
+      "id": "api-routes-without-auth-middleware",
+      "name": "API Routes Without Auth Middleware",
+      "prompt": "Provide API routes with no auth checks and run api-scoring",
+      "setup": "Provide routes with no auth middleware or checks",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Security scores <= 3 (CRITICAL)",
+        "Auth & AuthZ scores <= 3 (CRITICAL)",
+        "OWASP API1 (BOLA) and API2 (Broken Auth) flagged"
+      ],
+      "pass_criteria": "Security and Auth & AuthZ both CRITICAL (<= 3), OWASP API1 and API2 flagged",
+      "fail_indicators": [
+        "Security or Auth scores above 3",
+        "Missing OWASP API1/API2 flags"
+      ]
+    },
+    {
+      "id": "missing-rate-limiting-on-public-endpoints",
+      "name": "Missing Rate Limiting on Public Endpoints",
+      "prompt": "Provide public API routes with no rate limiting and run api-scoring",
+      "setup": "Provide public API routes without any rate limiting configuration",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Rate Limiting scores 0-2",
+        "OWASP API4 (Resource Consumption) flagged as CRITICAL",
+        "Issue references specific unprotected route files"
+      ],
+      "pass_criteria": "Rate Limiting scores 0-2, OWASP API4 flagged as CRITICAL, specific routes referenced",
+      "fail_indicators": [
+        "Rate Limiting score above 2",
+        "Missing OWASP API4 flag",
+        "No file references"
+      ]
+    },
+    {
+      "id": "sensitive-data-in-error-responses",
+      "name": "Sensitive Data in Error Responses",
+      "prompt": "Provide API routes that leak stack traces or internal details in error responses",
+      "setup": "Provide API routes returning stack traces or internal details in error responses",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Error Handling penalized (score <= 4)",
+        "OWASP API8 (Misconfiguration) flagged",
+        "Issue recommends safe error envelope pattern"
+      ],
+      "pass_criteria": "Error Handling score <= 4, OWASP API8 flagged, safe error envelope recommended",
+      "fail_indicators": [
+        "Error Handling score above 4",
+        "Missing OWASP API8 flag"
+      ]
+    },
+    {
+      "id": "nextjs-app-router-api-routes",
+      "name": "Next.js App Router API Routes",
+      "prompt": "Provide Next.js route.ts files using App Router conventions and run api-scoring",
+      "setup": "Provide Next.js App Router route.ts files",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Framework-specific adjustments from nextjs-patterns.md are applied",
+        "Two-layer auth pattern is checked (middleware + route handler)",
+        "Webhook route patterns are evaluated separately"
+      ],
+      "pass_criteria": "Next.js-specific patterns recognized, two-layer auth checked, webhook routes evaluated separately",
+      "fail_indicators": [
+        "Framework adjustments not applied",
+        "Two-layer auth not checked",
+        "Webhook routes not separated"
+      ]
+    },
+    {
+      "id": "all-categories-score-10",
+      "name": "All Categories Score 10",
+      "prompt": "Run api-scoring against an exemplary codebase that should score 10 in all categories",
+      "setup": "Provide an exemplary codebase including: Zod validation on every route + Content-Type check (Input 10); requireAuth() + role-based requireAdmin() + CSRF token (Auth 10, Security 9+); CSP with nonce, CORS allowlist, X-Content-Type-Options, dep scanning (Security 10); errorResponse() helper with machine-readable codes, no stack traces (Error 10); Per-user rate limiting with sliding window (Rate Limit 10); Consistent { success, data, error } envelope, cursor pagination (Response 10); DB query timeouts, connection pooling, caching headers (Performance 10); Structured JSON logging, X-Request-Id, Sentry (Observability 10); OpenAPI spec or README with endpoints + examples (Docs 10); Integration tests for happy + error paths, >80% coverage (Testing 10)",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Total score is 100",
+        "Grade is A+",
+        "Issues list is empty or contains only LOW severity items",
+        "No false CRITICAL or HIGH issues flagged"
+      ],
+      "pass_criteria": "Total 100, grade A+, issues empty or LOW only, no false CRITICAL/HIGH",
+      "fail_indicators": [
+        "Total below 100",
+        "Grade not A+",
+        "False CRITICAL or HIGH issues present"
+      ]
+    },
+    {
+      "id": "mixed-http-methods-without-validation",
+      "name": "Mixed HTTP Methods Without Validation",
+      "prompt": "Provide routes accepting POST/PUT/PATCH without input validation and run api-scoring",
+      "setup": "Provide routes handling POST/PUT/PATCH methods without any input validation",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Input Validation scores <= 3",
+        "OWASP API3 (BOPLA) and API7 (SSRF) flagged"
+      ],
+      "pass_criteria": "Input Validation score <= 3, OWASP API3 and API7 flagged",
+      "fail_indicators": [
+        "Input Validation score above 3",
+        "Missing OWASP API3/API7 flags"
+      ]
+    }
+  ]
+}

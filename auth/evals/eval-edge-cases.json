@@ -1,0 +1,128 @@
+{
+  "skill": "auth",
+  "eval_name": "eval-edge-cases",
+  "description": "Verify correct behavior for authentication-specific edge cases.",
+  "tests": [
+    {
+      "id": "no-auth-implementation-found",
+      "name": "No Auth Implementation Found",
+      "prompt": "Run auth-scoring against a codebase with no auth library or session handling",
+      "setup": "Provide a codebase with no auth library or session handling",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Scoring does not crash",
+        "All auth categories score 0",
+        "Output recommends implementing auth before production"
+      ],
+      "pass_criteria": "No crash, all auth categories score 0, recommendation to implement auth provided",
+      "fail_indicators": [
+        "Crash or unhandled error",
+        "Any auth category scores above 0"
+      ]
+    },
+    {
+      "id": "sessions-without-expiry-or-rotation",
+      "name": "Sessions Without Expiry or Rotation",
+      "prompt": "Provide session config with no expiresIn or token rotation and run auth-scoring",
+      "setup": "Provide session config with no expiresIn or token rotation",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Session Management scores <= 3 (CRITICAL)",
+        "Issue recommends session expiry and rotation settings",
+        "OWASP A07 flagged"
+      ],
+      "pass_criteria": "Session Management CRITICAL (<= 3), expiry/rotation recommended, OWASP A07 flagged",
+      "fail_indicators": [
+        "Session Management score above 3",
+        "Missing expiry/rotation recommendation",
+        "Missing OWASP A07 flag"
+      ]
+    },
+    {
+      "id": "plaintext-or-weak-password-hashing",
+      "name": "Plaintext or Weak Password Hashing",
+      "prompt": "Provide auth config using MD5/SHA1 or no hashing and run auth-scoring",
+      "setup": "Provide auth config using MD5/SHA1 or no hashing",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Password Security scores 0-1 (CRITICAL)",
+        "Issue specifically names the weak algorithm",
+        "OWASP A02 (Cryptographic Failures) flagged"
+      ],
+      "pass_criteria": "Password Security score 0-1, weak algorithm named, OWASP A02 flagged",
+      "fail_indicators": [
+        "Password Security score above 1",
+        "Weak algorithm not named",
+        "Missing OWASP A02 flag"
+      ]
+    },
+    {
+      "id": "oauth-without-state-parameter",
+      "name": "OAuth Without State Parameter",
+      "prompt": "Provide OAuth setup missing CSRF state verification and run auth-scoring",
+      "setup": "Provide OAuth setup missing CSRF state verification",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "OAuth scores <= 4",
+        "CSRF & Origin Validation also penalized",
+        "Issue explains state parameter requirement"
+      ],
+      "pass_criteria": "OAuth score <= 4, CSRF penalized, state parameter requirement explained",
+      "fail_indicators": [
+        "OAuth score above 4",
+        "CSRF not penalized",
+        "State parameter not mentioned"
+      ]
+    },
+    {
+      "id": "missing-csrf-protection-on-mutations",
+      "name": "Missing CSRF Protection on Mutations",
+      "prompt": "Provide forms/routes with POST/PUT/DELETE and no CSRF token and run auth-scoring",
+      "setup": "Provide forms/routes with POST/PUT/DELETE and no CSRF token",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "CSRF & Origin Validation scores <= 3 (CRITICAL)",
+        "OWASP A01 (Broken Access Control) flagged"
+      ],
+      "pass_criteria": "CSRF score <= 3 (CRITICAL), OWASP A01 flagged",
+      "fail_indicators": [
+        "CSRF score above 3",
+        "Missing OWASP A01 flag"
+      ]
+    },
+    {
+      "id": "better-auth-plugin-configuration",
+      "name": "Better Auth Plugin Configuration",
+      "prompt": "Provide Better Auth config with missing plugins (e.g., no twoFactor) and run auth-scoring",
+      "setup": "Provide Better Auth config with missing plugins such as no twoFactor",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Framework-specific adjustments from better-auth-patterns.md apply",
+        "2FA/MFA scores 0 when plugin is absent",
+        "databaseHooks and session cookie config checked"
+      ],
+      "pass_criteria": "Better Auth patterns applied, 2FA scores 0 when absent, hooks and cookies checked",
+      "fail_indicators": [
+        "Framework adjustments not applied",
+        "2FA scores above 0 when plugin missing"
+      ]
+    },
+    {
+      "id": "no-rate-limiting-on-login-register",
+      "name": "No Rate Limiting on Login/Register",
+      "prompt": "Provide login and register routes with no rate limiting and run auth-scoring",
+      "setup": "Provide login and register routes with no rate limiting",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Rate Limiting scores <= 2 (CRITICAL)",
+        "Brute force attack vector noted in issues",
+        "Fix recommends per-IP and per-account limiting"
+      ],
+      "pass_criteria": "Rate Limiting score <= 2, brute force vector noted, per-IP and per-account limiting recommended",
+      "fail_indicators": [
+        "Rate Limiting score above 2",
+        "Brute force risk not mentioned"
+      ]
+    }
+  ]
+}

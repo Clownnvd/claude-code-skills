@@ -1,0 +1,17 @@
+{
+  "skill": "email",
+  "eval_name": "migrate-mode",
+  "description": "Verify migrate mode handles email provider and library upgrades",
+  "tests": [
+    {
+      "id": "email-mig-1",
+      "name": "Migrate from Nodemailer to Resend",
+      "prompt": "migrate email from Nodemailer to Resend SDK",
+      "setup": "Next.js project using Nodemailer with SMTP transport, EJS templates, no queue",
+      "input_files": ["src/lib/mailer.ts", "package.json"],
+      "expectations": ["Identifies Nodemailer SMTP removal", "Maps to Resend SDK initialization", "Converts EJS templates to React Email components", "Preserves all email trigger points"],
+      "pass_criteria": "All Nodemailer calls replaced with Resend. Templates converted. Trigger points preserved.",
+      "fail_indicators": ["Misses SMTP config removal", "Loses email triggers", "Breaks template rendering"]
+    }
+  ]
+}

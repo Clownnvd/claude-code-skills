@@ -1,0 +1,53 @@
+# UI Quality Scoring — Scorecard
+
+**Project**: {{PROJECT_NAME}}
+**Page**: {{PAGE_NAME}}
+**Date**: {{DATE}}
+**Score**: {{TOTAL_SCORE}}/100
+**Grade**: {{GRADE}}
+
+## Category Scores
+
+| # | Category | Weight | Raw (0-10) | Weighted | Notes |
+|---|----------|--------|------------|----------|-------|
+| 1 | Visual Hierarchy | 15% | {{HIERARCHY_RAW}} | {{HIERARCHY_WEIGHTED}} | {{HIERARCHY_NOTES}} |
+| 2 | Color & Theme | 10% | {{COLOR_RAW}} | {{COLOR_WEIGHTED}} | {{COLOR_NOTES}} |
+| 3 | Typography | 10% | {{TYPO_RAW}} | {{TYPO_WEIGHTED}} | {{TYPO_NOTES}} |
+| 4 | Spacing & Layout | 12% | {{SPACING_RAW}} | {{SPACING_WEIGHTED}} | {{SPACING_NOTES}} |
+| 5 | Responsiveness | 12% | {{RESPONSIVE_RAW}} | {{RESPONSIVE_WEIGHTED}} | {{RESPONSIVE_NOTES}} |
+| 6 | Interactions | 8% | {{INTERACT_RAW}} | {{INTERACT_WEIGHTED}} | {{INTERACT_NOTES}} |
+| 7 | Accessibility | 10% | {{A11Y_RAW}} | {{A11Y_WEIGHTED}} | {{A11Y_NOTES}} |
+| 8 | Content & Copy | 8% | {{CONTENT_RAW}} | {{CONTENT_WEIGHTED}} | {{CONTENT_NOTES}} |
+| 9 | Conversion & CTA | 10% | {{CTA_RAW}} | {{CTA_WEIGHTED}} | {{CTA_NOTES}} |
+| 10 | Performance | 5% | {{PERF_RAW}} | {{PERF_WEIGHTED}} | {{PERF_NOTES}} |
+| | **TOTAL** | **100%** | | **{{TOTAL_SCORE}}** | |
+
+## Grade Scale
+
+A+ (97-100) | A (93-96) | A- (90-92) | B+ (87-89) | B (83-86) | B- (80-82) | C+ (77-79) | C (73-76) | C- (70-72) | D (60-69) | F (<60)
+
+## Anti-Bias Check
+
+- Baseline: 7/10 per category
+- Scores 9-10 require specific evidence cited in Notes
+- Scores below 5 require specific failing checklist items
+
+## Prioritized Issues
+
+| # | Severity | Category | Issue | Component | Fix |
+|---|----------|----------|-------|-----------|-----|
+{{ISSUES_LIST}}
+
+## Nielsen Heuristic Cross-Check
+
+| Heuristic | Status | Notes |
+|-----------|--------|-------|
+| Visibility of system status | {{H1_STATUS}} | {{H1_NOTES}} |
+| Match between system and real world | {{H2_STATUS}} | {{H2_NOTES}} |
+| User control and freedom | {{H3_STATUS}} | {{H3_NOTES}} |
+| Consistency and standards | {{H4_STATUS}} | {{H4_NOTES}} |
+| Error prevention | {{H5_STATUS}} | {{H5_NOTES}} |
+
+## Quick Wins
+
+{{QUICK_WINS_LIST}}

@@ -1,0 +1,17 @@
+{
+  "skill": "scalability",
+  "eval_name": "migrate-mode",
+  "description": "Verify migrate mode handles performance-affecting version upgrades",
+  "tests": [
+    {
+      "id": "scale-mig-1",
+      "name": "Migrate from React 18 to 19",
+      "prompt": "migrate scalability patterns from React 18 to 19",
+      "setup": "Next.js app with manual useMemo/useCallback, React 18",
+      "input_files": ["src/components/**/*.tsx"],
+      "expectations": ["Identifies auto-memoization from React Compiler", "Maps useMemo removal opportunities", "Preserves performance characteristics"],
+      "pass_criteria": "React 19 optimizations applied without regression",
+      "fail_indicators": ["Removes necessary memoization", "Misses compiler optimization"]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "skill": "infrastructure",
+  "eval_name": "migrate-mode",
+  "description": "Verify migrate mode handles infrastructure version upgrades",
+  "tests": [
+    {
+      "id": "infra-mig-1",
+      "name": "Migrate from Node 18 to 20",
+      "prompt": "migrate infrastructure from Node 18 to Node 20",
+      "setup": "Dockerfile with node:18-alpine, GitHub Actions with node 18",
+      "input_files": ["Dockerfile", ".github/workflows/ci.yml"],
+      "expectations": ["Updates base image", "Updates CI runner", "Preserves security posture", "Tests build"],
+      "pass_criteria": "All Node version references updated, security maintained",
+      "fail_indicators": ["Misses CI update", "Removes non-root user", "Breaks build"]
+    }
+  ]
+}

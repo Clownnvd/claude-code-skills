@@ -1,0 +1,17 @@
+{
+  "skill": "payment",
+  "eval_name": "generate-mode",
+  "description": "Verify generate mode produces payment code meeting all 10 categories",
+  "tests": [
+    {
+      "id": "pay-gen-1",
+      "name": "Generate Stripe checkout and webhook handler",
+      "prompt": "generate Stripe checkout session route and webhook handler for subscription billing",
+      "setup": "Next.js 16 App Router with Stripe, Better Auth, Prisma",
+      "input_files": ["src/app/api/stripe/checkout/route.ts", "src/app/api/stripe/webhook/route.ts"],
+      "expectations": ["Checkout session with success/cancel URLs", "Webhook signature verification", "Subscription status sync", "Error handling with Stripe error types", "Env var validation", "Idempotent webhook processing"],
+      "pass_criteria": "All 10 payment categories addressed",
+      "fail_indicators": ["No signature verification", "Missing error handling", "No subscription sync", "Hardcoded keys"]
+    }
+  ]
+}

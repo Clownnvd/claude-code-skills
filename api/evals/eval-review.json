@@ -1,0 +1,27 @@
+{
+  "skill": "api",
+  "eval_name": "review-mode",
+  "description": "Verify review mode correctly identifies issues in API route files",
+  "tests": [
+    {
+      "id": "api-rev-1",
+      "name": "Review route with missing auth",
+      "prompt": "review src/app/api/problems/route.ts",
+      "setup": "API route with no auth check, basic error handling",
+      "input_files": ["src/app/api/problems/route.ts"],
+      "expectations": ["Identifies missing auth as CRITICAL", "Identifies missing rate limit as HIGH", "Provides code fixes", "Scores Security/Auth at 0-3"],
+      "pass_criteria": "All critical issues identified with line numbers and fixes",
+      "fail_indicators": ["Misses auth gap", "No line numbers", "No fix suggestions"]
+    },
+    {
+      "id": "api-rev-2",
+      "name": "Review well-written route",
+      "prompt": "review src/app/api/checkout/route.ts",
+      "setup": "API route with all best practices implemented",
+      "input_files": ["src/app/api/checkout/route.ts"],
+      "expectations": ["Scores 8-10 on all categories", "No false positives", "May suggest minor optimizations"],
+      "pass_criteria": "No fabricated issues on correct code",
+      "fail_indicators": ["Fabricates issues", "Scores below 8 on well-implemented categories"]
+    }
+  ]
+}

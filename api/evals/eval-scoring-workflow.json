@@ -1,0 +1,103 @@
+{
+  "skill": "api",
+  "eval_name": "eval-scoring-workflow",
+  "description": "Verify the API scoring process produces correct, complete output.",
+  "tests": [
+    {
+      "id": "valid-codebase-produces-score-0-100",
+      "name": "Valid Codebase Produces Score 0-100",
+      "prompt": "Run api-scoring against a codebase with API routes",
+      "setup": "Provide a codebase containing API route files",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
+      "expectations": [
+        "Output contains a numeric score between 0 and 100",
+        "All 10 categories (Security, Auth & AuthZ, Input Validation, Error Handling, Rate Limiting, Response Design, Performance, Observability, Documentation & DX, Testing) have individual scores",
+        "Each raw score must be 0-10"
+      ],
+      "pass_criteria": "Score is 0-100, all 10 categories present with raw scores 0-10",
+      "fail_indicators": [
+        "Score outside 0-100 range",
+        "Missing categories",
+        "Raw score outside 0-10"
+      ]
+    },
+    {
+      "id": "each-criterion-scored-individually-with-weight",
+      "name": "Each Criterion Scored Individually With Weight",
+      "prompt": "Verify each scoring criterion is weighted correctly and totals are computed properly",
+      "setup": "Run api-scoring and inspect the scorecard output",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
+      "expectations": [
+        "Security is weighted at 20%, Auth & AuthZ at 15%, Input Validation at 12%",
+        "Error Handling at 10%, Rate Limiting at 10%, Response Design at 8%",
+        "Performance at 8%, Observability at 7%, Documentation at 5%, Testing at 5%",
+        "Weighted score = raw score x weight x 10",
+        "Total = sum of all weighted scores"
+      ],
+      "pass_criteria": "All weights match specification and total equals sum of weighted scores",
+      "fail_indicators": [
+        "Incorrect weight percentages",
+        "Total does not equal sum of weighted scores"
+      ]
+    },
+    {
+      "id": "output-includes-scorecard-and-issues-list",
+      "name": "Output Includes Scorecard AND Issues List",
+      "prompt": "Verify output contains both a scorecard table and a prioritized issues list",
+      "setup": "Run api-scoring and inspect the full output",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
+      "expectations": [
+        "Output contains a scorecard table with all 10 categories",
+        "Output contains a prioritized issues list with columns: Severity, Category, Issue, Fix",
+        "Each issue references a specific file or code pattern",
+        "Quick wins section is present"
+      ],
+      "pass_criteria": "Both scorecard table and issues list present with correct columns and file references",
+      "fail_indicators": [
+        "Missing scorecard table",
+        "Missing issues list",
+        "Issues lack file references",
+        "No quick wins section"
+      ]
+    },
+    {
+      "id": "grade-letter-matches-score-range",
+      "name": "Grade Letter Matches Score Range",
+      "prompt": "Verify the grade letter assigned matches the numeric score range",
+      "setup": "Run api-scoring and check grade output against score",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
+      "expectations": [
+        "Score 90-100 produces A-range grade (A+/A/A-)",
+        "Score 80-89 produces B-range grade (B+/B/B-)",
+        "Score 73-79 produces C-range grade (C+/C)",
+        "Score 60-72 produces D grade",
+        "Score 0-59 produces F grade",
+        "Grade string appears in the scorecard header"
+      ],
+      "pass_criteria": "Grade letter correctly corresponds to numeric score range and appears in header",
+      "fail_indicators": [
+        "Grade does not match score range",
+        "Grade missing from scorecard header"
+      ]
+    },
+    {
+      "id": "issues-sorted-by-severity",
+      "name": "Issues Sorted by Severity",
+      "prompt": "Verify issues are sorted from most to least severe",
+      "setup": "Run api-scoring against a codebase with issues at multiple severity levels",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
+      "expectations": [
+        "CRITICAL issues (score 0-3 or security hole) appear first",
+        "HIGH issues (score 4-5, weight >= 12%) appear second",
+        "MEDIUM issues (score 4-5, weight < 12%) appear third",
+        "LOW issues (score 7-8, improvement suggestions) appear last",
+        "No CRITICAL issues are listed below HIGH issues"
+      ],
+      "pass_criteria": "Issues strictly ordered: CRITICAL > HIGH > MEDIUM > LOW with no ordering violations",
+      "fail_indicators": [
+        "CRITICAL issue listed after HIGH issue",
+        "Issues not grouped by severity"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "skill": "dataflow",
+  "eval_name": "test-mode",
+  "description": "Verify test mode generates data flow tests covering all 10 categories",
+  "tests": [
+    {
+      "id": "df-test-1",
+      "name": "Generate data flow tests",
+      "prompt": "generate tests for data flow patterns",
+      "setup": "Next.js 16 with server components, Prisma, forms",
+      "input_files": ["src/app/(app)/problems/page.tsx", "src/app/api/problems/route.ts"],
+      "expectations": ["Server fetch tests", "API envelope shape tests", "Form validation tests", "Serialization tests", "Coverage matrix"],
+      "pass_criteria": "All 10 categories have test cases",
+      "fail_indicators": ["Missing fetch tests", "No serialization tests", "No coverage matrix"]
+    }
+  ]
+}

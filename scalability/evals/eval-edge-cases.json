@@ -1,0 +1,126 @@
+{
+  "skill": "scalability",
+  "eval_name": "eval-edge-cases",
+  "description": "Verify correct behavior for scalability-specific edge cases.",
+  "tests": [
+    {
+      "id": "large-bundle-with-barrel-re-exports",
+      "name": "Large Bundle With Barrel Re-Exports",
+      "prompt": "Provide codebase using export * from barrel files importing heavy libraries and run scalability-scoring",
+      "setup": "Provide codebase using export * from barrel files importing heavy libraries",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Bundle Size scores <= 3 (CRITICAL)",
+        "Issue identifies specific barrel files and their import cost",
+        "Fix recommends direct imports or dynamic imports"
+      ],
+      "pass_criteria": "Bundle Size score <= 3 (CRITICAL), barrel files identified, direct/dynamic imports recommended",
+      "fail_indicators": [
+        "Bundle Size score above 3",
+        "Barrel files not identified"
+      ]
+    },
+    {
+      "id": "images-without-next-image",
+      "name": "Images Without next/image",
+      "prompt": "Provide pages using raw <img> tags instead of next/image and run scalability-scoring",
+      "setup": "Provide pages using raw <img> tags instead of next/image",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Image Optimization scores <= 3",
+        "Issue lists specific image elements missing optimization",
+        "Fix recommends next/image with width, height, and format props"
+      ],
+      "pass_criteria": "Image Optimization score <= 3, specific elements listed, next/image recommended",
+      "fail_indicators": [
+        "Image Optimization score above 3",
+        "Specific elements not listed"
+      ]
+    },
+    {
+      "id": "n-plus-1-database-queries",
+      "name": "N+1 Database Queries",
+      "prompt": "Provide code looping over records and querying DB inside the loop and run scalability-scoring",
+      "setup": "Provide code looping over records and querying DB inside the loop",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "DB Query Performance scores <= 2 (CRITICAL)",
+        "Issue identifies the N+1 pattern with file and line reference",
+        "Fix recommends include, findMany with where IN, or batch query"
+      ],
+      "pass_criteria": "DB Query Perf score <= 2 (CRITICAL), N+1 pattern identified with references, batch query recommended",
+      "fail_indicators": [
+        "DB Query Perf score above 2",
+        "N+1 pattern not identified"
+      ]
+    },
+    {
+      "id": "no-code-splitting-on-heavy-components",
+      "name": "No Code Splitting on Heavy Components",
+      "prompt": "Provide pages importing large libraries (chart, editor, map) statically and run scalability-scoring",
+      "setup": "Provide pages importing large libraries (chart, editor, map) statically",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Bundle Size penalized for missing dynamic() or React.lazy",
+        "Client-Side Performance also flagged for initial load impact",
+        "Fix recommends next/dynamic with ssr: false where applicable"
+      ],
+      "pass_criteria": "Bundle Size penalized, Client-Side Perf flagged, next/dynamic recommended",
+      "fail_indicators": [
+        "Bundle Size not penalized",
+        "next/dynamic not recommended"
+      ]
+    },
+    {
+      "id": "sequential-fetches-instead-of-parallel",
+      "name": "Sequential Fetches Instead of Parallel",
+      "prompt": "Provide server components with await chains for independent data and run scalability-scoring",
+      "setup": "Provide server components with await chains for independent data",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Concurrency scores <= 4",
+        "Issue identifies specific sequential await patterns",
+        "Fix recommends Promise.all for independent fetches"
+      ],
+      "pass_criteria": "Concurrency score <= 4, sequential awaits identified, Promise.all recommended",
+      "fail_indicators": [
+        "Concurrency score above 4",
+        "Sequential patterns not identified"
+      ]
+    },
+    {
+      "id": "no-web-vitals-tracking",
+      "name": "No Web Vitals Tracking",
+      "prompt": "Provide codebase with no performance monitoring or Lighthouse CI and run scalability-scoring",
+      "setup": "Provide codebase with no performance monitoring or Lighthouse CI",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Performance Monitoring scores <= 2",
+        "Issue recommends Web Vitals reporting and bundle budgets",
+        "Fix suggests reportWebVitals or Vercel Analytics"
+      ],
+      "pass_criteria": "Performance Monitoring score <= 2, Web Vitals recommended, reporting solution suggested",
+      "fail_indicators": [
+        "Performance Monitoring score above 2",
+        "Web Vitals not recommended"
+      ]
+    },
+    {
+      "id": "memory-leaks-in-client-components",
+      "name": "Memory Leaks in Client Components",
+      "prompt": "Provide components with event listeners or intervals without cleanup and run scalability-scoring",
+      "setup": "Provide components with event listeners or intervals without cleanup in useEffect",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Memory & Resource Management scores <= 3",
+        "Issue identifies missing cleanup in useEffect return",
+        "Fix recommends AbortController and cleanup functions"
+      ],
+      "pass_criteria": "Memory score <= 3, missing cleanup identified, AbortController recommended",
+      "fail_indicators": [
+        "Memory score above 3",
+        "Missing cleanup not identified"
+      ]
+    }
+  ]
+}

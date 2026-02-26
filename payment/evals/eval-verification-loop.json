@@ -1,0 +1,74 @@
+{
+  "skill": "payment",
+  "eval_name": "eval-verification-loop",
+  "description": "Verify the compile-test-rescore cycle, regression detection, and fix idempotency for payment-fix.",
+  "tests": [
+    {
+      "id": "compile-test-verification",
+      "name": "Compile + Test Verification",
+      "prompt": "Apply the Webhook Signature Verification fix and verify TypeScript compilation and tests pass",
+      "setup": "Scorecard with CRITICAL issue: missing webhook signature verification (Webhook Integration 2/10). Apply the signature verification fix from `webhook-integration.md` which adds `constructEvent` call to the webhook route handler.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Add `stripe.webhooks.constructEvent(body, sig, secret)` to webhook route handler",
+        "Run `pnpm typecheck`. Verify zero type errors after adding Stripe types",
+        "Run `pnpm test`. Verify all existing webhook tests still pass",
+        "Run `stripe listen --forward-to` to verify webhook receives events"
+      ],
+      "pass_criteria": "`pnpm typecheck` exits 0. All tests pass. Stripe CLI webhook test succeeds. No breaking changes to existing event handlers.",
+      "fail_indicators": [
+        "Type errors from Stripe event types, or existing webhook handlers break, or Stripe CLI test fails"
+      ]
+    },
+    {
+      "id": "re-score-improvement-verification",
+      "name": "Re-Score Improvement Verification",
+      "prompt": "Apply fixes for Webhook and Checkout categories and verify re-score improvement",
+      "setup": "Initial payment-scoring scorecard: Webhook Integration 2/10, Checkout & Billing 4/10, Security 3/10. Total 45/100 (F). Apply fixes for signature verification (Webhook) and session creation (Checkout).",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Run payment-fix for both issues",
+        "Invoke `payment-scoring` to produce a new scorecard",
+        "Compare per-category scores: Webhook, Checkout must increase",
+        "Verify Security, Subscriptions, and all other categories remain at or above pre-fix scores"
+      ],
+      "pass_criteria": "Webhook >= 6/10 (was 2). Checkout >= 6/10 (was 4). No category dropped below its pre-fix score. Total weighted score increased.",
+      "fail_indicators": [
+        "Any unfixed category score decreased, or fixed categories did not improve"
+      ]
+    },
+    {
+      "id": "regression-detection",
+      "name": "Regression Detection",
+      "prompt": "Apply a webhook fix that introduces an Error Handling regression and verify pipeline detects it",
+      "setup": "Initial scorecard: Webhook Integration 7/10, Error Handling 7/10, Checkout 8/10. Apply a webhook fix that adds constructEvent but wraps it in a try/catch that swallows all errors silently. Error Handling drops from 7/10 to 3/10.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Apply webhook fix that silently catches all errors with empty catch block",
+        "Run `payment-scoring` re-score",
+        "Verify pipeline detects Error Handling dropped from 7 to 3 (delta -4)",
+        "Verify pipeline halts and recommends proper error logging and response codes"
+      ],
+      "pass_criteria": "Pipeline detects the Error Handling regression. Output flags: silent error swallowing detected, before/after delta shown, recommendation to log errors and return proper HTTP status. Pipeline does not continue.",
+      "fail_indicators": [
+        "Pipeline ignores the silent catch block and continues, or fails to detect the error handling regression"
+      ]
+    },
+    {
+      "id": "fix-idempotency",
+      "name": "Fix Idempotency",
+      "prompt": "Run payment-fix with an already-fixed webhook signature verification issue and verify no changes are made",
+      "setup": "Scorecard with CRITICAL issue: missing webhook signature verification. The webhook route already has `stripe.webhooks.constructEvent()` from a previous fix run.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Run payment-fix with the same webhook issue",
+        "Check `git diff` after the fix attempt",
+        "Run `pnpm typecheck` and verify no new type errors"
+      ],
+      "pass_criteria": "No files modified (`git diff` is empty). Skill reports \"already applied\" or \"no changes needed.\" No duplicate `constructEvent` calls.",
+      "fail_indicators": [
+        "Duplicate `constructEvent` calls added, or webhook handler modified unnecessarily, or type errors introduced"
+      ]
+    }
+  ]
+}

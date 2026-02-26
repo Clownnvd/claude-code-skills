@@ -1,0 +1,60 @@
+{
+  "skill": "stripe",
+  "eval_name": "eval-webhook-handler",
+  "description": "Verify webhook handler follows correct signature verification, raw body parsing, and event routing patterns.",
+  "tests": [
+    {
+      "id": "raw-body-not-json",
+      "name": "Uses req.text() not req.json() for body",
+      "prompt": "Create a Stripe webhook handler for Next.js App Router",
+      "input_files": ["references/webhooks.md", "templates/webhook-handler.ts"],
+      "expectations": [
+        "Uses req.text() to read raw body",
+        "Does NOT use req.json()",
+        "Passes raw body string to constructEvent"
+      ],
+      "pass_criteria": "Response uses req.text() for raw body, never req.json()",
+      "fail_indicators": ["req.json()", "JSON.parse(body)"]
+    },
+    {
+      "id": "signature-verification",
+      "name": "Always verifies webhook signature",
+      "prompt": "Handle a Stripe webhook event in my Next.js API route",
+      "input_files": ["references/webhooks.md", "references/security.md"],
+      "expectations": [
+        "Uses stripe.webhooks.constructEvent(body, signature, secret)",
+        "Reads stripe-signature from headers",
+        "Uses await headers() for Next.js 15+ async pattern",
+        "Returns 400 if signature verification fails"
+      ],
+      "pass_criteria": "Signature verification is present and returns 400 on failure",
+      "fail_indicators": ["JSON.parse(body)", "skip verification", "without signature"]
+    },
+    {
+      "id": "webhook-secret-env-validation",
+      "name": "Validates STRIPE_WEBHOOK_SECRET at module level",
+      "prompt": "Set up a webhook endpoint for Stripe in Next.js",
+      "input_files": ["templates/webhook-handler.ts"],
+      "expectations": [
+        "Checks process.env.STRIPE_WEBHOOK_SECRET exists",
+        "Throws error at module level if missing",
+        "Does NOT use non-null assertion on env var directly"
+      ],
+      "pass_criteria": "STRIPE_WEBHOOK_SECRET is validated before use",
+      "fail_indicators": ["process.env.STRIPE_WEBHOOK_SECRET!"]
+    },
+    {
+      "id": "event-routing-switch",
+      "name": "Routes events via switch/case with typed objects",
+      "prompt": "Handle checkout.session.completed and invoice.paid webhook events",
+      "input_files": ["references/webhooks.md"],
+      "expectations": [
+        "Uses switch on event.type",
+        "Casts event.data.object to correct Stripe type",
+        "Handles at least checkout.session.completed and invoice.paid",
+        "Returns 200 OK after processing"
+      ],
+      "pass_criteria": "Events routed via switch/case with proper type casting"
+    }
+  ]
+}

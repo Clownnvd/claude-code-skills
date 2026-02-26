@@ -1,0 +1,118 @@
+{
+  "skill": "ui",
+  "eval_name": "eval-research-edge-cases",
+  "description": "Validate graceful handling of research-specific edge cases (from research-sites merge).",
+  "tests": [
+    {
+      "id": "unknown-page-type",
+      "name": "Unknown Page Type",
+      "prompt": "Research components for an onboarding wizard page",
+      "setup": "",
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
+      "expectations": [
+        "Skill does NOT refuse or error out",
+        "Maps to nearest known type or creates a reasonable section list",
+        "Output still follows per-page table format with #, Section, Component, Style, Link, Complexity",
+        "Asks clarifying question if page type is truly ambiguous"
+      ],
+      "pass_criteria": "Valid table output or clarifying question. Never a refusal.",
+      "fail_indicators": [
+        "Refusal to process the request",
+        "Error output instead of table or clarifying question"
+      ]
+    },
+    {
+      "id": "unreachable-source-site",
+      "name": "Unreachable Source Site",
+      "prompt": "Research components",
+      "setup": "Research triggers WebFetch on a URL that returns 404 or timeout",
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
+      "expectations": [
+        "Skip the unreachable source and continue with remaining sources",
+        "Do NOT include broken links in the output table",
+        "Do NOT hallucinate component details from an unreachable page",
+        "Output contains results from at least 2 other working sources"
+      ],
+      "pass_criteria": "No broken links in final table. Research completes with available sources.",
+      "fail_indicators": [
+        "Broken links in the output table",
+        "Hallucinated component details from unreachable page",
+        "Research fails entirely due to one unreachable source"
+      ]
+    },
+    {
+      "id": "framework-specific-filtering",
+      "name": "Framework-Specific Filtering",
+      "prompt": "Research landing page components for Vue/Nuxt (not React)",
+      "setup": "",
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
+      "expectations": [
+        "Prioritize Vue-compatible sources (Inspira UI, general CSS solutions)",
+        "Exclude React-only libraries (Aceternity, Magic UI) or note incompatibility",
+        "Still follow the standard table format",
+        "Link column points to Vue-compatible component pages"
+      ],
+      "pass_criteria": "No React-only components presented without a compatibility note.",
+      "fail_indicators": [
+        "React-only components listed without compatibility note",
+        "Non-standard table format"
+      ]
+    },
+    {
+      "id": "single-section-deep-dive",
+      "name": "Single Section Deep Dive",
+      "prompt": "Find 5 hero section variants for my landing page",
+      "setup": "",
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
+      "expectations": [
+        "Output is a single table focused on hero sections only",
+        "Contains at least 5 rows, all Section = \"Hero\"",
+        "Each row shows a distinct variant (Aurora, Parallax, Video, 3D, Kinetic, etc.)",
+        "Descriptions below the table differentiate each variant clearly"
+      ],
+      "pass_criteria": ">= 5 hero variants, all distinct styles, single-section table.",
+      "fail_indicators": [
+        "Fewer than 5 hero variants",
+        "Duplicate styles",
+        "Non-hero sections included"
+      ]
+    },
+    {
+      "id": "follow-up-numbering-continuity",
+      "name": "Follow-Up Numbering Continuity",
+      "prompt": "Show me more",
+      "setup": "User first requests landing page research (gets #1-#6), then asks \"show me more\"",
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
+      "expectations": [
+        "Additional results continue numbering from #7 onward",
+        "No duplicate components from the first batch",
+        "New results come from deeper or different search queries",
+        "Table format remains identical to the first batch"
+      ],
+      "pass_criteria": "Numbering continues without gaps or duplicates.",
+      "fail_indicators": [
+        "Numbering restarts from #1",
+        "Duplicate components from the first batch",
+        "Different table format"
+      ]
+    },
+    {
+      "id": "empty-search-results",
+      "name": "Empty Search Results",
+      "prompt": "Research 3D product configurator component",
+      "setup": "Research a very niche section type with likely no results from standard sources",
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
+      "expectations": [
+        "If no results found from standard sources, report honestly",
+        "Suggest alternative search terms or related components",
+        "Do NOT fabricate component names or URLs",
+        "Offer to broaden the search"
+      ],
+      "pass_criteria": "No fabricated links. Honest \"no results\" with suggestions.",
+      "fail_indicators": [
+        "Fabricated component names or URLs",
+        "No suggestion to broaden search or try alternatives"
+      ]
+    }
+  ]
+}

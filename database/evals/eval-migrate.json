@@ -1,0 +1,17 @@
+{
+  "skill": "database",
+  "eval_name": "migrate-mode",
+  "description": "Verify migrate mode handles Prisma version upgrades",
+  "tests": [
+    {
+      "id": "db-mig-1",
+      "name": "Migrate from Prisma 6 to 7",
+      "prompt": "migrate database from Prisma 6 to 7",
+      "setup": "Next.js project with Prisma 6, no prisma.config.ts",
+      "input_files": ["prisma/schema.prisma", "package.json"],
+      "expectations": ["Identifies prisma.config.ts requirement", "Maps query engine changes", "Preserves schema integrity"],
+      "pass_criteria": "All Prisma 7 breaking changes identified and migrated",
+      "fail_indicators": ["Misses config requirement", "Breaks schema", "Loses indexes"]
+    }
+  ]
+}

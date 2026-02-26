@@ -1,0 +1,17 @@
+{
+  "skill": "auth",
+  "eval_name": "migrate-mode",
+  "description": "Verify migrate mode handles auth library upgrades",
+  "tests": [
+    {
+      "id": "auth-mig-1",
+      "name": "Migrate from Clerk v5 to v6",
+      "prompt": "migrate auth from Clerk v5 to v6",
+      "setup": "Next.js project using Clerk v5 auth()",
+      "input_files": ["src/lib/auth/*.ts", "middleware.ts"],
+      "expectations": ["Identifies auth() API changes", "Updates all call sites", "Preserves session security", "Migrates middleware config"],
+      "pass_criteria": "All Clerk v5 patterns updated to v6 without auth regression",
+      "fail_indicators": ["Misses call sites", "Breaks session management", "Removes CSRF"]
+    }
+  ]
+}

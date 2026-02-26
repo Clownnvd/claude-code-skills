@@ -1,0 +1,126 @@
+{
+  "skill": "security",
+  "eval_name": "eval-edge-cases",
+  "description": "Verify correct behavior for security-specific edge cases.",
+  "tests": [
+    {
+      "id": "no-input-validation-on-user-input",
+      "name": "No Input Validation on User Input",
+      "prompt": "Provide API routes accepting user input without Zod or any validation and run security-scoring",
+      "setup": "Provide API routes accepting user input without Zod or any validation",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Input Validation scores <= 2 (CRITICAL)",
+        "OWASP A03 (Injection) flagged",
+        "Issue recommends Zod schemas at every boundary"
+      ],
+      "pass_criteria": "Input Validation score <= 2 (CRITICAL), OWASP A03 flagged, Zod schemas recommended",
+      "fail_indicators": [
+        "Input Validation score above 2",
+        "Missing OWASP A03 flag"
+      ]
+    },
+    {
+      "id": "hardcoded-secrets-in-source-code",
+      "name": "Hardcoded Secrets in Source Code",
+      "prompt": "Provide code with API keys, DB URLs, or tokens in source files and run security-scoring",
+      "setup": "Provide code with API keys, DB URLs, or tokens in source files",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Secrets & Environment Mgmt scores 0 (CRITICAL)",
+        "Issue identifies specific files and variable names",
+        "Fix recommends env variables with .env.example template"
+      ],
+      "pass_criteria": "Secrets score is 0 (CRITICAL), specific files/variables identified, env variables recommended",
+      "fail_indicators": [
+        "Secrets score above 0",
+        "Specific files not identified"
+      ]
+    },
+    {
+      "id": "known-cves-in-dependencies",
+      "name": "Known CVEs in Dependencies",
+      "prompt": "Provide package.json with dependencies that have known vulnerabilities and run security-scoring",
+      "setup": "Provide package.json with dependencies that have known vulnerabilities",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Dependency Security scores <= 3",
+        "Issue lists specific packages and CVE identifiers",
+        "Fix recommends npm audit fix or version upgrade"
+      ],
+      "pass_criteria": "Dependency Security score <= 3, specific packages and CVEs listed, npm audit fix recommended",
+      "fail_indicators": [
+        "Dependency Security score above 3",
+        "CVEs not listed"
+      ]
+    },
+    {
+      "id": "stack-traces-leaked-to-client",
+      "name": "Stack Traces Leaked to Client",
+      "prompt": "Provide error handling that sends full stack traces in production responses and run security-scoring",
+      "setup": "Provide error handling that sends full stack traces in production responses",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Error Handling & Info Disclosure scores <= 2 (CRITICAL)",
+        "OWASP A09 flagged",
+        "Fix recommends safe error envelope with generic client message"
+      ],
+      "pass_criteria": "Error Handling score <= 2 (CRITICAL), OWASP A09 flagged, safe error envelope recommended",
+      "fail_indicators": [
+        "Error Handling score above 2",
+        "Missing OWASP A09 flag"
+      ]
+    },
+    {
+      "id": "missing-csp-header",
+      "name": "Missing CSP Header",
+      "prompt": "Provide app with no Content-Security-Policy header configured and run security-scoring",
+      "setup": "Provide app with no Content-Security-Policy header configured",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "CSP scores <= 2",
+        "Issue flags XSS risk from missing script-src directive",
+        "Fix recommends CSP header with nonce or strict policy"
+      ],
+      "pass_criteria": "CSP score <= 2, XSS risk flagged, CSP with nonce or strict policy recommended",
+      "fail_indicators": [
+        "CSP score above 2",
+        "XSS risk not flagged"
+      ]
+    },
+    {
+      "id": "webhook-endpoints-without-signature-verification",
+      "name": "Webhook Endpoints Without Signature Verification",
+      "prompt": "Provide webhook handler routes that process payloads without verifying signatures and run security-scoring",
+      "setup": "Provide webhook handler routes that process payloads without verifying signatures",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Webhook Security scores <= 2 (CRITICAL)",
+        "Issue flags replay attack and spoofing risk",
+        "Fix recommends HMAC signature verification and idempotency keys"
+      ],
+      "pass_criteria": "Webhook Security score <= 2 (CRITICAL), replay/spoofing risk flagged, HMAC recommended",
+      "fail_indicators": [
+        "Webhook Security score above 2",
+        "Replay attack risk not flagged"
+      ]
+    },
+    {
+      "id": "open-redirect-vulnerability",
+      "name": "Open Redirect Vulnerability",
+      "prompt": "Provide redirect logic using unvalidated user-supplied URLs and run security-scoring",
+      "setup": "Provide redirect logic using unvalidated user-supplied URLs",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Open Redirect scores <= 2 (CRITICAL)",
+        "Issue identifies the redirect code and attack vector",
+        "Fix recommends allowlist validation and // blocking"
+      ],
+      "pass_criteria": "Open Redirect score <= 2 (CRITICAL), redirect code identified, allowlist validation recommended",
+      "fail_indicators": [
+        "Open Redirect score above 2",
+        "Redirect code not identified"
+      ]
+    }
+  ]
+}

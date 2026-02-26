@@ -1,0 +1,119 @@
+{
+  "skill": "caching",
+  "eval_name": "eval-edge-cases",
+  "description": "Verify correct behavior for caching-specific edge cases.",
+  "tests": [
+    {
+      "id": "no-cache-headers-on-auth-responses",
+      "name": "No Cache Headers on Auth Responses",
+      "prompt": "Provide API routes returning auth tokens without no-store/no-cache and run caching-scoring",
+      "setup": "Provide API routes returning auth tokens without no-store or no-cache headers",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Cache-Control Headers penalized (score <= 3, CRITICAL)",
+        "Issue flags specific routes caching sensitive data",
+        "Fix recommends NO_CACHE_HEADERS constant pattern"
+      ],
+      "pass_criteria": "Cache-Control Headers score <= 3 (CRITICAL), specific routes flagged, NO_CACHE_HEADERS recommended",
+      "fail_indicators": [
+        "Cache-Control Headers score above 3",
+        "Specific routes not identified"
+      ]
+    },
+    {
+      "id": "force-dynamic-on-every-page",
+      "name": "force-dynamic on Every Page",
+      "prompt": "Provide app with force-dynamic on all pages including static-eligible ones and run caching-scoring",
+      "setup": "Provide app with force-dynamic on all pages including static-eligible ones",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Static vs Dynamic Classification scores <= 3",
+        "Issue identifies pages that should be static",
+        "ISR also penalized for missed opportunities"
+      ],
+      "pass_criteria": "Static vs Dynamic score <= 3, static-eligible pages identified, ISR penalized",
+      "fail_indicators": [
+        "Static vs Dynamic score above 3",
+        "Static-eligible pages not identified"
+      ]
+    },
+    {
+      "id": "mutations-without-revalidation",
+      "name": "Mutations Without Revalidation",
+      "prompt": "Provide Server Actions or API routes that mutate data without revalidatePath/revalidateTag and run caching-scoring",
+      "setup": "Provide Server Actions or API routes that mutate data without revalidatePath or revalidateTag",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Revalidation Strategy scores <= 2 (CRITICAL)",
+        "Each mutation route is listed as an issue",
+        "Fix recommends tag-based revalidation"
+      ],
+      "pass_criteria": "Revalidation Strategy score <= 2 (CRITICAL), all mutation routes listed, tag-based revalidation recommended",
+      "fail_indicators": [
+        "Revalidation Strategy score above 2",
+        "Mutation routes not listed"
+      ]
+    },
+    {
+      "id": "duplicate-fetch-calls-in-rsc-tree",
+      "name": "Duplicate Fetch Calls in RSC Tree",
+      "prompt": "Provide server components making the same DB/fetch call multiple times per request and run caching-scoring",
+      "setup": "Provide server components making the same DB/fetch call multiple times per request",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Request Deduplication scores <= 4",
+        "React cache() Deduplication also penalized if cache() not used",
+        "Fix recommends cache() wrapper or Promise.all"
+      ],
+      "pass_criteria": "Request Dedup score <= 4, cache() penalized if not used, cache() or Promise.all recommended",
+      "fail_indicators": [
+        "Request Dedup score above 4"
+      ]
+    },
+    {
+      "id": "no-cache-observability-in-dev",
+      "name": "No Cache Observability in Dev",
+      "prompt": "Provide codebase with no x-cache headers or cache hit/miss logging and run caching-scoring",
+      "setup": "Provide codebase with no x-cache headers or cache hit/miss logging",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Cache Monitoring scores <= 3",
+        "Issue recommends adding debug headers in development"
+      ],
+      "pass_criteria": "Cache Monitoring score <= 3, debug headers recommended",
+      "fail_indicators": [
+        "Cache Monitoring score above 3"
+      ]
+    },
+    {
+      "id": "heavy-operations-in-proxy",
+      "name": "Heavy Operations in Proxy",
+      "prompt": "Provide proxy/middleware running expensive operations (DB queries, external fetches) and run caching-scoring",
+      "setup": "Provide proxy/middleware running expensive operations such as DB queries and external fetches",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "Proxy Caching scores <= 3",
+        "Issue recommends moving logic out of proxy path"
+      ],
+      "pass_criteria": "Proxy Caching score <= 3, recommendation to move logic out of proxy",
+      "fail_indicators": [
+        "Proxy Caching score above 3"
+      ]
+    },
+    {
+      "id": "static-assets-without-cdn-headers",
+      "name": "Static Assets Without CDN Headers",
+      "prompt": "Provide static asset responses missing s-maxage or stale-while-revalidate and run caching-scoring",
+      "setup": "Provide static asset responses missing s-maxage or stale-while-revalidate headers",
+      "input_files": ["references/scoring/best-practices.md"],
+      "expectations": [
+        "CDN & Edge Caching scores <= 4",
+        "Fix recommends Vercel edge config or CDN-friendly headers"
+      ],
+      "pass_criteria": "CDN & Edge Caching score <= 4, edge config or CDN-friendly headers recommended",
+      "fail_indicators": [
+        "CDN & Edge Caching score above 4"
+      ]
+    }
+  ]
+}

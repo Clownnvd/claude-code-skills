@@ -1,0 +1,17 @@
+{
+  "skill": "payment",
+  "eval_name": "review-mode",
+  "description": "Verify review mode identifies payment issues in specific files",
+  "tests": [
+    {
+      "id": "pay-rev-1",
+      "name": "Review webhook route with missing signature verification",
+      "prompt": "review src/app/api/stripe/webhook/route.ts",
+      "setup": "Webhook route that parses JSON body without constructEvent",
+      "input_files": ["src/app/api/stripe/webhook/route.ts"],
+      "expectations": ["Identifies missing signature verification as CRITICAL", "Identifies missing idempotency as HIGH", "Suggests constructEvent with raw body"],
+      "pass_criteria": "Webhook and security issues identified with fixes",
+      "fail_indicators": ["Misses signature verification gap", "No Stripe-specific syntax in suggestions"]
+    }
+  ]
+}

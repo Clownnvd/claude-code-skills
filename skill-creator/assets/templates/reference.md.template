@@ -1,0 +1,32 @@
+# {{TITLE}}
+
+## Overview
+
+{{OVERVIEW}}
+
+## Key Concepts
+
+| Concept | Description |
+|---------|-------------|
+| {{CONCEPT_1}} | {{DESC_1}} |
+| {{CONCEPT_2}} | {{DESC_2}} |
+
+## Implementation
+
+### Step 1: {{STEP_1}}
+
+{{STEP_1_CONTENT}}
+
+### Step 2: {{STEP_2}}
+
+{{STEP_2_CONTENT}}
+
+## Common Patterns
+
+{{PATTERNS}}
+
+## Troubleshooting
+
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| {{ISSUE_1}} | {{CAUSE_1}} | {{FIX_1}} |

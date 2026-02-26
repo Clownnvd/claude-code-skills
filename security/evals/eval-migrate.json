@@ -1,0 +1,17 @@
+{
+  "skill": "security",
+  "eval_name": "migrate-mode",
+  "description": "Verify migrate mode maintains security during framework upgrades",
+  "tests": [
+    {
+      "id": "sec-mig-1",
+      "name": "Migrate security from Next.js 15 to 16",
+      "prompt": "migrate security configuration from Next.js 15 to 16",
+      "setup": "Next.js 15 with middleware.ts security headers, CSP",
+      "input_files": ["middleware.ts", "next.config.ts"],
+      "expectations": ["Migrates headers to proxy.ts", "Preserves CSP", "Updates CORS config", "No security regression"],
+      "pass_criteria": "Security maintained through migration",
+      "fail_indicators": ["Removes headers", "Weakens CSP", "Loses CORS validation"]
+    }
+  ]
+}

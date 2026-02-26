@@ -1,0 +1,72 @@
+# Email Fix Report
+
+## Scoring Input
+
+- **Overall Grade**: {{GRADE_BEFORE}}
+- **Weighted Score**: {{SCORE_BEFORE}}/100
+- **Total Issues**: {{ISSUE_COUNT}}
+
+### Issues by Severity
+
+| Severity | Count | Categories |
+|----------|-------|------------|
+| CRITICAL | {{CRITICAL_COUNT}} | {{CRITICAL_CATEGORIES}} |
+| HIGH     | {{HIGH_COUNT}} | {{HIGH_CATEGORIES}} |
+| MEDIUM   | {{MEDIUM_COUNT}} | {{MEDIUM_CATEGORIES}} |
+| LOW      | {{LOW_COUNT}} | {{LOW_CATEGORIES}} |
+
+## Fixes Applied
+
+<!-- Repeat this block for each fix. Increment {{FIX_NUMBER}} sequentially. -->
+### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
+
+- **Severity**: {{SEVERITY}}
+- **Category**: {{CATEGORY}} (weight: {{WEIGHT}}%)
+- **Pattern**: `references/fix/fix-patterns/{{PATTERN_FILE}}`
+- **Files Changed**:
+  - `{{FILE_PATH}}` -- {{CHANGE_DESCRIPTION}}
+
+#### Before
+
+```typescript
+{{CODE_BEFORE}}
+```
+
+#### After
+
+```typescript
+{{CODE_AFTER}}
+```
+
+#### Verification
+
+- [ ] TypeScript compiles without errors
+- [ ] Email sends successfully in development
+- [ ] Queue processes messages without failure
+- [ ] Webhook endpoint responds correctly
+
+## Re-Score Results
+
+| Category | Before | After | Delta |
+|----------|--------|-------|-------|
+| Transactional Email (15%) | {{TRANS_BEFORE}} | {{TRANS_AFTER}} | {{TRANS_DELTA}} |
+| Email Templates & Rendering (12%) | {{TEMPL_BEFORE}} | {{TEMPL_AFTER}} | {{TEMPL_DELTA}} |
+| Notification Queue & Delivery (12%) | {{QUEUE_BEFORE}} | {{QUEUE_AFTER}} | {{QUEUE_DELTA}} |
+| Email Provider Integration (12%) | {{PROV_BEFORE}} | {{PROV_AFTER}} | {{PROV_DELTA}} |
+| Deliverability & Reputation (10%) | {{DELIV_BEFORE}} | {{DELIV_AFTER}} | {{DELIV_DELTA}} |
+| Bounce & Complaint Handling (10%) | {{BOUNCE_BEFORE}} | {{BOUNCE_AFTER}} | {{BOUNCE_DELTA}} |
+| Email Auth (SPF/DKIM/DMARC) (8%) | {{AUTH_BEFORE}} | {{AUTH_AFTER}} | {{AUTH_DELTA}} |
+| Rate Limiting & Throttling (8%) | {{RATE_BEFORE}} | {{RATE_AFTER}} | {{RATE_DELTA}} |
+| Analytics & Tracking (7%) | {{ANALYT_BEFORE}} | {{ANALYT_AFTER}} | {{ANALYT_DELTA}} |
+| Testing & Preview (6%) | {{TEST_BEFORE}} | {{TEST_AFTER}} | {{TEST_DELTA}} |
+
+- **Final Grade**: {{GRADE_AFTER}}
+- **Final Score**: {{SCORE_AFTER}}/100
+- **Improvement**: +{{SCORE_DELTA}} points
+
+## Fix Pattern References Used
+
+- `transactional-delivery.md` -- Email triggers, queue setup, retry logic, dead letter
+- `templates-rendering.md` -- Component system, responsive design, dynamic content
+- `provider-integration.md` -- Resend config, domain verification, webhooks, analytics
+- `security-compliance.md` -- SPF/DKIM/DMARC, bounce handling, rate limiting

@@ -1,0 +1,17 @@
+{
+  "skill": "payment",
+  "eval_name": "migrate-mode",
+  "description": "Verify migrate mode handles Stripe SDK version upgrades",
+  "tests": [
+    {
+      "id": "pay-mig-1",
+      "name": "Migrate from Stripe SDK v13 to v17",
+      "prompt": "migrate Stripe integration from SDK v13 to v17",
+      "setup": "Next.js project with Stripe v13, using deprecated API patterns",
+      "input_files": ["src/lib/stripe.ts", "package.json"],
+      "expectations": ["Identifies deprecated API methods", "Maps Checkout Session API changes", "Preserves webhook handler compatibility"],
+      "pass_criteria": "All Stripe SDK breaking changes identified and migrated",
+      "fail_indicators": ["Misses API deprecations", "Breaks webhook handler", "Loses customer data references"]
+    }
+  ]
+}

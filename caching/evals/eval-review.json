@@ -1,0 +1,17 @@
+{
+  "skill": "caching",
+  "eval_name": "review-mode",
+  "description": "Verify review mode identifies caching issues in specific files",
+  "tests": [
+    {
+      "id": "cache-rev-1",
+      "name": "Review API route missing cache headers",
+      "prompt": "review src/app/api/problems/route.ts for caching",
+      "setup": "API route returning auth data without Cache-Control: no-store",
+      "input_files": ["src/app/api/problems/route.ts"],
+      "expectations": ["Identifies missing no-store as CRITICAL", "Checks for Vary header", "Suggests NO_CACHE_HEADERS pattern"],
+      "pass_criteria": "Cache header issues identified with severity and fixes",
+      "fail_indicators": ["Misses no-store gap", "No severity levels"]
+    }
+  ]
+}

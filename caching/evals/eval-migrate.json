@@ -1,0 +1,17 @@
+{
+  "skill": "caching",
+  "eval_name": "migrate-mode",
+  "description": "Verify migrate mode handles Next.js cache API changes",
+  "tests": [
+    {
+      "id": "cache-mig-1",
+      "name": "Migrate caching from Next.js 15 to 16",
+      "prompt": "migrate caching strategy from Next.js 15 to 16",
+      "setup": "Next.js 15 with revalidate exports, no 'use cache'",
+      "input_files": ["src/app/(app)/dashboard/page.tsx", "next.config.ts"],
+      "expectations": ["Identifies 'use cache' directive need", "Maps dynamicIO changes", "Preserves auth cache safety"],
+      "pass_criteria": "All caching breaking changes identified and migrated",
+      "fail_indicators": ["Misses dynamicIO", "Caches auth data after migration"]
+    }
+  ]
+}

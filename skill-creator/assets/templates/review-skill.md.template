@@ -1,0 +1,49 @@
+---
+name: {{DOMAIN}}-review
+description: Review {{DOMAIN_FULL}} against best practices. Check {{CRITERIA_LIST}}. Output issues list with severity and fix suggestions.
+---
+
+# {{DOMAIN_TITLE}} Review
+
+Review {{DOMAIN_FULL}} quality and produce actionable feedback.
+
+## When to Use
+
+- Pre-merge code review for {{DOMAIN}}
+- Reviewing pull requests
+- Auditing existing {{DOMAIN}} implementation
+
+## Review Process
+
+1. Read `references/review-criteria.md` for what to check
+2. Scan codebase for each criterion
+3. For each issue found, classify severity and suggest fix
+4. Output review report following `references/output-format.md`
+
+## Review Criteria
+
+| # | Criterion | Reference |
+|---|-----------|-----------|
+{{CRITERIA_TABLE}}
+
+## Output Format
+
+### Issue Entry
+```
+[SEVERITY] file:line — Description
+  Fix: Suggested fix
+  Ref: references/criteria/relevant-file.md
+```
+
+### Severity Levels
+| Level | Meaning |
+|:---:|---|
+| Critical | Blocks merge, security/data risk |
+| High | Should fix before merge |
+| Medium | Fix soon, not blocking |
+| Low | Suggestion for improvement |
+
+## Quick Reference
+- `references/review-criteria.md` — All criteria detailed
+- `references/common-issues.md` — Frequently found issues + fixes
+- `references/output-format.md` — Review report structure

@@ -1,0 +1,38 @@
+---
+name: {{DOMAIN}}-fix
+description: Take {{DOMAIN}}-scoring feedback (scorecard + issues list) and implement all fixes systematically. Prioritize by severity, apply code changes, verify, and re-score. {{FRAMEWORK}} patterns.
+---
+
+# {{DOMAIN_TITLE}} Fix
+
+Implement fixes from {{DOMAIN}}-scoring feedback. Process issues by severity (critical first), apply changes, verify each fix, re-score when complete.
+
+## When to Use
+
+- After running {{DOMAIN}}-scoring and receiving a scorecard
+- Fixing specific {{DOMAIN}} issues identified in an audit
+- Improving {{DOMAIN}} score from current grade to target grade
+
+## Fix Process
+
+1. Read scoring output (scorecard + issues list)
+2. Read `references/overview.md` for fix priority framework
+3. Read `references/implementation-workflow.md` for step-by-step process
+4. For each issue, load matching `references/fix-patterns/*.md`
+5. Apply fixes in severity order: critical > high > medium > low
+6. Verify each fix, then re-run {{DOMAIN}}-scoring
+
+## Fix Pattern References
+
+| Pattern File | Covers |
+|---|---|
+{{FIX_PATTERNS_TABLE}}
+
+## Severity Priority
+
+| Severity | Action | SLA |
+|:---:|---|---|
+| Critical | Fix immediately, blocks deployment | Now |
+| High | Fix before next release | This sprint |
+| Medium | Fix when touching related code | Next sprint |
+| Low | Fix when convenient | Backlog |

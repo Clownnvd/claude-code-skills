@@ -1,0 +1,17 @@
+{
+  "skill": "dataflow",
+  "eval_name": "review-mode",
+  "description": "Verify review mode identifies data flow issues in specific files",
+  "tests": [
+    {
+      "id": "df-rev-1",
+      "name": "Review page with client-side fetch",
+      "prompt": "review src/app/(app)/dashboard/page.tsx",
+      "setup": "Server component using useEffect + fetch instead of direct Prisma",
+      "input_files": ["src/app/(app)/dashboard/page.tsx"],
+      "expectations": ["Identifies client fetch as CRITICAL", "Suggests server component fetch", "Checks for loading.tsx"],
+      "pass_criteria": "Data flow anti-patterns identified with fixes",
+      "fail_indicators": ["Misses client fetch issue", "No RSC suggestion"]
+    }
+  ]
+}

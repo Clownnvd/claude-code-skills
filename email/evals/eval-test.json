@@ -1,0 +1,17 @@
+{
+  "skill": "email",
+  "eval_name": "test-mode",
+  "description": "Verify test mode generates email tests covering all 10 categories",
+  "tests": [
+    {
+      "id": "email-test-1",
+      "name": "Generate email system tests",
+      "prompt": "generate tests for email service and templates",
+      "setup": "Next.js 16 with Resend SDK, React Email templates, QStash queue",
+      "input_files": ["src/lib/email.ts", "src/emails/welcome.tsx", "src/app/api/webhooks/resend/route.ts"],
+      "expectations": ["Template rendering tests", "Queue publish/consume tests", "Webhook signature verification tests", "Rate limiting tests", "Bounce handling tests", "Coverage matrix"],
+      "pass_criteria": "All 10 categories have test cases",
+      "fail_indicators": ["Missing webhook tests", "No queue tests", "No coverage matrix"]
+    }
+  ]
+}

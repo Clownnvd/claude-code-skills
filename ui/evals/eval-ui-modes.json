@@ -1,0 +1,160 @@
+{
+  "skill": "ui",
+  "eval_name": "eval-ui-modes",
+  "description": "Validate all 4 modes of the ui skill produce correct output.",
+  "tests": [
+    {
+      "id": "research-design-brief-output",
+      "name": "Research Mode — Design Brief Output",
+      "prompt": "Research UI for a SaaS landing page",
+      "setup": "Mode: Research",
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
+      "expectations": [
+        "Output contains all required sections: Direction, Component Plan, Design Tokens, Anti-Patterns",
+        "Direction includes vibe, layout, primary color from CSS variables, 3+ inspiration URLs",
+        "Component Plan table has >= 3 rows with Component, Pattern, Source columns",
+        "Design Tokens extracted from `globals.css` (not hardcoded)",
+        "Anti-Patterns lists >= 2 items with reasons"
+      ],
+      "pass_criteria": "All 5 required sections present. No placeholder text.",
+      "fail_indicators": [
+        "Missing required sections",
+        "Placeholder text in output",
+        "Hardcoded design tokens instead of CSS variable references"
+      ]
+    },
+    {
+      "id": "research-token-extraction",
+      "name": "Research Mode — Token Extraction",
+      "prompt": "Research UI tokens for the project",
+      "setup": "Mode: Research. Project has `globals.css` containing custom properties.",
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
+      "expectations": [
+        "Design Tokens table references `var(--primary)`, `var(--accent)`, etc.",
+        "Values match actual `globals.css` content",
+        "No hardcoded hex or oklch values outside of the Value column"
+      ],
+      "pass_criteria": "Every color in Component Plan uses CSS variable references.",
+      "fail_indicators": [
+        "Hardcoded hex or oklch values in Component Plan",
+        "Token values that don't match globals.css"
+      ]
+    },
+    {
+      "id": "score-10-category-scorecard",
+      "name": "Score Mode — 10-Category Scorecard",
+      "prompt": "Score my landing page",
+      "setup": "Mode: Score. Existing component files present for the landing page.",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/criteria/visual-design.md"],
+      "expectations": [
+        "Scorecard table has exactly 10 rows matching the weighted categories",
+        "Each row has: #, Category, Score (0-10), Grade, Key Issues",
+        "Total score is weighted sum (not simple average)",
+        "Grade matches the score using the defined scale (A+ 97-100 ... F <60)",
+        "Issues classified into Critical / Improvements / Nice-to-have"
+      ],
+      "pass_criteria": "Weighted total correct. Grade matches scale. All 10 categories scored.",
+      "fail_indicators": [
+        "Incorrect number of categories",
+        "Simple average used instead of weighted sum",
+        "Grade does not match the defined scale"
+      ]
+    },
+    {
+      "id": "score-anti-bias-baseline",
+      "name": "Score Mode — Anti-Bias Baseline",
+      "prompt": "Score a well-built page with standard components",
+      "setup": "Mode: Score. Page uses standard, well-built components.",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/criteria/visual-design.md"],
+      "expectations": [
+        "Baseline starts at 7/10 per category (not inflated 9-10)",
+        "Scores of 9-10 require specific evidence cited in the issues column",
+        "No category gets 10/10 without explicit justification"
+      ],
+      "pass_criteria": "Average score <= 8.0 for a standard page. No unjustified 9+ scores.",
+      "fail_indicators": [
+        "Average score above 8.0 for a standard page",
+        "Unjustified 9+ scores without cited evidence"
+      ]
+    },
+    {
+      "id": "fix-scorecard-driven-fixes",
+      "name": "Fix Mode — Scorecard-Driven Fixes",
+      "prompt": "Fix the issues identified in the scorecard",
+      "setup": "Mode: Fix. Scorecard shows Visual Hierarchy 4/10, Accessibility 3/10.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Fixes prioritized: Accessibility (Critical, 10% weight) before Visual Hierarchy (Major, 15% weight)",
+        "Each fix references the specific scorecard issue",
+        "Files modified with Edit tool (not full rewrites)",
+        "`npx tsc --noEmit` run after each fix",
+        "Before/after comparison table output"
+      ],
+      "pass_criteria": "Critical issues fixed first. TypeScript check passes. Delta shown.",
+      "fail_indicators": [
+        "Non-critical issues fixed before critical ones",
+        "Full file rewrites instead of targeted edits",
+        "No TypeScript check after fixes",
+        "Missing before/after comparison"
+      ]
+    },
+    {
+      "id": "fix-loop-iteration",
+      "name": "Fix Mode — Fix Loop Iteration",
+      "prompt": "Fix until score reaches 85+",
+      "setup": "Mode: Fix. Current score is below 85.",
+      "input_files": ["references/fix/implementation-workflow.md", "references/fix/verification.md"],
+      "expectations": [
+        "Loop runs: fix -> verify -> re-score -> check target",
+        "Stops when score >= 85, or delta=0 for 2 rounds, or 5 iterations max",
+        "Each iteration tracked in iteration log",
+        "Final output shows full before/after comparison"
+      ],
+      "pass_criteria": "Loop terminates correctly. No infinite iteration.",
+      "fail_indicators": [
+        "Infinite loop",
+        "No iteration tracking",
+        "Missing termination conditions"
+      ]
+    },
+    {
+      "id": "pipeline-full",
+      "name": "Pipeline Mode — Full Pipeline (research -> build -> score -> fix)",
+      "prompt": "Run full UI pipeline for pricing page, target 83+",
+      "setup": "Mode: Pipeline.",
+      "input_files": ["references/research/research-workflow.md", "references/research/inspiration-sources.md"],
+      "expectations": [
+        "Phase 1: Design Brief produced",
+        "Phase 2: Components built following the brief",
+        "Phase 3: Scorecard generated",
+        "Phase 4: Fix loop until 83+ or plateau",
+        "Phase 5: Final verification (tsc, tests, build) and commit suggestion"
+      ],
+      "pass_criteria": "All 5 phases execute. Final score >= 83 or plateau report.",
+      "fail_indicators": [
+        "Missing phases",
+        "Phases executed out of order",
+        "No final verification step"
+      ]
+    },
+    {
+      "id": "pipeline-audit-variant",
+      "name": "Pipeline Mode — Audit Pipeline Variant",
+      "prompt": "Audit my existing dashboard page",
+      "setup": "Mode: Pipeline (audit variant). Existing dashboard page with component files.",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/criteria/visual-design.md"],
+      "expectations": [
+        "Skips research and build phases",
+        "Starts directly at scoring existing component files",
+        "Proceeds to fix loop if below target",
+        "Outputs before/after comparison"
+      ],
+      "pass_criteria": "No research phase. Score + fix only.",
+      "fail_indicators": [
+        "Research phase executed unnecessarily",
+        "Build phase executed on existing components",
+        "Missing before/after comparison"
+      ]
+    }
+  ]
+}

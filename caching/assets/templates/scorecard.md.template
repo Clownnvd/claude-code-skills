@@ -1,0 +1,45 @@
+# Caching Strategy Scoring — Scorecard
+
+**Project**: {{PROJECT_NAME}}
+**Date**: {{DATE}}
+**Score**: {{TOTAL_SCORE}}/100
+**Grade**: {{GRADE}}
+
+## Category Scores
+
+| # | Category | Weight | Raw (0-10) | Weighted | Notes |
+|---|----------|--------|------------|----------|-------|
+| 1 | Cache-Control Headers | 15% | {{HEADERS_RAW}} | {{HEADERS_WEIGHTED}} | {{HEADERS_NOTES}} |
+| 2 | Revalidation Strategy | 15% | {{REVAL_RAW}} | {{REVAL_WEIGHTED}} | {{REVAL_NOTES}} |
+| 3 | Static vs Dynamic Classification | 12% | {{STATIC_DYN_RAW}} | {{STATIC_DYN_WEIGHTED}} | {{STATIC_DYN_NOTES}} |
+| 4 | ISR Configuration | 8% | {{ISR_RAW}} | {{ISR_WEIGHTED}} | {{ISR_NOTES}} |
+| 5 | React cache() Deduplication | 10% | {{REACT_CACHE_RAW}} | {{REACT_CACHE_WEIGHTED}} | {{REACT_CACHE_NOTES}} |
+| 6 | "use cache" Directive | 10% | {{USE_CACHE_RAW}} | {{USE_CACHE_WEIGHTED}} | {{USE_CACHE_NOTES}} |
+| 7 | CDN & Edge Caching | 8% | {{CDN_RAW}} | {{CDN_WEIGHTED}} | {{CDN_NOTES}} |
+| 8 | Request Deduplication | 7% | {{DEDUP_RAW}} | {{DEDUP_WEIGHTED}} | {{DEDUP_NOTES}} |
+| 9 | Proxy Caching | 7% | {{PROXY_RAW}} | {{PROXY_WEIGHTED}} | {{PROXY_NOTES}} |
+| 10 | Cache Monitoring & Debug | 8% | {{MONITOR_RAW}} | {{MONITOR_WEIGHTED}} | {{MONITOR_NOTES}} |
+| | **TOTAL** | **100%** | | **{{TOTAL_SCORE}}** | |
+
+## Grade Scale
+
+A+ (97-100) | A (93-96) | A- (90-92) | B+ (87-89) | B (83-86) | B- (80-82) | C+ (77-79) | C (73-76) | D (60-72) | F (<60)
+
+## Prioritized Issues
+
+| # | Severity | Category | Issue | Affected Files | Fix |
+|---|----------|----------|-------|----------------|-----|
+{{ISSUES_LIST}}
+
+## Framework Status
+
+| Component | Detected |
+|-----------|----------|
+| Next.js Version | {{NEXTJS_VERSION}} |
+| Deployment Target | {{DEPLOY_TARGET}} |
+| Cache Provider | {{CACHE_PROVIDER}} |
+| CDN | {{CDN_PROVIDER}} |
+
+## Quick Wins
+
+{{QUICK_WINS_LIST}}

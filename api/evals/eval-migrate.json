@@ -1,0 +1,17 @@
+{
+  "skill": "api",
+  "eval_name": "migrate-mode",
+  "description": "Verify migrate mode handles Next.js version upgrades for API routes",
+  "tests": [
+    {
+      "id": "api-mig-1",
+      "name": "Migrate API routes from Next.js 15 to 16",
+      "prompt": "migrate api routes from Next.js 15 to 16",
+      "setup": "Next.js 15 project with middleware.ts auth, multiple API routes",
+      "input_files": ["src/app/api/*/route.ts", "middleware.ts"],
+      "expectations": ["Identifies proxy.ts migration need", "Maps dynamicIO impact on routes", "Preserves auth checks", "No quality regression"],
+      "pass_criteria": "All breaking changes identified and migrated, no auth regression",
+      "fail_indicators": ["Misses proxy migration", "Removes auth during migration", "Doesn't verify after"]
+    }
+  ]
+}

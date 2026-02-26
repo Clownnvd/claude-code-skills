@@ -1,0 +1,74 @@
+{
+  "skill": "caching",
+  "eval_name": "eval-verification-loop",
+  "description": "Verify the compile-test-rescore cycle, regression detection, and fix idempotency for caching-fix.",
+  "tests": [
+    {
+      "id": "compile-test-verification",
+      "name": "Compile + Test Verification",
+      "prompt": "Apply the NO_CACHE_HEADERS fix and verify compilation and tests pass",
+      "setup": "Scorecard with HIGH issue: API routes missing `Cache-Control: no-store` on authenticated responses (Headers & Revalidation 4/10). Apply the NO_CACHE_HEADERS fix from `headers-revalidation.md`.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Apply `Cache-Control: no-store, no-cache, must-revalidate` headers to all authenticated API route responses",
+        "Add `export const dynamic = \"force-dynamic\"` to each API route file",
+        "Run `npx tsc --noEmit`. Verify zero type errors",
+        "Run `pnpm test`. Verify existing API tests and ISR page tests still pass"
+      ],
+      "pass_criteria": "`tsc --noEmit` exits 0. All tests pass. `pnpm build` output shows API routes as dynamic and landing page remains static. No header type mismatches.",
+      "fail_indicators": [
+        "Type error from `NextResponse` header methods, test regression in cached page tests, or static routes accidentally forced dynamic"
+      ]
+    },
+    {
+      "id": "re-score-improvement-verification",
+      "name": "Re-Score Improvement Verification",
+      "prompt": "Apply fixes for Headers & Revalidation and Static/Dynamic/ISR categories and verify re-score improvement",
+      "setup": "Initial caching-scoring scorecard: Headers & Revalidation 4/10, Static/Dynamic/ISR 5/10, React Cache 3/10. Total 45/100 (D+). Apply fixes for cache-control headers and ISR `revalidatePath` after mutations.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Run caching-fix for both issues",
+        "Invoke `caching-scoring` to produce a new scorecard",
+        "Compare per-category scores: Headers & Revalidation, Static/Dynamic/ISR must increase",
+        "Verify CDN, React Cache, Proxy, and all other categories remain at or above pre-fix scores"
+      ],
+      "pass_criteria": "Headers & Revalidation >= 7/10 (was 4). Static/Dynamic/ISR >= 7/10 (was 5). No category dropped below its pre-fix score. Total weighted score increased. Comparison uses `references/verification.md` template.",
+      "fail_indicators": [
+        "Any unfixed category score decreased, or fixed categories show no improvement"
+      ]
+    },
+    {
+      "id": "regression-detection",
+      "name": "Regression Detection",
+      "prompt": "Apply a React cache() fix that introduces a Static/Dynamic/ISR regression and verify pipeline detects it",
+      "setup": "Initial scorecard: Headers & Revalidation 7/10, Static/Dynamic/ISR 8/10, React Cache 6/10. Apply a React `cache()` fix that wraps page-level data fetches, accidentally making the landing page dynamic. Static/Dynamic/ISR drops from 8/10 to 4/10.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Apply `cache()` wrapper that adds `cookies()` call inside cached function",
+        "Run `caching-scoring` re-score",
+        "Verify pipeline detects Static/Dynamic/ISR dropped from 8 to 4 (delta -4)",
+        "Verify pipeline halts and recommends reverting the cache wrapper"
+      ],
+      "pass_criteria": "Pipeline detects the Static/Dynamic/ISR regression. Output flags: category regressed, `pnpm build` shows landing page moved from static to dynamic, recommendation to avoid `cookies()` inside `cache()`. Pipeline does not continue.",
+      "fail_indicators": [
+        "Pipeline ignores the ISR regression and continues, or fails to identify that `cookies()` caused the static-to-dynamic shift"
+      ]
+    },
+    {
+      "id": "fix-idempotency",
+      "name": "Fix Idempotency",
+      "prompt": "Run caching-fix with an already-fixed cache-control issue and verify no changes are made",
+      "setup": "Scorecard with HIGH issue: no `Cache-Control` headers on API responses. All API routes already have `NO_CACHE_HEADERS` applied and `export const dynamic = \"force-dynamic\"` from a previous fix run.",
+      "input_files": ["references/fix/verification.md", "references/scoring/scoring-workflow.md"],
+      "expectations": [
+        "Run caching-fix with the same cache-control issue",
+        "Check `git diff` after the fix attempt",
+        "Run `caching-scoring` and compare scores to the post-first-fix scorecard"
+      ],
+      "pass_criteria": "No files modified (`git diff` is empty). Score remains identical. Skill reports \"already applied\" or \"no changes needed.\" No duplicate `Cache-Control` headers or duplicate `dynamic` exports inserted.",
+      "fail_indicators": [
+        "Double `Cache-Control` header set, second `export const dynamic` line added, or score changes from the second application"
+      ]
+    }
+  ]
+}

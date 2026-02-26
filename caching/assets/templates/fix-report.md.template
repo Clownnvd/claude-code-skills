@@ -1,0 +1,72 @@
+# Caching Fix Report
+
+## Scoring Input
+
+- **Overall Grade**: {{GRADE_BEFORE}}
+- **Weighted Score**: {{SCORE_BEFORE}}/100
+- **Total Issues**: {{ISSUE_COUNT}}
+
+### Issues by Severity
+
+| Severity | Count | Categories |
+|----------|-------|------------|
+| CRITICAL | {{CRITICAL_COUNT}} | {{CRITICAL_CATEGORIES}} |
+| HIGH     | {{HIGH_COUNT}} | {{HIGH_CATEGORIES}} |
+| MEDIUM   | {{MEDIUM_COUNT}} | {{MEDIUM_CATEGORIES}} |
+| LOW      | {{LOW_COUNT}} | {{LOW_CATEGORIES}} |
+
+## Fixes Applied
+
+<!-- Repeat this block for each fix. Increment {{FIX_NUMBER}} sequentially. -->
+### Fix {{FIX_NUMBER}}: {{FIX_TITLE}}
+
+- **Severity**: {{SEVERITY}}
+- **Category**: {{CATEGORY}} (weight: {{WEIGHT}}%)
+- **Pattern**: `references/fix-patterns/{{PATTERN_FILE}}`
+- **Files Changed**:
+  - `{{FILE_PATH}}` -- {{CHANGE_DESCRIPTION}}
+
+#### Before
+
+```typescript
+{{CODE_BEFORE}}
+```
+
+#### After
+
+```typescript
+{{CODE_AFTER}}
+```
+
+#### Verification
+
+- [ ] `pnpm build` shows correct static/dynamic classification
+- [ ] Cache headers present on responses (`curl -sI`)
+- [ ] Revalidation triggers on mutation
+
+## Re-Score Results
+
+| Category | Before | After | Delta |
+|----------|--------|-------|-------|
+| Cache-Control Headers (15%) | {{HDR_BEFORE}} | {{HDR_AFTER}} | {{HDR_DELTA}} |
+| Revalidation Strategy (15%) | {{REVAL_BEFORE}} | {{REVAL_AFTER}} | {{REVAL_DELTA}} |
+| Static/Dynamic (12%) | {{SD_BEFORE}} | {{SD_AFTER}} | {{SD_DELTA}} |
+| ISR (8%) | {{ISR_BEFORE}} | {{ISR_AFTER}} | {{ISR_DELTA}} |
+| React cache() (10%) | {{RC_BEFORE}} | {{RC_AFTER}} | {{RC_DELTA}} |
+| "use cache" (10%) | {{UC_BEFORE}} | {{UC_AFTER}} | {{UC_DELTA}} |
+| CDN (8%) | {{CDN_BEFORE}} | {{CDN_AFTER}} | {{CDN_DELTA}} |
+| Request Dedup (7%) | {{DEDUP_BEFORE}} | {{DEDUP_AFTER}} | {{DEDUP_DELTA}} |
+| Proxy Caching (7%) | {{PROXY_BEFORE}} | {{PROXY_AFTER}} | {{PROXY_DELTA}} |
+| Monitoring (8%) | {{MON_BEFORE}} | {{MON_AFTER}} | {{MON_DELTA}} |
+
+- **Final Grade**: {{GRADE_AFTER}}
+- **Final Score**: {{SCORE_AFTER}}/100
+- **Improvement**: +{{SCORE_DELTA}} points
+
+## Fix Pattern References Used
+
+- `headers-revalidation.md` -- NO_CACHE_HEADERS, revalidatePath, Tag-Based Revalidation
+- `static-dynamic-isr.md` -- Static Page Conversion, force-dynamic Removal, ISR Config
+- `react-cache-use-cache.md` -- cache() Session Dedup, Shared Data Loader, "use cache" Directive
+- `cdn-dedup.md` -- Vary Header, CDN Cache Headers, Promise.all Dedup
+- `proxy-monitoring.md` -- Proxy Matcher Optimization, Revalidation Logging

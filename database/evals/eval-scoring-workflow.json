@@ -1,0 +1,99 @@
+{
+  "skill": "database",
+  "eval_name": "eval-scoring-workflow",
+  "description": "Verify the database scoring process produces correct, complete output.",
+  "tests": [
+    {
+      "id": "valid-codebase-produces-score-0-100",
+      "name": "Valid Codebase Produces Score 0-100",
+      "prompt": "Run db-scoring against a codebase with schema.prisma and migrations",
+      "setup": "Provide a codebase with schema.prisma and migration files",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
+      "expectations": [
+        "Output contains a numeric score between 0 and 100",
+        "All 10 categories (Schema Design, Data Integrity, Indexing, Security, Query Performance, Migration, Monitoring, Backup, Scalability, Developer Experience) have individual scores",
+        "Each raw score must be 0-10"
+      ],
+      "pass_criteria": "Score is 0-100, all 10 categories present with raw scores 0-10",
+      "fail_indicators": [
+        "Score outside 0-100 range",
+        "Missing categories",
+        "Raw score outside 0-10"
+      ]
+    },
+    {
+      "id": "each-criterion-scored-individually-with-weight",
+      "name": "Each Criterion Scored Individually With Weight",
+      "prompt": "Verify each scoring criterion is weighted correctly and totals are computed properly",
+      "setup": "Run db-scoring and inspect the scorecard output",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
+      "expectations": [
+        "Schema Design at 15%, Data Integrity at 12%, Indexing at 12%",
+        "Security at 15%, Query Performance at 10%, Migration at 10%",
+        "Monitoring at 8%, Backup at 8%, Scalability at 5%, DX at 5%",
+        "Weighted score = raw score x weight x 10",
+        "Total = sum of all weighted scores"
+      ],
+      "pass_criteria": "All weights match specification and total equals sum of weighted scores",
+      "fail_indicators": [
+        "Incorrect weight percentages",
+        "Total does not equal sum of weighted scores"
+      ]
+    },
+    {
+      "id": "output-includes-scorecard-and-issues-list",
+      "name": "Output Includes Scorecard AND Issues List",
+      "prompt": "Verify output contains both a scorecard table and a prioritized issues list",
+      "setup": "Run db-scoring and inspect the full output",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
+      "expectations": [
+        "Output contains a scorecard table with all 10 categories",
+        "Output contains a prioritized issues list with Severity, Category, Issue, Fix",
+        "Each issue references specific schema files, migrations, or query locations",
+        "Quick wins section is present"
+      ],
+      "pass_criteria": "Both scorecard table and issues list present with correct columns and file references",
+      "fail_indicators": [
+        "Missing scorecard table",
+        "Missing issues list",
+        "Issues lack file references",
+        "No quick wins section"
+      ]
+    },
+    {
+      "id": "grade-letter-matches-score-range",
+      "name": "Grade Letter Matches Score Range",
+      "prompt": "Verify the grade letter assigned matches the numeric score range",
+      "setup": "Run db-scoring and check grade output against score",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
+      "expectations": [
+        "Score 90-100 produces A-range grade (A+/A/A-)",
+        "Score 80-89 produces B-range grade (B+/B/B-)",
+        "Score 73-79 produces C-range grade (C+/C)",
+        "Score 60-72 produces D grade",
+        "Score 0-59 produces F grade"
+      ],
+      "pass_criteria": "Grade letter correctly corresponds to numeric score range",
+      "fail_indicators": [
+        "Grade does not match score range"
+      ]
+    },
+    {
+      "id": "issues-sorted-by-severity",
+      "name": "Issues Sorted by Severity",
+      "prompt": "Verify issues are sorted from most to least severe",
+      "setup": "Run db-scoring against a codebase with issues at multiple severity levels",
+      "input_files": ["references/scoring/scoring-workflow.md", "references/scoring/overview.md"],
+      "expectations": [
+        "CRITICAL issues (score 0-3 or data loss risk) appear first",
+        "HIGH issues (score 4-5, weight >= 12%) appear second",
+        "MEDIUM issues (score 4-5, weight < 12%) appear third",
+        "LOW issues (score 7-8) appear last"
+      ],
+      "pass_criteria": "Issues strictly ordered: CRITICAL > HIGH > MEDIUM > LOW",
+      "fail_indicators": [
+        "Issues not grouped by severity"
+      ]
+    }
+  ]
+}

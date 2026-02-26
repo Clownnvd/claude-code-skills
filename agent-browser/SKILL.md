@@ -419,24 +419,63 @@ Priority (lowest to highest): `~/.agent-browser/config.json` < `./agent-browser.
 
 PageFlows (pageflows.com) records real user flows from top apps. Use it to research UI patterns before building.
 
+### ⚠️ ALWAYS Use Real Chrome (NEVER the headless shell)
+
+Playwright's bundled `chrome-headless-shell.exe` does NOT show a visible window even with `--headed`. Always use the real Chrome installed on this machine:
+
+```bash
+# ✅ CORRECT — real Chrome, visible window:
+agent-browser --session pageflows --headed \
+  --executable-path "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" \
+  open https://pageflows.com/
+
+# ❌ WRONG — headless shell, no visible window:
+agent-browser --session pageflows --headed open https://pageflows.com/
+```
+
+**Chrome path on this machine:** `C:\Program Files\Google\Chrome\Application\chrome.exe`
+
 ### Session State
-- Auth saved: `pageflows-auth.json` (load with `agent-browser state load pageflows-auth.json`)
-- Reload: `agent-browser state load pageflows-auth.json && agent-browser open https://pageflows.com/`
+- Named session: `--session pageflows` — use on EVERY command
+- Auth file: `pageflows-auth.json` (saved from previous login)
+- Account: `magicduy56@gmail.com` (Pro account)
+
+### Keeping Headed Chrome Alive (Critical for PageFlows)
+
+**NEVER close Chrome when logged into PageFlows** — closing loses the login session.
+
+**If Chrome is already open and logged in** — reconnect with just the session name, no need for `--headed` or `--executable-path`:
+
+```bash
+# ✅ CORRECT — reconnect to already-open Chrome:
+agent-browser --session pageflows open "https://pageflows.com/post/desktop-web/..."
+agent-browser --session pageflows snapshot -i
+agent-browser --session pageflows screenshot screenshots/flows/name.png
+```
+
+**Opening fresh** (session lost or first time):
+```bash
+# Open real Chrome — user logs in manually:
+agent-browser --session pageflows --headed \
+  --executable-path "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" \
+  open https://pageflows.com/
+# After manual login, save session:
+agent-browser --session pageflows state save pageflows-auth.json
+```
+
+**Rules:**
+- NEVER run `agent-browser close` during a PageFlows research session
+- If daemon crashes, reopen with the full `--headed --executable-path` command above
+- Always confirm Chrome is open with `agent-browser --session pageflows get url` before proceeding
 
 ### Efficient PageFlows Browsing Pattern
 
-**NEVER close/restart headed Chrome when logged into PageFlows** — requires re-login each time.
-
 ```bash
-# 1. Load auth session (if browser was closed)
-agent-browser state load pageflows-auth.json
-agent-browser --headed open https://pageflows.com/
-
 # 2. Navigate to a specific app+flow
-agent-browser open "https://pageflows.com/post/desktop-web/<flow-name>/<app-name>/"
+agent-browser --session pageflows open "https://pageflows.com/post/desktop-web/<flow-name>/<app-name>/"
 
 # 3. Extract ALL screen URLs with JavaScript (PREFERRED over clicking)
-agent-browser eval --stdin <<'EVALEOF'
+agent-browser --session pageflows eval --stdin <<'EVALEOF'
 JSON.stringify(
   Array.from(document.querySelectorAll('li[data-url]'))
     .map(el => ({title: el.dataset.title, url: el.dataset.url}))
@@ -445,8 +484,8 @@ JSON.stringify(
 EVALEOF
 
 # 4. Open each screen image directly (1920x1080 full resolution)
-agent-browser open "https://pageflows.com/media/screenshots/videos/<filename>.jpg"
-agent-browser screenshot screenshots/flows/<name>.png
+agent-browser --session pageflows open "https://pageflows.com/media/screenshots/videos/<filename>.jpg"
+agent-browser --session pageflows screenshot screenshots/flows/<name>.png
 ```
 
 ### PageFlows URL Patterns
@@ -490,3 +529,10 @@ done
 - The `-C` flag on snapshot reveals `data-url` attributes on list items
 - Save screenshots to `screenshots/flows/` for organized learning
 - Always read captured screenshots with the Read tool to analyze UI visually
+- **Always use `--session pageflows`** on every command to keep the headed browser alive
+- **NEVER run `agent-browser close`** when in a PageFlows research session
+- If asked to "use headed Chrome" or "keep Chrome open", always use `--session` flag
+
+### Accounts
+- `pageflows-auth.json` — saved session (may be free or pro account)
+- Pro account available: `magicduy56@gmail.com` — load via `agent-browser --session pageflows state load pageflows-auth.json` (this session was used for Claude.ai research)

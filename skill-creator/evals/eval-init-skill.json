@@ -1,0 +1,80 @@
+{
+  "skill": "skill-creator",
+  "eval_name": "eval-init-skill",
+  "description": "Validate init_skill.py creates correct skill directory structure and handles errors.",
+  "tests": [
+    {
+      "id": "basic-initialization",
+      "name": "Basic Initialization",
+      "prompt": "python scripts/init_skill.py test-skill --path /tmp/skills",
+      "setup": "Clean /tmp/skills directory with no pre-existing test-skill folder.",
+      "input_files": ["references/creation-workflow.md", "references/structure-organization-criteria.md"],
+      "expectations": [
+        "Directory `/tmp/skills/test-skill/` created",
+        "`SKILL.md` exists with valid YAML frontmatter (`name: test-skill`)",
+        "`LICENSE.txt` exists (Apache 2.0)",
+        "`scripts/example.py` exists and is executable",
+        "`references/api_reference.md` exists",
+        "`references/best-practices.md` exists",
+        "`assets/example_asset.txt` exists",
+        "Exit code: 0"
+      ],
+      "pass_criteria": "All files exist, SKILL.md frontmatter passes `quick_validate.py`.",
+      "fail_indicators": [
+        "Missing files in generated structure",
+        "SKILL.md frontmatter fails validation",
+        "Non-zero exit code"
+      ]
+    },
+    {
+      "id": "duplicate-skill-rejection",
+      "name": "Duplicate Skill Rejection",
+      "prompt": "python scripts/init_skill.py test-skill --path /tmp/skills",
+      "setup": "Run init_skill.py twice for the same skill name and path. First run succeeds.",
+      "input_files": ["references/creation-workflow.md", "references/structure-organization-criteria.md"],
+      "expectations": [
+        "Second run prints error: \"Skill directory already exists\"",
+        "Exit code: 1",
+        "Original directory unchanged"
+      ],
+      "pass_criteria": "Second run exits with error. Original directory is not modified.",
+      "fail_indicators": [
+        "Second run succeeds or overwrites existing skill",
+        "Original directory contents changed"
+      ]
+    },
+    {
+      "id": "invalid-arguments",
+      "name": "Invalid Arguments",
+      "prompt": "python scripts/init_skill.py",
+      "setup": "Run with no arguments.",
+      "input_files": ["references/creation-workflow.md", "references/structure-organization-criteria.md"],
+      "expectations": [
+        "Prints usage instructions",
+        "Exit code: 1"
+      ],
+      "pass_criteria": "Usage instructions printed and non-zero exit code.",
+      "fail_indicators": [
+        "Traceback or unhandled exception",
+        "Exit code 0 with no output"
+      ]
+    },
+    {
+      "id": "nested-path-creation",
+      "name": "Nested Path Creation",
+      "prompt": "python scripts/init_skill.py deep-skill --path /tmp/a/b/c",
+      "setup": "Parent directories /tmp/a/b/c do not exist yet.",
+      "input_files": ["references/creation-workflow.md", "references/structure-organization-criteria.md"],
+      "expectations": [
+        "All parent directories created (`/tmp/a/b/c/deep-skill/`)",
+        "Full structure generated",
+        "Exit code: 0"
+      ],
+      "pass_criteria": "All parent directories created and full skill structure generated.",
+      "fail_indicators": [
+        "Failure due to missing parent directories",
+        "Partial structure generated"
+      ]
+    }
+  ]
+}
