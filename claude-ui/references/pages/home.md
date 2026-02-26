@@ -43,12 +43,34 @@
 
 ```tsx
 <header className="flex items-center justify-between px-4 py-3 border-b border-[#E0E0E0] bg-white flex-shrink-0">
-  <button
-    onClick={() => setRenameOpen(true)}
-    className="flex items-center gap-1.5 text-sm font-medium text-gray-900 hover:bg-gray-100 px-2 py-1.5 rounded-lg transition-colors duration-200 cursor-pointer">
-    {chatTitle}
-    <ChevronDownIcon className="w-4 h-4 text-[#6B6B6B]" />
-  </button>
+  {/* Title click → dropdown (NOT directly rename modal) */}
+  <div className="relative">
+    <button
+      onClick={() => setShowTitleDropdown(v => !v)}
+      className="flex items-center gap-1.5 text-sm font-medium text-gray-900 hover:bg-gray-100 px-2 py-1.5 rounded-lg transition-colors duration-200 cursor-pointer">
+      {chatTitle}
+      <ChevronDownIcon className="w-4 h-4 text-[#6B6B6B]" />
+    </button>
+    {showTitleDropdown && (
+      <>
+        {/* Transparent overlay to close */}
+        <div className="fixed inset-0 z-40" onClick={() => setShowTitleDropdown(false)} />
+        <div className="absolute top-full left-0 mt-1 bg-white border border-[#E0E0E0] rounded-xl shadow-lg z-50 min-w-[130px] py-1">
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer">
+            <StarIcon className="w-4 h-4" /> Star
+          </button>
+          <button onClick={() => { setShowTitleDropdown(false); setShowRenameModal(true); }}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer">
+            <PencilIcon className="w-4 h-4" /> Rename
+          </button>
+          <button onClick={() => { setShowTitleDropdown(false); setShowDeleteConfirm(true); }}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-gray-50 cursor-pointer">
+            <TrashIcon className="w-4 h-4" /> Delete
+          </button>
+        </div>
+      </>
+    )}
+  </div>
   <button
     onClick={() => setShareOpen(true)}
     className="flex items-center gap-1.5 text-sm text-[#6B6B6B] hover:text-gray-900 hover:bg-gray-100 px-3 py-1.5 rounded-lg transition-colors duration-200 cursor-pointer">
@@ -57,8 +79,9 @@
 </header>
 ```
 
-Clicking title or `↓` opens Rename modal — see `references/components/modals.md`.
-Share button opens Share modal — see `references/components/modals.md`.
+**CRITICAL:** Title click opens dropdown (Star/Rename/Delete), NOT directly Rename modal.
+Rename modal pre-fills title and selects all text on focus — see `references/components/modals.md`.
+Share button opens Share modal (two states: before/after link created) — see `references/components/modals.md`.
 
 ## Upgrade Banner (below input)
 

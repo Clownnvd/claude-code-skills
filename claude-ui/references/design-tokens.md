@@ -54,6 +54,20 @@ Both `bg-[#F9F6F0]` and `bg-cream` compile correctly. IDE may warn to prefer tok
 | Pill buttons | `rounded-full` |
 | Nav item border radius | `rounded-lg` |
 
+## Dev Server Setup (Next.js 16 + Tailwind v4)
+
+VSCode sets `NODE_ENV=production` which breaks the webpack CSS pipeline for Tailwind v4.
+Fix: add `cross-env` to package.json:
+
+```json
+"dependencies": { "cross-env": "^7.0.3" },
+"scripts": {
+  "dev": "cross-env NODE_ENV=development next dev --webpack"
+}
+```
+
+Also use only ONE postcss config file: keep `postcss.config.mjs` (ES module), NOT `.js`.
+
 ## Transition Convention
 
 All interactive elements: `transition-colors duration-200`

@@ -19,52 +19,45 @@ function UserMessage({ content }: { content: string }) {
 }
 ```
 
-## Assistant Message
+## Assistant Message — NO avatar bubble
+
+**CRITICAL: NO avatar on left side.** Full-width response text. Toolbar uses `justify-between`.
 
 ```tsx
-function AssistantMessage({ content }: { content: string }) {
+function AssistantMessage({ content, onFeedback }) {
   return (
-    <div className="flex items-start gap-3">
-      <div className="w-7 h-7 rounded-full bg-[#C96A4A] flex items-center justify-center flex-shrink-0 mt-0.5">
-        <AnthropicMark className="w-4 h-4 text-white" />
+    <div>
+      <div className="text-sm text-gray-900 leading-relaxed whitespace-pre-wrap">
+        {content}
       </div>
-      <div className="flex-1 min-w-0">
-        <div className="text-sm text-gray-900 leading-relaxed">
-          {content}
+      {/* Toolbar: AnthropicMark LEFT, action buttons RIGHT */}
+      <div className="flex items-center justify-between mt-3">
+        <AnthropicMark className="w-4 h-4 text-[#C96A4A]" />
+        <div className="flex items-center gap-1">
+          <button className="w-7 h-7 flex items-center justify-center rounded-lg text-[#6B6B6B] hover:bg-black/5 cursor-pointer" aria-label="Copy">
+            <CopyIcon />
+          </button>
+          <button onClick={() => onFeedback?.("positive")} className="w-7 h-7 flex items-center justify-center rounded-lg text-[#6B6B6B] hover:bg-black/5 cursor-pointer" aria-label="Good response">
+            <ThumbsUpIcon />
+          </button>
+          <button onClick={() => onFeedback?.("negative")} className="w-7 h-7 flex items-center justify-center rounded-lg text-[#6B6B6B] hover:bg-black/5 cursor-pointer" aria-label="Bad response">
+            <ThumbsDownIcon />
+          </button>
+          <button className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-[#6B6B6B] hover:bg-black/5 cursor-pointer">
+            Retry <ChevronDownIcon />
+          </button>
         </div>
-        <ResponseToolbar />
-        <p className="text-xs text-[#6B6B6B] mt-2">
-          Claude can make mistakes. Please double-check responses.
-        </p>
       </div>
+      {/* Disclaimer — per message, right-aligned */}
+      <p className="text-xs text-right text-[#6B6B6B] mt-1">
+        Claude can make mistakes. Please double-check responses.
+      </p>
     </div>
   );
 }
 ```
 
-## Response Toolbar — ALWAYS VISIBLE (not hover-only)
-
-```tsx
-function ResponseToolbar() {
-  return (
-    <div className="flex items-center gap-1 mt-2">
-      <button className="w-7 h-7 flex items-center justify-center rounded-lg text-[#6B6B6B] hover:bg-black/5 cursor-pointer" aria-label="Copy">
-        <CopyIcon />
-      </button>
-      <button className="w-7 h-7 flex items-center justify-center rounded-lg text-[#6B6B6B] hover:bg-black/5 cursor-pointer" aria-label="Good response">
-        <ThumbsUpIcon />
-      </button>
-      <button className="w-7 h-7 flex items-center justify-center rounded-lg text-[#6B6B6B] hover:bg-black/5 cursor-pointer" aria-label="Bad response">
-        <ThumbsDownIcon />
-      </button>
-      <button className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-[#6B6B6B] hover:bg-black/5 cursor-pointer">
-        Retry <ChevronDownIcon />
-      </button>
-    </div>
-  );
-}
-```
-
+Toolbar is **ALWAYS VISIBLE** (not hover-only).
 Clicking 👍/👎 opens Feedback modal — see `references/components/modals.md`.
 
 ## Streaming / Loading State

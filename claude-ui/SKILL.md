@@ -36,11 +36,16 @@ Project: `c:\nextjs_project\pulse-analytics` → renamed to `claude-ui` on GitHu
 | "New chat" is a full-width button | It's a **nav item row** (coral dot + text) |
 | Projects badge is blue | Teal — `bg-[#E8F4F8] text-[#3B82A0]` |
 | Response toolbar shows on hover | ALWAYS visible (no hover-only) |
+| Response toolbar: all buttons on left | `justify-between` — AnthropicMark LEFT, Copy/👍/👎/Retry RIGHT |
+| "Claude can make mistakes" below chat input | Per-message, right-aligned BELOW response toolbar (not global) |
+| Clicking chat title → Rename modal directly | Opens DROPDOWN first: Star / Rename / Delete |
 | StyleIcon is a bolt/lightning bolt | 3 sliders SVG: `d="M8 6h13M8 12h9m-9 6h5"` |
 | `window.location.href` for navigation | Use `<Link href>` or `router.push()` |
 | `border-t border-gray-50` (invisible) | Use `border-[#E0E0E0]` |
 | AnthropicMark duplicated in files | Extract to `src/components/icons.tsx` |
+| AnthropicMark uses double-A wordmark path | Star path: `M12 2L9.5 8.5H3L8.5 12.5L6 19L12 15L18 19L15.5 12.5L21 8.5H14.5L12 2Z` |
 | `bg-black/8` IDE warning | Valid in Tailwind v4 — compiles correctly |
+| `pnpm dev` fails in VSCode (NODE_ENV=production) | Add `cross-env NODE_ENV=development` to dev script |
 
 ---
 
