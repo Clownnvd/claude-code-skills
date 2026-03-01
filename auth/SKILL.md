@@ -112,6 +112,7 @@ Map categories to assertions → Generate tests → Output suite (`assets/templa
 | Stack | Additional Reference |
 |-------|---------------------|
 | Better Auth + Next.js | `references/better-auth-patterns.md` -- plugin config, session cookies, two-layer auth, databaseHooks |
+| Better Auth + Next.js 16 (enhanced) | `references/better-auth-nextjs16-reference.md` -- 22 errors (BA-001–022), session patterns, OAuth, proxy.ts, cookies, rate limiting, security, CViet patterns |
 
 ## Quick Reference -- All Files
 

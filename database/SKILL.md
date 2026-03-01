@@ -124,6 +124,7 @@ Map categories to assertions → Generate tests → Output suite (`assets/templa
 | Prisma (any version) | `references/prisma-patterns.md` -- schema patterns, query anti-patterns, migration commands |
 | Prisma 7 specifically | `references/prisma-patterns.md` -- `prisma.config.ts` requirement (critical) |
 | Neon PostgreSQL | `references/neon-patterns.md` -- branching, pooling, PITR, edge runtime |
+| Prisma 7 + Neon (enhanced) | `references/prisma7-neon-reference.md` -- 34 errors (PERR-001–034), Prisma 7 breaking changes, connection pooling, Json typing, migrations, Better Auth integration, Next.js 16 patterns |
 
 ## Quick Reference -- All Files
 

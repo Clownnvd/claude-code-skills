@@ -118,6 +118,12 @@ Detect versions → Map breaking changes → Apply migrations → Verify (`asset
 Generate tests from scoring criteria. Load `references/test/workflow.md`.
 Map categories to assertions → Generate tests → Output suite (`assets/templates/test-suite.md.template`)
 
+## Stack-Specific References
+
+| Stack | Additional Reference |
+|-------|---------------------|
+| Next.js 16 + Prisma + Neon | `references/nextjs16-cicd-deploy-reference.md` -- 20 errors (CD-001–020), Vercel/Docker/GitHub Actions, Prisma CI, Neon branching, postinstall patches, rollback strategies |
+
 ## Quick Reference -- All Files
 
 ### Scoring

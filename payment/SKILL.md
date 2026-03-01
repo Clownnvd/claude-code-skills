@@ -123,6 +123,7 @@ Map categories to assertions -> Generate tests -> Output suite (`assets/template
 |-------|---------------------|
 | Stripe | `references/stripe-patterns.md` -- SDK init, Products/Prices, Checkout Sessions, webhooks |
 | Next.js App Router | `references/webhook-patterns.md` -- route handlers, raw body parsing, signature verification |
+| Polar + Next.js 16 | `references/polar-nextjs16-reference.md` -- 25 errors (POL-001–025), checkout flows, subscriptions, webhooks, Free/Pro gating, Better Auth plugin, customer portal, CViet patterns |
 
 ## Quick Reference -- All Files
 
